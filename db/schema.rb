@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204161620) do
+ActiveRecord::Schema.define(version: 20141204202422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20141204161620) do
   create_table "killings", force: true do |t|
     t.string   "victim_name"
     t.integer  "victim_age"
-    t.string   "victim_gender_m_f"
+    t.string   "victim_gender"
     t.boolean  "victim_unarmed"
     t.string   "victim_race"
-    t.boolean  "victim_hispanic_or_latino_origin"
+    t.string   "victim_hispanic_or_latino_origin"
     t.text     "url_victim_image"
     t.date     "date_of_killing"
     t.string   "agency_responsible"
