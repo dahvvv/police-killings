@@ -61,7 +61,8 @@ namespace :db do
         location_of_killing_state: state,
         location_of_killing_county: county,
         description: description,
-        source: links
+        source: links,
+        data_from:  "U.S. Police Shootings Data"
         )
     end
   end

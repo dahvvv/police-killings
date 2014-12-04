@@ -3,7 +3,7 @@ class CreateKillings < ActiveRecord::Migration
     create_table :killings do |t|
       t.string :victim_name
       t.integer :victim_age
-      t.string :victim_gender
+      t.string :victim_gender_m_f
       t.boolean :victim_unarmed
       t.string :victim_race
       t.boolean :victim_hispanic_or_latino_origin
