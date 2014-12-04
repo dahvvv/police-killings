@@ -11,3 +11,8 @@ end
 get '/console' do
   binding.pry
 end
+
+get '/api' do
+  content_type :json
+  Killing.all.to_json
+end
