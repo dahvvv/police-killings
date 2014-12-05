@@ -95,6 +95,13 @@ namespace :db do
       agency = "Unknown" if agency[0..3].downcase == "http"
       cause = (csv[14]!=nil ? csv[14].capitalize : "Unknown")
       description = (csv[15]!=nil ? csv[15] : "Unknown")
+      disposition = (csv[16]!=nil ? csv[16].downcase : "unknown")
+      if csv[17]==nil || (csv[17][0..3]!="http" && csv[17][0..2]!="www")
+        source = "unknown"
+      else
+        source = csv[17]
+      end
+      illness = csv[18]
 
       Killing.create!(
         victim_name: v_name,
@@ -110,7 +117,10 @@ namespace :db do
         location_of_killing_county: county,
         agency_responsible: agency,
         cause_of_death: cause,
-        description: description
+        description: description,
+        official_disposition: disposition,
+        source: source,
+        symptoms_of_mental_illness: illness
         )
     end
   end
