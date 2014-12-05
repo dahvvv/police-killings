@@ -26,7 +26,11 @@ namespace :db do
 
   desc "seed data from U.S.Police..."
   task :seed_from_us do
-    file_path_us = 'lib/U.S._Police_Shootings_Data_Responses.txt'
+    us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
+    CSV.foreach(us_csv, headers: true) do |csv|
+      state = (csv[2]!=nil ? csv[2][0..1] : "unknown")
+
+
     us_txt = File.read(file_path_us)
     us_arr = us_txt.split(/\n\d+\/\d+\/\d+.+,[A-Z]{2}\s-\s/)
     us_arr.each do |str|
@@ -89,6 +93,7 @@ namespace :db do
       address = (csv[8]!=nil ? csv[8] : "Unknown")
       city = csv[9]
       state = csv[10]
+      state = "WA" if state == "Washington"
       zip = (csv[11]!=nil ? csv[11].to_i : nil)
       county = (csv[12]!=nil ? csv[12] : "Unknown")
       agency = (csv[13]!=nil ? csv[13].capitalize : "Unknown")
