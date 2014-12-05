@@ -18,9 +18,21 @@ get '/api' do
   killings.to_json
 end
 
-get '/api/show' do
+get '/api/state/:state' do
   content_type :json
-  victim_age = params[:victim_age]
-  killing = Killing.find_by(victim_age: victim_age)
-  killing.to_json
+  killings = Killing.where("location_of_killing_state = ?", params[:state])
+  killings.to_json
 end
+
+
+# get '/api/games/state/:state' do
+#   content_type :json
+#   games = Game.possible_ends_for(params[:state])
+#   games = games.where({complete: params[:complete]}) if params[:complete]
+#   games = games.where({winner: params[:winner]}) if params[:winner]
+#   games.to_json
+# end
+
+#   def self.possible_ends_for(state)
+#     self.where("state LIKE '#{state.gsub(/-/, "%")}'").order("LENGTH(turns)")
+#   end
