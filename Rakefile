@@ -102,7 +102,7 @@ namespace :db do
         victim_gender: v_gender,
         victim_race: v_race,
         url_victim_image: url_img,
-        date_of_killing: date
+        date_of_killing: date,
         location_of_killing_address: address,
         location_of_killing_city: city,
         location_of_killing_state: state,
