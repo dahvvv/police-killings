@@ -66,6 +66,34 @@ namespace :db do
         )
     end
   end
+
+  desc "seed data from Fatal Encounters"
+  task :seed_from_fatal do
+    file_path_fe = 'lib/Fatal_Encounters.txt'
+    fe_txt = File.read(file_path_fe)
+    fe_arr = fe_txt.split(/\n\d+\/\d+\/\d+\s/).drop(1)
+    fe_arr.each do |str|
+      separated = str.split(" ")
+      first_num_idx = separated.find_index {|x| x.to_i != 0}
+      v_name = separated[0...first_num_idx].join(" ").strip
+      v_age = separated[first_num_idx]
+      if (separated[first_num_idx + 1].downcase == "ma;e") || (separated[first_num_idx + 1].downcase == "maale")
+        v_gender = "Male"
+      elsif separated[first_num_idx + 1][0] == ","
+        v_gender = separated[first_num_idx + 1][1..-1]
+      elsif separated[first_num_idx + 1].to_i != 0
+        v_gender = "Unknown"
+      else
+        v_gender = separated[first_num_idx + 1]
+      end
+      first_link_idx = separated.find_index {|x| x[0..3]=="http" }
+      if first_link_idx
+        v_race = separated[(first_num_idx + 2)...first_link_idx].join(" ")
+      end
+    end
+  end
 end
+
+# fatal encounters: Timestamp,Subject's Name,Subject's age,Subject's gender,Subject's race,URL of image of deceased,Date of injury resulting in death (month/day/year),Location of injury (address),Location of death (city),Location of death (state),Location of death (zip code),Location of death (county),Agency responsible for death,Cause of death,A brief description of the circumstances surrounding the death,Official disposition of death (justified or other),Link to news article or photo of official document,Symptoms of mental illness?,Unique identifier/submitted by,Email address,Date&Description
 
 # us: Timestamp,Date Searched,State,County,City,Agency Name,Victim Name,Victim's Age,Victim's Gender,Race,Hispanic or Latino Origin,Shots Fired,Hit or Killed?,Armed or Unarmed?,Weapon,Summary,Source Link,Name of Officer or Officers,Shootings,Was the Shooting Justified?,Receive Updates?,Name,Email Address,Twitter,Date of Incident,Results Page Number
