@@ -94,14 +94,15 @@ namespace :db do
       agency = (csv[13]!=nil ? csv[13].capitalize : "Unknown")
       agency = "Unknown" if agency[0..3].downcase == "http"
       cause = (csv[14]!=nil ? csv[14].capitalize : "Unknown")
-      description = (csv[15]!=nil ? csv[15] : "Unknown")
+      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "Unknown")
       disposition = (csv[16]!=nil ? csv[16].downcase : "unknown")
       if csv[17]==nil || (csv[17][0..3]!="http" && csv[17][0..2]!="www")
         source = "unknown"
       else
         source = csv[17]
       end
-      illness = csv[18]
+      illness = (csv[18]!=nil ? csv[18].downcase : "unknown")
+      date = /^\d+\/\d+\/\d+/.match(csv[21]).to_s
 
       Killing.create!(
         victim_name: v_name,
@@ -120,64 +121,12 @@ namespace :db do
         description: description,
         official_disposition: disposition,
         source: source,
-        symptoms_of_mental_illness: illness
+        symptoms_of_mental_illness: illness,
+        date_of_killing: date,
+        data_from:  "Fatal Encounters Database"
         )
     end
   end
-
-  # desc "seed data from Fatal Encounters"
-  # task :seed_from_fatal do
-  #   file_path_fe = 'lib/Fatal_Encounters.txt'
-  #   fe_txt = File.read(file_path_fe)
-  #   fe_arr = fe_txt.split(/\n\d+\/\d+\/\d+\s/).drop(1)
-  #   months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
-  #   race_special_cases = ["Native", "Middle"]
-  #   fe_arr.each do |str|
-  #     separated = str.split(" ")
-  #     first_num_idx = separated.find_index {|x| x.to_i != 0}
-  #     if months.include?(separated[first_num_idx - 1])
-  #       first_num_idx = nil
-  #     end
-
-
-  #     if months.include?(separated[first_num_idx - 1])
-  #       v_name = str.partition("  ")[0].strip
-  #       v_gender = str.partition("  ")[2].split(" ")[0].strip
-  #     else
-  #       v_name = separated[0...first_num_idx].join(" ").strip
-  #       v_age = separated[first_num_idx]
-  #     end
-
-
-  #     if (separated[first_num_idx + 1].downcase == "ma;e") || (separated[first_num_idx + 1].downcase == "maale")
-  #       v_gender = "Male"
-  #     elsif separated[first_num_idx + 1][0] == ","
-  #       v_gender = separated[first_num_idx + 1][1..-1]
-  #     elsif separated[first_num_idx + 1].to_i != 0
-  #       v_gender = "Unknown"
-  #     else
-  #       v_gender = separated[first_num_idx + 1]
-  #     end
-  #     i = 0
-  #     race_special_cases.each do |special|
-  #       if separated[first_num_idx + 2] == special
-  #         v_race = separated.slice(first_num_idx + 2,2).join(" ")
-  #         i += 1
-  #       end
-  #     end
-  #     if i == 0
-  #       v_race = separated[first_num_idx + 2]
-  #     end
-
-  #     first_link_idx = separated.find_index {|x| x[0..3]=="http" }
-  #     if first_link_idx == nil || first_link_idx > 11
-  #       first_link_idx =
-  #     end
-  #   end
-  # end
-
 end
-
-# fatal encounters: Timestamp,Subject's Name,Subject's age,Subject's gender,Subject's race,URL of image of deceased,Date of injury resulting in death (month/day/year),Location of injury (address),Location of death (city),Location of death (state),Location of death (zip code),Location of death (county),Agency responsible for death,Cause of death,A brief description of the circumstances surrounding the death,Official disposition of death (justified or other),Link to news article or photo of official document,Symptoms of mental illness?,Unique identifier/submitted by,Email address,Date&Description
 
 # us: Timestamp,Date Searched,State,County,City,Agency Name,Victim Name,Victim's Age,Victim's Gender,Race,Hispanic or Latino Origin,Shots Fired,Hit or Killed?,Armed or Unarmed?,Weapon,Summary,Source Link,Name of Officer or Officers,Shootings,Was the Shooting Justified?,Receive Updates?,Name,Email Address,Twitter,Date of Incident,Results Page Number
