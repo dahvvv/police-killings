@@ -14,5 +14,13 @@ end
 
 get '/api' do
   content_type :json
-  Killing.all.to_json
+  killings = Killing.all
+  killings.to_json
+end
+
+get '/api/show' do
+  content_type :json
+  victim_age = params[:victim_age]
+  killing = Killing.find_by(victim_age: victim_age)
+  killing.to_json
 end
