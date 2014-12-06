@@ -29,20 +29,19 @@ namespace :db do
     us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
     CSV.foreach(us_csv, headers: true) do |csv|
       state = (csv[2]!=nil ? csv[2][0..1] : "unknown")
+      county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : "unknown")
+      city = (csv[4]!=nil ? csv[4].downcase.strip : "unknown")
+      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
+      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
+      v_name = (csv[6]!=nil ? csv[6].strip : "unknown")
+      v_name = "unknown" if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v.name.downcase.include?(error) }
+      v_age = csv[7].to_i
+      v_age = nil if v_age == 0
+      v_gender = (csv[8]!=nil ? csv[8].downcase : "unknown")
+      v_race = (csv[9]!=nil ? csv[9].downcase : "unknown")
+      v_hisp = (csv[10]!=nil ? csv[10].downcase : "unknown")
 
 
-    us_txt = File.read(file_path_us)
-    us_arr = us_txt.split(/\n\d+\/\d+\/\d+.+,[A-Z]{2}\s-\s/)
-    us_arr.each do |str|
-      comma_sep = str.split(",")
-      state = comma_sep[0]
-      county = comma_sep[1]
-      city = comma_sep[2]
-      agency = comma_sep[3]
-      v_name = comma_sep[4]
-      v_age = comma_sep[5]
-      v_gender = comma_sep[6]
-      v_race = comma_sep[7]
       v_hisp = comma_sep[8]
       shots = comma_sep[9]
       unarmed = (comma_sep[11].downcase == "unarmed")
@@ -75,29 +74,30 @@ namespace :db do
   desc "seed data from Fatal_Encounters.csv"
   task :load_fe_csv do
   fe_csv = "lib/Fatal_Encounters.csv"
-  male_typos = ["Maale","male",",Male","M","Ma;e","White"]
+  male_typos = ["maale",",male","m","ma;e","white"]
   CSV.foreach(fe_csv, headers: true) do |csv|
       v_name = csv[2]
+      v_name = "unknown" if ["unnamed","unknown","unidentified","withheld"].any? { |error| v_name.downcase.include?(error) }
       v_age = csv[3].to_i
       v_age = nil if v_age == 0
-      v_gender = csv[4]
-      v_gender = "Male" if male_typos.include?(v_gender)
-      v_gender = "Unknown" if v_gender == nil
-      v_race = csv[5]
-      v_race = "Unknown" if v_race == nil || ["unknown","unreported"].any? { |error| v_race.downcase.include?(error) }
+      v_gender = (csv[4]!=nil ? csv[4].downcase : "unknown")
+      v_gender = "male" if male_typos.include?(v_gender)
+      v_race = (csv[5]!=nil ? csv[5].downcase : "unknown")
+      v_race = v_race.gsub("european american","european-american").gsub("hispanic/latin","hispanic-latin").gsub("eureopean","european")
+      v_race = "unknown" if ["unreported","unknown"].any? { |error| v_race.include?(error) }
       url_img = (csv[6]!=nil ? csv[6] : "Unknown")
       if (url_img.length < 3) || (url_img.length > 2000)
         url_img = "Unknown"
       end
       date = (csv[7]!=nil ? csv[7] : "Unknown")
       address = (csv[8]!=nil ? csv[8] : "Unknown")
-      city = csv[9]
+      city = csv[9].downcase.strip
       state = csv[10]
       state = "WA" if state == "Washington"
       zip = (csv[11]!=nil ? csv[11].to_i : nil)
-      county = (csv[12]!=nil ? csv[12] : "Unknown")
-      agency = (csv[13]!=nil ? csv[13].capitalize : "Unknown")
-      agency = "Unknown" if agency[0..3].downcase == "http"
+      county = (csv[12]!=nil ? csv[12].downcase.gsub("county","").strip : "unknown")
+      agency = (csv[13]!=nil ? csv[13].downcase.strip : "unknown")
+      agency = "unknown" if agency[0..3].downcase == "http"
       cause = (csv[14]!=nil ? csv[14].capitalize : "Unknown")
       description = (csv[15]!=nil ? csv[15].gsub("’","'") : "Unknown")
       disposition = (csv[16]!=nil ? csv[16].downcase : "unknown")
