@@ -62,6 +62,7 @@ namespace :db do
         description: description,
         shots_fired: shots,
         source: source,
+        url_victim_image: "unknown",
         data_from:  "U.S. Police Shootings Data"
         )
     end
@@ -81,12 +82,12 @@ namespace :db do
       v_race = (csv[5]!=nil ? csv[5].downcase : "unknown")
       v_race = v_race.gsub("european american","european-american").gsub("hispanic/latin","hispanic-latin").gsub("eureopean","european")
       v_race = "unknown" if ["unreported","unknown"].any? { |error| v_race.include?(error) }
-      url_img = (csv[6]!=nil ? csv[6] : "Unknown")
+      url_img = (csv[6]!=nil ? csv[6] : "unknown")
       if (url_img.length < 3) || (url_img.length > 2000)
-        url_img = "Unknown"
+        url_img = "unknown"
       end
-      date = (csv[7]!=nil ? csv[7] : "Unknown")
-      address = (csv[8]!=nil ? csv[8] : "Unknown")
+      date = (csv[7]!=nil ? csv[7] : "unknown")
+      address = (csv[8]!=nil ? csv[8] : "unknown")
       city = csv[9].downcase.strip
       state = csv[10]
       state = "WA" if state == "Washington"
@@ -94,8 +95,8 @@ namespace :db do
       county = (csv[12]!=nil ? csv[12].downcase.gsub("county","").strip : "unknown")
       agency = (csv[13]!=nil ? csv[13].downcase.strip : "unknown")
       agency = "unknown" if agency[0..3].downcase == "http"
-      cause = (csv[14]!=nil ? csv[14].capitalize : "Unknown")
-      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "Unknown")
+      cause = (csv[14]!=nil ? csv[14].capitalize : "unknown")
+      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "unknown")
       disposition = (csv[16]!=nil ? csv[16].downcase : "unknown")
       if csv[17]==nil || (csv[17][0..3]!="http" && csv[17][0..2]!="www")
         source = "unknown"

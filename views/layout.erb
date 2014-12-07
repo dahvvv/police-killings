@@ -9,7 +9,9 @@
 
   <script type="template" id="killing-template">
     <h2 class='victim_name'>
+      <%% if(url_victim_image!="unknown") print('<a href="' + url_victim_image + '">') %>
       <%%= victim_name %>
+      <%% if(url_victim_image!="unknown") print("</a>") %>
     </h2>
   </script>
 
