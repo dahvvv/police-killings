@@ -18,6 +18,12 @@ get '/api/killings' do
   killings.to_json
 end
 
+get '/api/killings/:id' do
+  content_type :json
+  killing = Killing.find(params[:id])
+  killing.to_json
+end
+
 get '/api/state/:state' do
   content_type :json
   killings = Killing.where("location_of_killing_state = ?", params[:state])

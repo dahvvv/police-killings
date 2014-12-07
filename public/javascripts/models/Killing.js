@@ -1,1 +1,3 @@
-var Killing = Backbone.Model.extend({})
+var Killing = Backbone.Model.extend({
+  urlRoot: '/api/killings'
+})

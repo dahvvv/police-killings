@@ -1,5 +1,25 @@
 ayy
 
+<form action=""></form>
+
+<div class="killings"></div>
+
 <script>
-  var killings = new KillingList();
+  var killingList = new KillingList();
+  var listView;
+
+  $(function(){
+
+    listView = new KillingListView({
+      collection: killingList,
+      el: $('div.killings')
+    });
+
+    killingList.fetch({
+      success: function(){
+        listView.render();
+      }
+    });
+
+  })
 </script>
