@@ -12,7 +12,7 @@ get '/console' do
   binding.pry
 end
 
-get '/api' do
+get '/api/killings' do
   content_type :json
   killings = Killing.all
   killings.to_json
