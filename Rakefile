@@ -34,24 +34,19 @@ namespace :db do
       agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
       agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
       v_name = (csv[6]!=nil ? csv[6].strip : "unknown")
-      v_name = "unknown" if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v.name.downcase.include?(error) }
+      v_name = "unknown" if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v_name.downcase.include?(error) }
       v_age = csv[7].to_i
       v_age = nil if v_age == 0
       v_gender = (csv[8]!=nil ? csv[8].downcase : "unknown")
       v_race = (csv[9]!=nil ? csv[9].downcase : "unknown")
-      v_hisp = (csv[10]!=nil ? csv[10].downcase : "unknown")
-
-
-      v_hisp = comma_sep[8]
-      shots = comma_sep[9]
-      unarmed = (comma_sep[11].downcase == "unarmed")
-      link_idx = comma_sep.index {|x| x.include?("http")}
-      description = comma_sep[13..link_idx].join.split("http")[0]
-      end_of_desc = description[-15..-1]
-      links = comma_sep[13..link_idx].join.split(end_of_desc)[1] || ""
-      comma_sep.select {|x| x[0..3]=="http"}.each do |link|
-        links += " " + link
+      if csv[10]
+        v_hisp=true if csv[10].downcase=="hispanic or latino origin"
+        v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
       end
+      shots = (csv[11]!=nil ? csv[11].to_i : nil)
+      unarmed = (csv[13]!=nil ? (csv[13].downcase == "unarmed") : nil)
+      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "unknown")
+      source = (csv[16]!=nil ? csv[16].strip : "unknown")
 
       Killing.create!(
         victim_name: v_name,
@@ -65,14 +60,15 @@ namespace :db do
         location_of_killing_state: state,
         location_of_killing_county: county,
         description: description,
-        source: links,
+        shots_fired: shots,
+        source: source,
         data_from:  "U.S. Police Shootings Data"
         )
     end
   end
 
   desc "seed data from Fatal_Encounters.csv"
-  task :load_fe_csv do
+  task :seed_from_fe do
   fe_csv = "lib/Fatal_Encounters.csv"
   male_typos = ["maale",",male","m","ma;e","white"]
   CSV.foreach(fe_csv, headers: true) do |csv|
@@ -133,5 +129,3 @@ namespace :db do
     end
   end
 end
-
-# us: Timestamp,Date Searched,State,County,City,Agency Name,Victim Name,Victim's Age,Victim's Gender,Race,Hispanic or Latino Origin,Shots Fired,Hit or Killed?,Armed or Unarmed?,Weapon,Summary,Source Link,Name of Officer or Officers,Shootings,Was the Shooting Justified?,Receive Updates?,Name,Email Address,Twitter,Date of Incident,Results Page Number
