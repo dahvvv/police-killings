@@ -1,12 +1,15 @@
 var KillingListView = Backbone.View.extend({
+  initialize: function(){
+    this.collection.on('add', this.addOne, this);
+  },
+
   render: function(){
     this.$el.empty();
+    this.collection.forEach(this.addOne, this);
+  },
 
-    for (var i = 0; i < 3; i++) {
-      var killing = _.sample(this.collection.models);
-      var view = new KillingView({model: killing});
-      this.$el.append(view.render().$el);
-    };
-    return this;
+  addOne: function(killing){
+    var killingView = new KillingView({model: killing});
+    this.$el.append(killingView.render().el);
   }
 });

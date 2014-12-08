@@ -12,16 +12,28 @@ get '/console' do
   binding.pry
 end
 
-get '/api/killings' do
+get '/api/killings/age/:min/:max' do
   content_type :json
-  killings = Killing.all
+  if params[:min]!="nil" && params[:max]!="nil"
+    killings = Killing.where("victim_age >= ? AND victim_age <= ?", params[:min], params[:max])
+  elsif params[:min]!="nil"
+    killings = Killing.where("victim_age >= ?", params[:min])
+  else
+    killings = Killing.where("victim_age <= ?", params[:max])
+  end
   killings.to_json
 end
 
-get '/api/killings/:id' do
+get '/api/killings/name/:name' do
   content_type :json
-  killing = Killing.find(params[:id])
-  killing.to_json
+  killings = Killing.where("victim_name = ?", params[:name])
+  killings.to_json
+end
+
+get '/api/killings/gender/:gender' do
+  content_type :json
+  killings = Killing.where("victim_gender = ?", params[:gender])
+  killings.to_json
 end
 
 get '/api/killings/state/:state' do
@@ -29,6 +41,42 @@ get '/api/killings/state/:state' do
   killings = Killing.where("location_of_killing_state = ?", params[:state])
   killings.to_json
 end
+
+get '/api/killings' do
+  content_type :json
+  if params[:location_of_killing_state] && params[:victim_gender]
+    killings = Killing.where("location_of_killing_state = ? AND victim_gender = ?", params[:location_of_killing_state], params[:victim_gender])
+  elsif params[:location_of_killing_state]
+    killings = Killing.where("location_of_killing_state = ?", params[:location_of_killing_state])
+  end
+  killings.to_json
+end
+
+# class MarketsController < ApplicationController
+#   def index
+#     markets = Market.open_on(options["day"]).located_in(options["borough"])
+#     render json: markets
+#   end
+
+#   private
+
+#   def options
+#     defaults.merge(params)
+#   end
+
+#   def defaults
+#     {"day" => "", "borough" => ""}
+#   end
+# end
+
+
+# get '/api/killings/:id' do
+#   content_type :json
+#   killing = Killing.find(params[:id])
+#   killing.to_json
+# end
+
+
 
 
 # get '/api/games/state/:state' do

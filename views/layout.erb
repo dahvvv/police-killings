@@ -6,24 +6,47 @@
   <script src="/javascripts/lib/jquery.js"></script>
   <script src="/javascripts/lib/underscore.js"></script>
   <script src="/javascripts/lib/backbone.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 
   <script type="template" id="killing-template">
-    <h2 class='victim_name'>
-      <%% if(url_victim_image!="unknown") print('<a href="' + url_victim_image + '">') %>
-      <%%= victim_name %>
-      <%% if(url_victim_image!="unknown") print("</a>") %>
-    </h2>
+    // <h2 class='victim_name'>
+    //   <%% if(url_victim_image!="unknown") print('<a href="' + url_victim_image + '">') %>
+    //   <%%= victim_name %>
+    //   <%% if(url_victim_image!="unknown") print("</a>") %>
+    // </h2>
+    // <h4>State:  <%%= location_of_killing_state %></h4>
+    // <h4>Source:  <%%= source %></h4>
+
   </script>
 
   <script src="/javascripts/models/Killing.js"></script>
   <script src="/javascripts/collections/KillingList.js"></script>
   <script src="/javascripts/views/KillingView.js"></script>
   <script src="/javascripts/views/KillingListView.js"></script>
+  <script src="/javascripts/geojson.js"></script>
+  <script src="/javascripts/map.js"></script>
   <script src="/javascripts/app.js"></script>
 
   <title>Police Killings</title>
 </head>
 <body>
+  <div id='map-one' class='map'> </div>
+  <script>
+  L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd3ZZIn0.VNcoUZ2TFXUuID8JQ2-t2A';
+
+  var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
+    scrollWheelZoom: false,
+    legendControl: {
+      position: 'topright'
+    }
+  }).setView([38.8929,-77.0252], 14);
+
+  var myLayer = L.mapbox.featureLayer().addTo(map);
+  myLayer.setGeoJSON(geojson);
+
+  map.legendControl.addLegend('<strong>My walk from the White House to the hill!</strong>');
+  </script>
   <%= yield %>
 </body>
 </html>

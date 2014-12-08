@@ -3,26 +3,61 @@ ayy
 <form class="get-by-state" action="/api/killings" method="get">
   <label for="state">State Abbr ("TX")</label>
   <input type="text" name="state">
+  <input class="submit-state" type="submit">
 </form>
 
 <div class="killings"></div>
 
+
+
 <script>
   var killingList = new KillingList();
-  var listView;
+  var killingListView;
 
   $(function(){
 
-    listView = new KillingListView({
+    killingListView = new KillingListView({
       collection: killingList,
       el: $('div.killings')
     });
 
-    killingList.fetch({
-      success: function(){
-        listView.render();
-      }
+    // killingList.fetch({
+    //   success: function(){
+    //     killingListView.render();
+    //   }
+    // });
+
+    $('.submit-state').on('click', function(e){
+      e.preventDefault();
+      debugger;
+      killingListView.fetch({
+        reset: true,
+        data: { location_of_killing_state: $(this).siblings([name='state']).val() }
+      });
     });
 
-  })
+  });
 </script>
+
+
+<!-- function getParams(){
+  return {
+    day: $('#day').val(),
+    borough: $('#borough').val()
+  }
+}
+
+$(function(){
+  marketList = new MarketList();
+  MarketListView = new MarketListView({
+    collection: marketList,
+    el: "#markets"
+  })
+  marketList.fetch({reset: true});
+
+  $('select').on('change', function(e){
+    marketList.fetch({
+      reset: true,
+      data: getParams()
+    });
+  }); -->
