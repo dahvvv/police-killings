@@ -27,10 +27,10 @@ namespace :db do
   desc "seed data from U.S.Police..."
   task :seed_from_us do
     us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
-    CSV.foreach(us_csv, headers: true) do |csv|
+    CSV.foreach(us_csv, headers: false) do |csv|
       state = (csv[2]!=nil ? csv[2][0..1] : "unknown")
       county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : "unknown")
-      city = (csv[4]!=nil ? csv[4].downcase.strip : "unknown")
+      city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "unknown")
       agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
       agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
       v_name = (csv[6]!=nil ? csv[6].strip : "unknown")
@@ -70,9 +70,9 @@ namespace :db do
 
   desc "seed data from Fatal_Encounters.csv"
   task :seed_from_fe do
-  fe_csv = "lib/Fatal_Encounters.csv"
-  male_typos = ["maale",",male","m","ma;e","white"]
-  CSV.foreach(fe_csv, headers: true) do |csv|
+    fe_csv = "lib/Fatal_Encounters.csv"
+    male_typos = ["maale",",male","m","ma;e","white"]
+    CSV.foreach(fe_csv, headers: false) do |csv|
       v_name = csv[2]
       v_name = "unknown" if ["unnamed","unknown","unidentified","withheld"].any? { |error| v_name.downcase.include?(error) }
       v_age = csv[3].to_i
@@ -87,8 +87,8 @@ namespace :db do
         url_img = "unknown"
       end
       date = (csv[7]!=nil ? csv[7] : "unknown")
-      address = (csv[8]!=nil ? csv[8] : "unknown")
-      city = csv[9].downcase.strip
+      address = (csv[8]!=nil ? csv[8].gsub("’","'") : "unknown")
+      city = csv[9].downcase.strip.gsub("’","'")
       state = csv[10]
       state = "WA" if state == "Washington"
       zip = (csv[11]!=nil ? csv[11].to_i : nil)
@@ -130,25 +130,59 @@ namespace :db do
     end
   end
 
-  desc "geocode lat/lng/formatted address"
-  task :geocode do
-    (1..1000).each do |i|
-      if Killing.find(i)
-        killing = Killing.find(i)
-        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{killing.location_of_killing_address},+#{killing.location_of_killing_city},+#{killing.location_of_killing_state},+#{killing.location_of_killing_zip}&key=#{ENV['GEOCODE']}"
-        query = query.gsub("unknown","")
+  def urlencode(x)
+    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("%","%25").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("+","%2B").gsub(",","%2C").gsub("-","%2D").gsub(".","%2E").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
+  end
+
+  desc "geocode fe lat/lng/formatted address to csv"
+  task :geocode_fe do
+    i = 0
+    data = []
+    fe_csv = "lib/Fatal_Encounters.csv"
+    CSV.foreach(fe_csv, headers: false) do |csv|
+      if i>=500 && i<2000
+        address = (csv[8]!=nil ? csv[8].gsub("’","'") : "")
+        city = city = csv[9].downcase.strip.gsub("’","'")
+        state = csv[10]
+        state = "WA" if state == "Washington"
+        zip = (csv[11]!=nil ? csv[11].to_i : "")
+        zip = "" if zip.to_s.length != 5
+        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{address},+#{city},+#{state},+#{zip}&key=#{ENV['GEOCODE']}"
+        query = query.gsub(" ","+")
+        query = urlencode(query)
         response = HTTParty.get(query)
         formatted_address = response["results"][0]["formatted_address"]
         lat = response["results"][0]["geometry"]["location"]["lat"]
         lng = response["results"][0]["geometry"]["location"]["lng"]
-        killing.update({
-          formatted_address: formatted_address,
-          lat: lat,
-          lng: lng
-          })
-        killing.save!
+        data.push([formatted_address,lat,lng])
         sleep 5
       end
+      i += 1
+    end
+    fe_csv_2 = "lib/Fatal_Encounters_2.csv"
+    CSV.open(fe_csv_2, "a") do |csv|
+      data.each do |arr|
+        csv << arr
+      end
+    end
+  end
+
+  desc "seed data from Fatal_Encounters_2.csv"
+  task :seed_from_fe_2 do
+    fe_csv_2 = "lib/Fatal_Encounters_2.csv"
+    i = 1
+    CSV.foreach(fe_csv_2, headers: false) do |csv|
+      formatted_address = csv[0]
+      lat = csv[1]
+      lng = csv[2]
+      killing = Killing.find(i)
+      killing.update({
+        formatted_address: formatted_address,
+        lat: lat,
+        lng: lng
+        })
+      killing.save!
+      i+=1
     end
   end
 end
