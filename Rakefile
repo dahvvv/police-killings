@@ -129,4 +129,26 @@ namespace :db do
         )
     end
   end
+
+  desc "geocode lat/lng/formatted address"
+  task :geocode do
+    (1..1000).each do |i|
+      if Killing.find(i)
+        killing = Killing.find(i)
+        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{killing.location_of_killing_address},+#{killing.location_of_killing_city},+#{killing.location_of_killing_state},+#{killing.location_of_killing_zip}&key=#{ENV['GEOCODE']}"
+        query = query.gsub("unknown","")
+        response = HTTParty.get(query)
+        formatted_address = response["results"][0]["formatted_address"]
+        lat = response["results"][0]["geometry"]["location"]["lat"]
+        lng = response["results"][0]["geometry"]["location"]["lng"]
+        killing.update({
+          formatted_address: formatted_address,
+          lat: lat,
+          lng: lng
+          })
+        killing.save!
+        sleep 5
+      end
+    end
+  end
 end

@@ -1,18 +1,40 @@
-ayy
-
 <form class="get-by-state" action="/api/killings" method="get">
   <label for="state">State Abbr ("TX")</label>
   <input type="text" name="state">
   <input class="submit-state" type="submit">
 </form>
 
+<form class="enter-lat-lon" action="/api/killings" method="get">
+  <input type="text" name="lat" placeholder="Lat">
+  <input type="text" name="lon" placeholder="Lon">
+  <input class="submit-lat-lon" type="submit">
+</form>
+
 <div class="killings"></div>
 
+<div id='map-one' class='map'> </div>
 
 
 <script>
   var killingList = new KillingList();
   var killingListView;
+
+  L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd3ZZIn0.VNcoUZ2TFXUuID8JQ2-t2A';
+
+  var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
+    scrollWheelZoom: false,
+    legendControl: {
+      position: 'topright'
+    }
+  }).setView([38.8929,-77.0252], 16);
+
+  var myLayer = L.mapbox.featureLayer().addTo(map);
+
+  myLayer.setGeoJSON(geojson);
+
+  function fitToBounds (){
+    map.fitBounds(myLayer.getBounds());
+  };
 
   $(function(){
 
@@ -34,6 +56,21 @@ ayy
         reset: true,
         data: { location_of_killing_state: $(this).siblings([name='state']).val() }
       });
+    });
+
+    fitToBounds();
+
+    map.legendControl.addLegend('<strong>My walk from the White House to the hill!</strong>');
+
+    $('.submit-lat-lon').on('click', function(e){
+      e.preventDefault();
+      alert('ayyy');
+      var lat = $(this).siblings([name="lat"]).val();
+      var lon = $(this).siblings([name="lon"]).val();
+      var myLayer = L.mapbox.featureLayer().addTo(map);
+      myLayer.setGeoJSON(geojson);
+      alert('setted!');
+      fitToBounds();
     });
 
   });

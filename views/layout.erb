@@ -32,27 +32,9 @@
 <body>
   <div id='map-one' class='map'> </div>
   <script>
-  L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd3ZZIn0.VNcoUZ2TFXUuID8JQ2-t2A';
 
-  var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
-    scrollWheelZoom: false,
-    legendControl: {
-      position: 'topright'
-    }
-  }).setView([38.8929,-77.0252], 16);
 
-  var myLayer = L.mapbox.featureLayer().addTo(map);
-  myLayer.setGeoJSON(geojson);
 
-  function fitToBounds (){
-    map.fitBounds(myLayer.getBounds());
-  };
-
-  $(function(){
-    fitToBounds();
-
-    map.legendControl.addLegend('<strong>My walk from the White House to the hill!</strong>');
-  })
   </script>
   <%= yield %>
 </body>
