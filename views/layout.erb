@@ -25,7 +25,6 @@
   <script src="/javascripts/views/KillingView.js"></script>
   <script src="/javascripts/views/KillingListView.js"></script>
   <script src="/javascripts/geojson.js"></script>
-  <script src="/javascripts/map.js"></script>
   <script src="/javascripts/app.js"></script>
 
   <title>Police Killings</title>
@@ -40,12 +39,20 @@
     legendControl: {
       position: 'topright'
     }
-  }).setView([38.8929,-77.0252], 14);
+  }).setView([38.8929,-77.0252], 16);
 
   var myLayer = L.mapbox.featureLayer().addTo(map);
   myLayer.setGeoJSON(geojson);
 
-  map.legendControl.addLegend('<strong>My walk from the White House to the hill!</strong>');
+  function fitToBounds (){
+    map.fitBounds(myLayer.getBounds());
+  };
+
+  $(function(){
+    fitToBounds();
+
+    map.legendControl.addLegend('<strong>My walk from the White House to the hill!</strong>');
+  })
   </script>
   <%= yield %>
 </body>
