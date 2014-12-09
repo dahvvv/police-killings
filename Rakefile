@@ -140,8 +140,8 @@ namespace :db do
     data = []
     fe_csv = "lib/Fatal_Encounters.csv"
     CSV.foreach(fe_csv, headers: false) do |csv|
-      # enter the boundaries for which rows you want to geocode:
-      if i>=1700 && i<1800
+      # enter the boundaries to specify which rows you want to geocode:
+      if i>=1950 && i<2000
         address = (csv[8]!=nil ? csv[8] : "")
         city = csv[9].downcase.strip
         state = csv[10]
