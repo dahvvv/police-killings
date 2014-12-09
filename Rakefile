@@ -141,7 +141,7 @@ namespace :db do
     fe_csv = "lib/Fatal_Encounters.csv"
     CSV.foreach(fe_csv, headers: false) do |csv|
       # enter the boundaries to specify which rows you want to geocode:
-      if i>=1950 && i<2000
+      if i>=2155 && i<2200
         address = (csv[8]!=nil ? csv[8] : "")
         city = csv[9].downcase.strip
         state = csv[10]
@@ -184,6 +184,38 @@ namespace :db do
         })
       killing.save!
       i+=1
+    end
+  end
+
+  desc "seed into Data.csv"
+  task :seed_into_data do
+    #set bounds of how many you wanna seed at a time
+    data = "lib/Data.csv"
+    killings = Killing.where("id >= 1 AND id < 4")
+    CSV.open(data, "a") do |csv|
+      killings.each do |killing|
+        arr = []
+        arr.push(killing.victim_name)
+        arr.push(killing.victim_age)
+        arr.push(killing.victim_race)
+        arr.push(killing.victim_gender)
+        arr.push(killing.date_of_killing)
+        arr.push(killing.description)
+        arr.push(killing.shots_fired)
+        arr.push(killing.victim_unarmed)
+        arr.push(killing.symptoms_of_mental_illness)
+        arr.push(killing.lat)
+        arr.push(killing.lng)
+        arr.push(killing.formatted_address)
+        arr.push(killing.location_of_killing_city)
+        arr.push(killing.location_of_killing_state)
+        arr.push(killing.location_of_killing_zip)
+        arr.push(killing.location_of_killing_county)
+        arr.push(killing.url_victim_image)
+        arr.push(killing.source)
+        arr.push(killing.data_from)
+        csv << arr
+      end
     end
   end
 end
