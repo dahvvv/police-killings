@@ -131,7 +131,7 @@ namespace :db do
   end
 
   def urlencode(x)
-    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("%","%25").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("+","%2B").gsub(",","%2C").gsub("-","%2D").gsub(".","%2E").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
+    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F").gsub("ñ","n")
   end
 
   desc "geocode fe lat/lng/formatted address to csv"
@@ -140,16 +140,17 @@ namespace :db do
     data = []
     fe_csv = "lib/Fatal_Encounters.csv"
     CSV.foreach(fe_csv, headers: false) do |csv|
-      if i>=500 && i<2000
-        address = (csv[8]!=nil ? csv[8].gsub("’","'") : "")
-        city = city = csv[9].downcase.strip.gsub("’","'")
+      # enter the boundaries for which rows you want to geocode:
+      if i>=1700 && i<1800
+        address = (csv[8]!=nil ? csv[8] : "")
+        city = csv[9].downcase.strip
         state = csv[10]
         state = "WA" if state == "Washington"
         zip = (csv[11]!=nil ? csv[11].to_i : "")
         zip = "" if zip.to_s.length != 5
-        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{address},+#{city},+#{state},+#{zip}&key=#{ENV['GEOCODE']}"
-        query = query.gsub(" ","+")
-        query = urlencode(query)
+        full_address = "#{address},+#{city},+#{state},+#{zip}"
+        encoded_address = urlencode(full_address).gsub("%20","+")
+        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{encoded_address}&key=#{ENV['GEOCODE']}"
         response = HTTParty.get(query)
         formatted_address = response["results"][0]["formatted_address"]
         lat = response["results"][0]["geometry"]["location"]["lat"]
