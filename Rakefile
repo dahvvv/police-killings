@@ -10,6 +10,10 @@ require_relative 'models/killing'
 
 namespace :db do
 
+  def urlencode(x)
+    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
+  end
+
   desc "create police_killings_db"
   task :create_db do
     conn = PG::Connection.open()
@@ -22,50 +26,6 @@ namespace :db do
     conn = PG::Connection.open()
     conn.exec ('DROP DATABASE police_killings_db;')
     conn.close
-  end
-
-  desc "seed data from U.S.Police..."
-  task :seed_from_us do
-    us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
-    CSV.foreach(us_csv, headers: false) do |csv|
-      state = (csv[2]!=nil ? csv[2][0..1] : "unknown")
-      county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : "unknown")
-      city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "unknown")
-      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
-      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
-      v_name = (csv[6]!=nil ? csv[6].strip : "unknown")
-      v_name = "unknown" if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v_name.downcase.include?(error) }
-      v_age = csv[7].to_i
-      v_age = nil if v_age == 0
-      v_gender = (csv[8]!=nil ? csv[8].downcase : "unknown")
-      v_race = (csv[9]!=nil ? csv[9].downcase : "unknown")
-      if csv[10]
-        v_hisp=true if csv[10].downcase=="hispanic or latino origin"
-        v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
-      end
-      shots = (csv[11]!=nil ? csv[11].to_i : nil)
-      unarmed = (csv[13]!=nil ? (csv[13].downcase == "unarmed") : nil)
-      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "unknown")
-      source = (csv[16]!=nil ? csv[16].strip : "unknown")
-
-      Killing.create!(
-        victim_name: v_name,
-        victim_age: v_age,
-        victim_gender: v_gender,
-        victim_unarmed: unarmed,
-        victim_race: v_race,
-        victim_hispanic_or_latino_origin: v_hisp,
-        agency_responsible: agency,
-        location_of_killing_city: city,
-        location_of_killing_state: state,
-        location_of_killing_county: county,
-        description: description,
-        shots_fired: shots,
-        source: source,
-        url_victim_image: "unknown",
-        data_from:  "U.S. Police Shootings Data"
-        )
-    end
   end
 
   desc "seed data from Fatal_Encounters.csv"
@@ -130,10 +90,6 @@ namespace :db do
     end
   end
 
-  def urlencode(x)
-    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
-  end
-
   desc "geocode fe lat/lng/formatted address to csv"
   task :geocode_fe do
     i = 0
@@ -168,6 +124,71 @@ namespace :db do
     end
   end
 
+  desc "seed data from Fatal_Encounters_2.csv"
+  task :seed_from_fe_2 do
+    fe_csv_2 = "lib/Fatal_Encounters_2.csv"
+    i = 1
+    CSV.foreach(fe_csv_2, headers: false) do |csv|
+      formatted_address = csv[0]
+      lat = csv[1]
+      lng = csv[2]
+      killing = Killing.find(i)
+      killing.update({
+        formatted_address: formatted_address,
+        lat: lat,
+        lng: lng
+        })
+      killing.save!
+      i+=1
+    end
+  end
+
+  # before seeding from us, run Killing.all.count, and set the i variable in seed_from_us_2 to Killing.all.count+1
+
+  desc "seed data from U.S.Police..."
+  task :seed_from_us do
+    us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
+    CSV.foreach(us_csv, headers: false) do |csv|
+      state = (csv[2]!=nil ? csv[2][0..1] : "unknown")
+      county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : "unknown")
+      city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "unknown")
+      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
+      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
+      v_name = (csv[6]!=nil ? csv[6].strip : "unknown")
+      v_name = "unknown" if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v_name.downcase.include?(error) }
+      v_age = csv[7].to_i
+      v_age = nil if v_age == 0
+      v_gender = (csv[8]!=nil ? csv[8].downcase : "unknown")
+      v_race = (csv[9]!=nil ? csv[9].downcase : "unknown")
+      if csv[10]
+        v_hisp=true if csv[10].downcase=="hispanic or latino origin"
+        v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
+      end
+      shots = (csv[11]!=nil ? csv[11].to_i : nil)
+      unarmed = (csv[13]!=nil ? (csv[13].downcase == "unarmed") : nil)
+      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "unknown")
+      source = (csv[16]!=nil ? csv[16].strip : "unknown")
+
+      Killing.create!(
+        victim_name: v_name,
+        victim_age: v_age,
+        victim_gender: v_gender,
+        victim_unarmed: unarmed,
+        victim_race: v_race,
+        victim_hispanic_or_latino_origin: v_hisp,
+        agency_responsible: agency,
+        location_of_killing_city: city,
+        location_of_killing_state: state,
+        location_of_killing_county: county,
+        description: description,
+        shots_fired: shots,
+        source: source,
+        url_victim_image: "unknown",
+        data_from:  "U.S. Police Shootings Data"
+        )
+    end
+  end
+
   desc "geocode us lat/lng/formatted address to csv"
   task :geocode_us do
     i = 0
@@ -199,29 +220,11 @@ namespace :db do
     end
   end
 
-  desc "seed data from Fatal_Encounters_2.csv"
-  task :seed_from_fe_2 do
-    fe_csv_2 = "lib/Fatal_Encounters_2.csv"
-    i = 1
-    CSV.foreach(fe_csv_2, headers: false) do |csv|
-      formatted_address = csv[0]
-      lat = csv[1]
-      lng = csv[2]
-      killing = Killing.find(i)
-      killing.update({
-        formatted_address: formatted_address,
-        lat: lat,
-        lng: lng
-        })
-      killing.save!
-      i+=1
-    end
-  end
-
   desc "seed data from U.S._Police_Shootings_Data_Responses_2.csv"
   task :seed_from_us_2 do
     us_csv_2 = "lib/U.S._Police_Shootings_Data_Responses_2.csv"
-    i = 1
+    # set i equal to Killing.all.count + 1, before running :seed_from_us
+    i = 2919
     CSV.foreach(us_csv_2, headers: false) do |csv|
       formatted_address = csv[0]
       lat = csv[1]
