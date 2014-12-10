@@ -131,7 +131,7 @@ namespace :db do
   end
 
   def urlencode(x)
-    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F").gsub("ñ","n")
+    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
   end
 
   desc "geocode fe lat/lng/formatted address to csv"
@@ -141,7 +141,7 @@ namespace :db do
     fe_csv = "lib/Fatal_Encounters.csv"
     CSV.foreach(fe_csv, headers: false) do |csv|
       # enter the boundaries to specify which rows you want to geocode:
-      if i>=2155 && i<2200
+      if i>=2900 && i<2918
         address = (csv[8]!=nil ? csv[8] : "")
         city = csv[9].downcase.strip
         state = csv[10]
@@ -189,9 +189,9 @@ namespace :db do
 
   desc "seed into Data.csv"
   task :seed_into_data do
-    #set bounds of how many you wanna seed at a time
     data = "lib/Data.csv"
-    killings = Killing.where("id >= 1 AND id < 4")
+    #set bounds of how many you wanna seed at a time
+    killings = Killing.where("id >= 0 AND id < 5000")
     CSV.open(data, "a") do |csv|
       killings.each do |killing|
         arr = []
