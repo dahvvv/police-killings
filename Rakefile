@@ -154,8 +154,8 @@ namespace :db do
       city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : nil)
       agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
       agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
-      v_name = (csv[6]!=nil ? csv[6].strip.gsub("-German ","") : nil)
-      v_name = nil if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v_name.downcase.include?(error) }
+      v_name = (csv[6]!=nil ? csv[6].strip.gsub("-German ","").gsub("ack ","") : nil)
+      v_name = nil if ["withheld","unkown","unknown","sideshow","not listed","not released","un","unidentified","unnamed minor","unreleased"].any? { |error| v_name.downcase.include?(error) }
       v_age = csv[7].to_i
       v_age = nil if v_age == 0
       v_gender = (csv[8]!=nil ? csv[8].downcase : nil)
