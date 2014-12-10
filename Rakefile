@@ -175,7 +175,7 @@ namespace :db do
     us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
     CSV.foreach(us_csv, headers: false) do |csv|
       # enter the boundaries to specify which rows you want to geocode:
-      if i>=0 && i<5
+      if i>=150 && i<200
         state = (csv[2]!=nil ? csv[2][0..1]+"+" : "")
         city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "")
         county = (csv[3]!=nil ? ",+"+csv[3].downcase.strip : "")
@@ -204,6 +204,25 @@ namespace :db do
     fe_csv_2 = "lib/Fatal_Encounters_2.csv"
     i = 1
     CSV.foreach(fe_csv_2, headers: false) do |csv|
+      formatted_address = csv[0]
+      lat = csv[1]
+      lng = csv[2]
+      killing = Killing.find(i)
+      killing.update({
+        formatted_address: formatted_address,
+        lat: lat,
+        lng: lng
+        })
+      killing.save!
+      i+=1
+    end
+  end
+
+  desc "seed data from U.S._Police_Shootings_Data_Responses_2.csv"
+  task :seed_from_us_2 do
+    us_csv_2 = "lib/U.S._Police_Shootings_Data_Responses_2.csv"
+    i = 1
+    CSV.foreach(us_csv_2, headers: false) do |csv|
       formatted_address = csv[0]
       lat = csv[1]
       lng = csv[2]
