@@ -175,9 +175,9 @@ namespace :db do
     us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
     CSV.foreach(us_csv, headers: false) do |csv|
       # enter the boundaries to specify which rows you want to geocode:
-      if i>=150 && i<200
+      if i>=1600 && i<1700
         state = (csv[2]!=nil ? csv[2][0..1]+"+" : "")
-        city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "")
+        city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "")+(",+")
         county = (csv[3]!=nil ? ",+"+csv[3].downcase.strip : "")
         full_address = "#{city}#{state}#{county}"
         encoded_address = urlencode(full_address).gsub("%20","+")
@@ -187,7 +187,7 @@ namespace :db do
         lat = response["results"][0]["geometry"]["location"]["lat"]
         lng = response["results"][0]["geometry"]["location"]["lng"]
         data.push([formatted_address,lat,lng])
-        sleep 5
+        sleep 4
       end
       i += 1
     end
