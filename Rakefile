@@ -168,6 +168,37 @@ namespace :db do
     end
   end
 
+  desc "geocode us lat/lng/formatted address to csv"
+  task :geocode_us do
+    i = 0
+    data = []
+    us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
+    CSV.foreach(us_csv, headers: false) do |csv|
+      # enter the boundaries to specify which rows you want to geocode:
+      if i>=0 && i<5
+        state = (csv[2]!=nil ? csv[2][0..1]+"+" : "")
+        city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "")
+        county = (csv[3]!=nil ? ",+"+csv[3].downcase.strip : "")
+        full_address = "#{city}#{state}#{county}"
+        encoded_address = urlencode(full_address).gsub("%20","+")
+        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{encoded_address}&key=#{ENV['GEOCODE']}"
+        response = HTTParty.get(query)
+        formatted_address = response["results"][0]["formatted_address"]
+        lat = response["results"][0]["geometry"]["location"]["lat"]
+        lng = response["results"][0]["geometry"]["location"]["lng"]
+        data.push([formatted_address,lat,lng])
+        sleep 5
+      end
+      i += 1
+    end
+    us_csv_2 = "lib/U.S._Police_Shootings_Data_Responses_2.csv"
+    CSV.open(us_csv_2, "a") do |csv|
+      data.each do |arr|
+        csv << arr
+      end
+    end
+  end
+
   desc "seed data from Fatal_Encounters_2.csv"
   task :seed_from_fe_2 do
     fe_csv_2 = "lib/Fatal_Encounters_2.csv"
