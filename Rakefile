@@ -34,36 +34,36 @@ namespace :db do
     male_typos = ["maale",",male","m","ma;e","white"]
     CSV.foreach(fe_csv, headers: false) do |csv|
       v_name = csv[2]
-      v_name = "unknown" if ["unnamed","unknown","unidentified","withheld"].any? { |error| v_name.downcase.include?(error) }
+      v_name = nil if ["unnamed","unknown","unidentified","withheld"].any? { |error| v_name.downcase.include?(error) }
       v_age = csv[3].to_i
       v_age = nil if v_age == 0
-      v_gender = (csv[4]!=nil ? csv[4].downcase : "unknown")
+      v_gender = (csv[4]!=nil ? csv[4].downcase : nil)
       v_gender = "male" if male_typos.include?(v_gender)
-      v_race = (csv[5]!=nil ? csv[5].downcase : "unknown")
+      v_race = (csv[5]!=nil ? csv[5].downcase : nil)
       v_race = v_race.gsub("european american","european-american").gsub("hispanic/latin","hispanic-latin").gsub("eureopean","european")
-      v_race = "unknown" if ["unreported","unknown"].any? { |error| v_race.include?(error) }
-      url_img = (csv[6]!=nil ? csv[6] : "unknown")
+      v_race = nil if ["unreported","unknown"].any? { |error| v_race.include?(error) }
+      url_img = (csv[6]!=nil ? csv[6] : nil)
       if (url_img.length < 3) || (url_img.length > 2000)
-        url_img = "unknown"
+        url_img = nil
       end
-      date = (csv[7]!=nil ? csv[7] : "unknown")
-      address = (csv[8]!=nil ? csv[8].gsub("’","'") : "unknown")
+      date = (csv[7]!=nil ? csv[7] : nil)
+      address = (csv[8]!=nil ? csv[8].gsub("’","'") : nil)
       city = csv[9].downcase.strip.gsub("’","'")
       state = csv[10]
       state = "WA" if state == "Washington"
       zip = (csv[11]!=nil ? csv[11].to_i : nil)
-      county = (csv[12]!=nil ? csv[12].downcase.gsub("county","").strip : "unknown")
-      agency = (csv[13]!=nil ? csv[13].downcase.strip : "unknown")
-      agency = "unknown" if agency[0..3].downcase == "http"
-      cause = (csv[14]!=nil ? csv[14].capitalize : "unknown")
-      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "unknown")
-      disposition = (csv[16]!=nil ? csv[16].downcase : "unknown")
+      county = (csv[12]!=nil ? csv[12].downcase.gsub("county","").strip : nil)
+      agency = (csv[13]!=nil ? csv[13].downcase.strip : nil)
+      agency = nil if agency[0..3].downcase == "http"
+      cause = (csv[14]!=nil ? csv[14].capitalize : nil)
+      description = (csv[15]!=nil ? csv[15].gsub("’","'") : nil)
+      disposition = (csv[16]!=nil ? csv[16].downcase : nil)
       if csv[17]==nil || (csv[17][0..3]!="http" && csv[17][0..2]!="www")
-        source = "unknown"
+        source = nil
       else
         source = csv[17]
       end
-      illness = (csv[18]!=nil ? csv[18].downcase : "unknown")
+      illness = (csv[18]!=nil ? csv[18].downcase : nil)
       date = /^\d+\/\d+\/\d+/.match(csv[21]).to_s
 
       Killing.create!(
@@ -149,25 +149,25 @@ namespace :db do
   task :seed_from_us do
     us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
     CSV.foreach(us_csv, headers: false) do |csv|
-      state = (csv[2]!=nil ? csv[2][0..1] : "unknown")
-      county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : "unknown")
-      city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "unknown")
-      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
-      agency = (csv[5]!=nil ? csv[5].downcase.strip : "unknown")
-      v_name = (csv[6]!=nil ? csv[6].strip : "unknown")
-      v_name = "unknown" if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v_name.downcase.include?(error) }
+      state = (csv[2]!=nil ? csv[2][0..1] : nil)
+      county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : nil)
+      city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : nil)
+      agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
+      agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
+      v_name = (csv[6]!=nil ? csv[6].strip.gsub("-German ","") : nil)
+      v_name = nil if ["withheld","unkown","unknown","sideshow","not listed","not released"].any? { |error| v_name.downcase.include?(error) }
       v_age = csv[7].to_i
       v_age = nil if v_age == 0
-      v_gender = (csv[8]!=nil ? csv[8].downcase : "unknown")
-      v_race = (csv[9]!=nil ? csv[9].downcase : "unknown")
+      v_gender = (csv[8]!=nil ? csv[8].downcase : nil)
+      v_race = (csv[9]!=nil ? csv[9].downcase : nil)
       if csv[10]
         v_hisp=true if csv[10].downcase=="hispanic or latino origin"
         v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
       end
       shots = (csv[11]!=nil ? csv[11].to_i : nil)
       unarmed = (csv[13]!=nil ? (csv[13].downcase == "unarmed") : nil)
-      description = (csv[15]!=nil ? csv[15].gsub("’","'") : "unknown")
-      source = (csv[16]!=nil ? csv[16].strip : "unknown")
+      description = (csv[15]!=nil ? csv[15].gsub("’","'") : nil)
+      source = (csv[16]!=nil ? csv[16].strip : nil)
 
       Killing.create!(
         victim_name: v_name,
@@ -183,7 +183,7 @@ namespace :db do
         description: description,
         shots_fired: shots,
         source: source,
-        url_victim_image: "unknown",
+        url_victim_image: nil,
         data_from:  "U.S. Police Shootings Data"
         )
     end
