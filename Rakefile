@@ -40,11 +40,15 @@ namespace :db do
       v_gender = (csv[4]!=nil ? csv[4].downcase : nil)
       v_gender = "male" if male_typos.include?(v_gender)
       v_race = (csv[5]!=nil ? csv[5].downcase : nil)
-      v_race = v_race.gsub("european american","european-american").gsub("hispanic/latin","hispanic-latin").gsub("eureopean","european")
-      v_race = nil if ["unreported","unknown"].any? { |error| v_race.include?(error) }
+      if v_race
+        v_race = v_race.gsub("european american","european-american").gsub("hispanic/latin","hispanic-latin").gsub("eureopean","european")
+        v_race = nil if ["unreported","unknown"].any? { |error| v_race.include?(error) }
+      end
       url_img = (csv[6]!=nil ? csv[6] : nil)
-      if (url_img.length < 3) || (url_img.length > 2000)
-        url_img = nil
+      if url_img
+        if (url_img.length < 3) || (url_img.length > 2000)
+          url_img = nil
+        end
       end
       date = (csv[7]!=nil ? csv[7] : nil)
       address = (csv[8]!=nil ? csv[8].gsub("’","'") : nil)
@@ -153,9 +157,10 @@ namespace :db do
       county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : nil)
       city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : nil)
       agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
-      agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
       v_name = (csv[6]!=nil ? csv[6].strip.gsub("-German ","").gsub("ack ","") : nil)
-      v_name = nil if ["withheld","unkown","unknown","sideshow","not listed","not released","un","unidentified","unnamed minor","unreleased"].any? { |error| v_name.downcase.include?(error) }
+      if v_name
+        v_name = nil if ["withheld","unkown","unknown","sideshow","not listed","not released","un","unidentified","unnamed minor","unreleased"].any? { |error| v_name.downcase.include?(error) }
+      end
       v_age = csv[7].to_i
       v_age = nil if v_age == 0
       v_gender = (csv[8]!=nil ? csv[8].downcase : nil)
