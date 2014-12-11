@@ -10,8 +10,24 @@ require_relative 'models/killing'
 
 namespace :db do
 
-  def urlencode(x)
-    return x.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
+  def urlencode(str)
+    return str.gsub(" ","%20").gsub("!","%21").gsub('"',"%22").gsub("#","%23").gsub("$","%24").gsub("&","%26").gsub("'","%27").gsub("(","%28").gsub(")","%29").gsub("*","%2A").gsub("-","%2D").gsub("/","%2F").gsub(":","%3A").gsub(";","%3B").gsub("<","%3C").gsub("=","%3D").gsub(">","%3E").gsub("?","%3F").gsub("@","%40").gsub("[","%5B").gsub("]","%5D").gsub("^","%5E").gsub("_","%5F")
+  end
+
+  alaskan_pac_isl_subs = ["alaskan and/or pacific islander","native american/alaskan","american indian or alaska native","pacific islander","native hawaiian or other pacific islander","native american"]
+  asian_subs = ["asian"]
+  black_subs = ["black","black or african american","african-american/black","african-american","african american/black","african-american/black, sudanese"]
+  hispanic_latin_subs = ["hispanic and/or latin","hispanic-latina","hispanic-latino/latino","hispanic-latino","hispanic/latin","hispanic-latin"]
+  white_subs = ["white","european-american","white","european-american/white","european american"]
+  other_subs = ["other","mixed","middle eastern","haitian-american","european-american/white, african-american/black, mixed","european-american/white, hispanic-latino","european-american/white, pacific islander" "european-american/white, asian, mixed"]
+  race_multiarr = [alaskan_pac_isl_subs, asian_subs, black_subs, hispanic_latin_subs, white_subs, other_subs]
+
+  def racial_term_substitution(term, race_multiarr)
+    chosen_term = nil
+    race_multiarr.each do |race_subs|
+      chosen_term = race_subs[0] if race_subs.any? { |sub| term.downcase.include?(sub) }
+    end
+    return chosen_term
   end
 
   desc "create police_killings_db"
@@ -39,11 +55,7 @@ namespace :db do
       v_age = nil if v_age == 0
       v_gender = (csv[4]!=nil ? csv[4].downcase : nil)
       v_gender = "male" if male_typos.include?(v_gender)
-      v_race = (csv[5]!=nil ? csv[5].downcase : nil)
-      if v_race
-        v_race = v_race.gsub("european american","european-american").gsub("hispanic/latin","hispanic-latin").gsub("eureopean","european")
-        v_race = nil if ["unreported","unknown"].any? { |error| v_race.include?(error) }
-      end
+      v_race = racial_term_substitution(csv[5], race_multiarr)
       url_img = (csv[6]!=nil ? csv[6] : nil)
       if url_img
         if (url_img.length < 3) || (url_img.length > 2000)
@@ -164,7 +176,7 @@ namespace :db do
       v_age = csv[7].to_i
       v_age = nil if v_age == 0
       v_gender = (csv[8]!=nil ? csv[8].downcase : nil)
-      v_race = (csv[9]!=nil ? csv[9].downcase : nil)
+      v_race = racial_term_substitution(csv[9], race_multiarr)
       if csv[10]
         v_hisp=true if csv[10].downcase=="hispanic or latino origin"
         v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
