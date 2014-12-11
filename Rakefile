@@ -55,7 +55,7 @@ namespace :db do
       v_age = nil if v_age == 0
       v_gender = (csv[4]!=nil ? csv[4].downcase : nil)
       v_gender = "male" if male_typos.include?(v_gender)
-      v_race = racial_term_substitution(csv[5], race_multiarr)
+      v_race = csv[5] == nil ? nil : racial_term_substitution(csv[5], race_multiarr)
       url_img = (csv[6]!=nil ? csv[6] : nil)
       if url_img
         if (url_img.length < 3) || (url_img.length > 2000)
@@ -176,7 +176,7 @@ namespace :db do
       v_age = csv[7].to_i
       v_age = nil if v_age == 0
       v_gender = (csv[8]!=nil ? csv[8].downcase : nil)
-      v_race = racial_term_substitution(csv[9], race_multiarr)
+      v_race = csv[9] == nil ? nil : racial_term_substitution(csv[9], race_multiarr)
       if csv[10]
         v_hisp=true if csv[10].downcase=="hispanic or latino origin"
         v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
