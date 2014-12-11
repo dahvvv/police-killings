@@ -12,6 +12,7 @@ get '/console' do
   binding.pry
 end
 
+
 get '/api/killings/age/:min/:max' do
   content_type :json
   if params[:min]!="nil" && params[:max]!="nil"
@@ -44,12 +45,7 @@ end
 
 get '/api/killings' do
   content_type :json
-  if params[:location_of_killing_state] && params[:victim_gender]
-    killings = Killing.where("location_of_killing_state = ? AND victim_gender = ?", params[:location_of_killing_state], params[:victim_gender])
-  elsif params[:location_of_killing_state]
-    killings = Killing.where("location_of_killing_state = ?", params[:location_of_killing_state])
-  end
-  killings.to_json
+  Killing.limit(2).to_json
 end
 
 # class MarketsController < ApplicationController

@@ -288,4 +288,16 @@ namespace :db do
       end
     end
   end
+
+  desc "seed into 10K Arrests"
+  task :seed_into_arrests do
+    data = "lib/Arrests10K.csv"
+    CSV.open(data, "a") do |csv|
+      14.times { csv << ['alaskan and/or pacific islander'] }
+      11.times { csv << ['asian'] }
+      255.times { csv << ['black'] }
+      80.times { csv << ['hispanic and/or latin'] }
+      901.times { csv << ['white'] }
+    end
+  end
 end

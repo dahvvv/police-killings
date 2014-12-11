@@ -1,6 +1,7 @@
 var KillingListView = Backbone.View.extend({
+
   initialize: function(){
-    this.collection.on('add', this.addOne, this);
+    this.collection.on('change', this.addOne, this);
   },
 
   render: function(){
@@ -9,6 +10,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   addOne: function(killing){
+    alert('changed');
     var killingView = new KillingView({model: killing});
     this.$el.append(killingView.render().el);
   }
