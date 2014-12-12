@@ -45,7 +45,7 @@ end
 
 get '/api/killings' do
   content_type :json
-  Killing.limit(2).to_json
+  Killing.all.to_json
 end
 
 # class MarketsController < ApplicationController

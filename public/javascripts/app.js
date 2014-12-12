@@ -30,15 +30,40 @@ function featureToGeoFormat(lat,lon){
   return geoFeature;
 };
 
+var geojsonMarkerOptions = {
+    radius: 3,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
 function makeMap(map, geojson){
-  var layer = L.mapbox.featureLayer();
+  var layer = L.geoJson(geojson, {
+    pointToLayer: function(feature, latlng){
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    }
+  });
   layer.addTo(map);
-  layer.setGeoJSON(geojson);
   map.fitBounds(layer.getBounds());
 };
 
 var killingList = new KillingList;
 var geoFeatureArr = [];
+var geoJSON;
+var map;
+var markerList = document.getElementById('marker-list');
+
+
+// map.featureLayer.eachLayer(function(layer) {
+//           var item = markerList.appendChild(document.createElement('li'));
+//           item.innerHTML = layer.toGeoJSON().properties.title;
+//           item.onclick = function() {
+//              map.setView(layer.getLatLng(), 14);
+//              layer.openPopup();
+//           };
+//       });
 
 $(function(){
 
