@@ -9,7 +9,7 @@ function geoJSONify(geoFeatureArr){
   ]
 };
 
-function featureToGeoFormat(lat,lon){
+function featureToGeoFormat(lat,lon,i){
   var geoFeature = 
     {
       "type": "Feature",
@@ -21,10 +21,9 @@ function featureToGeoFormat(lat,lon){
         ]
       },
       "properties": {
-        "title": "The White House",
+        "title": i,
         "marker-color": "#9c89cc",
-        "marker-size": "medium",
-        "marker-symbol": "building"
+        "marker-size": "small",
       }
     };
   return geoFeature;
@@ -40,12 +39,8 @@ var geojsonMarkerOptions = {
 };
 
 function makeMap(map, geojson){
-  var layer = L.geoJson(geojson, {
-    pointToLayer: function(feature, latlng){
-      return L.circleMarker(latlng, geojsonMarkerOptions);
-    }
-  });
-  layer.addTo(map);
+  var layer = L.mapbox.featureLayer().addTo(map);
+  layer.setGeoJSON(geojson);
   map.fitBounds(layer.getBounds());
 };
 
@@ -78,11 +73,11 @@ $(function(){
   killingList.fetch({
     reset: true,
     success: function(data){
-      data.toJSON().forEach(function(elem){
+      data.toJSON().forEach(function(elem, i){
         console.log(elem.lat);
         var lat = elem.lat;
         var lon = elem.lng;
-        var geoFeature = featureToGeoFormat(lat,lon);
+        var geoFeature = featureToGeoFormat(lat,lon,i);
         geoFeatureArr.push(geoFeature);
       });
       var geoJSON = geoJSONify(geoFeatureArr);
