@@ -168,6 +168,9 @@ namespace :db do
       date = csv[5]!=nil ? csv[5] : nil
       address = (csv[6]!=nil ? csv[6].gsub("’","'") : nil)
       city = csv[7]!=nil ? csv[7].downcase.strip.gsub("’","'") : nil
+      if city
+        city = "new york city" if ["brooklyn","queens","bronx","staten island","new york","nyc"].any? { |borough| city.include?(borough) }
+      end
       state = csv[8]!=nil ? csv[8][0..1] : nil
       state = "WA" if state == "Washington"
       zip = csv[9]
@@ -185,6 +188,7 @@ namespace :db do
         source = csv[15].strip
       end
       illness = csv[16]!=nil ? csv[16].downcase : nil
+      illness = nil if illness != "yes" && illness != "no"
       shots = csv[17]!=nil ? csv[17].to_i : nil
       unarmed = csv[18]!=nil ? (csv[18].downcase == "unarmed") : nil
       data_from = csv[19]
