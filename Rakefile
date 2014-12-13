@@ -44,73 +44,11 @@ namespace :db do
     conn.close
   end
 
-  desc "seed data from Fatal_Encounters.csv"
-  task :seed_from_fe do
-    fe_csv = "lib/Fatal_Encounters.csv"
-    male_typos = ["maale",",male","m","ma;e","white"]
-    CSV.foreach(fe_csv, headers: false) do |csv|
-      v_name = csv[2]
-      v_name = nil if ["unnamed","unknown","unidentified","withheld"].any? { |error| v_name.downcase.include?(error) }
-      v_age = csv[3].to_i
-      v_age = nil if v_age == 0
-      v_gender = (csv[4]!=nil ? csv[4].downcase : nil)
-      v_gender = "male" if male_typos.include?(v_gender)
-      v_race = csv[5] == nil ? nil : racial_term_substitution(csv[5], race_multiarr)
-      url_img = (csv[6]!=nil ? csv[6] : nil)
-      if url_img
-        if (url_img.length < 3) || (url_img.length > 2000)
-          url_img = nil
-        end
-      end
-      date = (csv[7]!=nil ? csv[7] : nil)
-      address = (csv[8]!=nil ? csv[8].gsub("’","'") : nil)
-      city = csv[9].downcase.strip.gsub("’","'")
-      state = csv[10]
-      state = "WA" if state == "Washington"
-      zip = (csv[11]!=nil ? csv[11].to_i : nil)
-      county = (csv[12]!=nil ? csv[12].downcase.gsub("county","").strip : nil)
-      agency = (csv[13]!=nil ? csv[13].downcase.strip : nil)
-      agency = nil if agency[0..3].downcase == "http"
-      cause = (csv[14]!=nil ? csv[14].capitalize : nil)
-      description = (csv[15]!=nil ? csv[15].gsub("’","'") : nil)
-      disposition = (csv[16]!=nil ? csv[16].downcase : nil)
-      if csv[17]==nil || (csv[17][0..3]!="http" && csv[17][0..2]!="www")
-        source = nil
-      else
-        source = csv[17]
-      end
-      illness = (csv[18]!=nil ? csv[18].downcase : nil)
-      date = /^\d+\/\d+\/\d+/.match(csv[21]).to_s
-
-      Killing.create!(
-        victim_name: v_name,
-        victim_age: v_age,
-        victim_gender: v_gender,
-        victim_race: v_race,
-        url_victim_image: url_img,
-        date_of_killing: date,
-        location_of_killing_address: address,
-        location_of_killing_city: city,
-        location_of_killing_state: state,
-        location_of_killing_zip: zip,
-        location_of_killing_county: county,
-        agency_responsible: agency,
-        cause_of_death: cause,
-        description: description,
-        official_disposition: disposition,
-        source: source,
-        symptoms_of_mental_illness: illness,
-        date_of_killing: date,
-        data_from:  "Fatal Encounters Database"
-        )
-    end
-  end
-
-  desc "geocode fe lat/lng/formatted address to csv"
+  desc "geocode f_e_scraped into a csv"
   task :geocode_fe do
     i = 0
     data = []
-    fe_csv = "lib/Fatal_Encounters.csv"
+    fe_csv = "lib/Fatal_Encounters_Scraped.csv"
     CSV.foreach(fe_csv, headers: false) do |csv|
       # enter the boundaries to specify which rows you want to geocode:
       if i>=2900 && i<2918
@@ -132,7 +70,7 @@ namespace :db do
       end
       i += 1
     end
-    fe_csv_2 = "lib/Fatal_Encounters_2.csv"
+    fe_csv_2 = "lib/Fatal_Encounters_Geocodes.csv"
     CSV.open(fe_csv_2, "a") do |csv|
       data.each do |arr|
         csv << arr
@@ -140,164 +78,182 @@ namespace :db do
     end
   end
 
-  desc "seed data from Fatal_Encounters_2.csv"
-  task :seed_from_fe_2 do
-    fe_csv_2 = "lib/Fatal_Encounters_2.csv"
-    i = 1
-    CSV.foreach(fe_csv_2, headers: false) do |csv|
-      formatted_address = csv[0]
-      lat = csv[1]
-      lng = csv[2]
-      killing = Killing.find(i)
-      killing.update({
-        formatted_address: formatted_address,
-        lat: lat,
-        lng: lng
-        })
-      killing.save!
-      i+=1
+  desc "geocode us_scraped into a csv"
+  task :geocode_us do
+    i = 0
+    data = []
+    path1 = "lib/U.S._Police_Shootings_Scraped.csv"
+    path2 = "lib/U.S._Police_Shootings_Geocodes.csv"
+    CSV.open(path2, "a") do |csv2|
+      CSV.foreach(path1, headers: false) do |csv1|
+        # enter the boundaries to specify which rows you want to geocode:
+        if i>=1600 && i<1659
+          state = (csv1[2]!=nil ? csv1[2][0..1]+"+" : "")
+          city = (csv1[4]!=nil ? csv1[4].downcase.strip.gsub("’","'") : "")+(",+")
+          county = (csv1[3]!=nil ? ",+"+csv1[3].downcase.strip : "")
+          full_address = "#{city}#{state}#{county}"
+          encoded_address = urlencode(full_address).gsub("%20","+")
+          query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{encoded_address}&key=#{ENV['GEOCODE']}"
+          response = HTTParty.get(query)
+          formatted_address = response["results"][0]["formatted_address"]
+          lat = response["results"][0]["geometry"]["location"]["lat"]
+          lng = response["results"][0]["geometry"]["location"]["lng"]
+          csv2 << [formatted_address,lat,lng]
+          sleep 2
+        end
+        i += 1
+      end
     end
   end
 
-  # before seeding from us, run Killing.all.count, and set the i variable in seed_from_us_2 to Killing.all.count+1
+  desc "combine scraped data with geocodes into a master csv"
+  task :data_into_master_csv do
+    path1 = "lib/Fatal_Encounters_Scraped.csv"
+    path2 = "lib/Fatal_Encounters_Geocodes.csv"
+    path3 = "lib/U.S._Police_Shootings_Scraped.csv"
+    path4 = "lib/U.S._Police_Shootings_Geocodes.csv"
+    path5 = "lib/Complete_Data.csv"
+    f_e_combined = []
+    CSV.foreach(path1, headers: false) do |csv1_row|
+      reordered_row = csv1_row[2...19].push([nil,nil,"Fatal Encounters"]).flatten
+      f_e_combined.push(reordered_row)
+    end
+    i = 0
+    CSV.foreach(path2, headers: false) do |csv2_row|
+      csv2_row.each do |csv2_el|
+        f_e_combined[i].push(csv2_el)
+      end
+      i += 1
+    end
+    u_s_combined = []
+    CSV.foreach(path3, headers: false) do |csv3_row|
+      reordered_row = [csv3_row[6],csv3_row[7],csv3_row[8],csv3_row[9],nil,nil,nil,csv3_row[4],csv3_row[2],nil,csv3_row[3],csv3_row[5],nil,csv3_row[15],nil,csv3_row[16],nil,csv3_row[11],csv3_row[13],"U.S. Police Shootings"]
+      u_s_combined.push(reordered_row)
+    end
+    i = 0
+    CSV.foreach(path4, headers: false) do |csv4_row|
+      csv4_row.each do |csv4_el|
+        u_s_combined[i].push(csv4_el)
+      end
+      i += 1
+    end
+    all_data = f_e_combined + u_s_combined
+    CSV.open(path5, "a") do |master_csv|
+      all_data.each do |row|
+        master_csv << row
+      end
+    end
+  end
 
-  desc "seed data from U.S.Police..."
-  task :seed_from_us do
-    us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
-    CSV.foreach(us_csv, headers: false) do |csv|
-      state = (csv[2]!=nil ? csv[2][0..1] : nil)
-      county = (csv[3]!=nil ? csv[3].downcase.gsub("county","").strip : nil)
-      city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : nil)
-      agency = (csv[5]!=nil ? csv[5].downcase.strip : nil)
-      v_name = (csv[6]!=nil ? csv[6].strip.gsub("-German ","").gsub("ack ","") : nil)
+  desc "seed data from Complete_Data.csv"
+  task :seed_from_master do
+    path = "lib/Complete_Data.csv"
+    male_typos = ["maale",",male","m","ma;e","white"]
+    CSV.foreach(path, headers: true) do |csv|
+      v_name = csv[0]
       if v_name
-        v_name = nil if ["withheld","unkown","unknown","sideshow","not listed","not released","un","unidentified","unnamed minor","unreleased"].any? { |error| v_name.downcase.include?(error) }
+        v_name = nil if ["unnamed","unkown","unknown","unidentified","withheld","name undisclosed by police","sideshow","not listed","not released","un","unnamed minor","unreleased"].any? { |error| v_name.downcase.include?(error) }
       end
-      v_age = csv[7].to_i
+      v_age = csv[1].to_i
       v_age = nil if v_age == 0
-      v_gender = (csv[8]!=nil ? csv[8].downcase : nil)
-      v_race = csv[9] == nil ? nil : racial_term_substitution(csv[9], race_multiarr)
-      if csv[10]
-        v_hisp=true if csv[10].downcase=="hispanic or latino origin"
-        v_hisp=false if csv[10].downcase=="not of hispanic or latino origin"
+      v_gender = (csv[2]!=nil ? csv[2].downcase : nil)
+      v_gender = "male" if male_typos.include?(v_gender)
+      v_race = csv[3] == nil ? nil : racial_term_substitution(csv[3], race_multiarr)
+      url_img = (csv[4]!=nil ? csv[4] : nil)
+      if url_img
+        if (url_img.length < 3) || (url_img.length > 2000)
+          url_img = nil
+        end
       end
-      shots = (csv[11]!=nil ? csv[11].to_i : nil)
-      unarmed = (csv[13]!=nil ? (csv[13].downcase == "unarmed") : nil)
-      description = (csv[15]!=nil ? csv[15].gsub("’","'") : nil)
-      source = (csv[16]!=nil ? csv[16].strip : nil)
+      date = csv[5]!=nil ? csv[5] : nil
+      address = (csv[6]!=nil ? csv[6].gsub("’","'") : nil)
+      city = csv[7]!=nil ? csv[7].downcase.strip.gsub("’","'") : nil
+      state = csv[8]!=nil ? csv[8][0..1] : nil
+      state = "WA" if state == "Washington"
+      zip = csv[9]
+      county = csv[10]!=nil ? csv[10].downcase.gsub("county","").strip : nil
+      agency = csv[11]!=nil ? csv[11].downcase.strip : nil
+      if agency
+        agency = nil if agency[0..3] == "http"
+      end
+      cause = csv[12]!=nil ? csv[12].capitalize : nil
+      description = csv[13]!=nil ? csv[13].gsub("’","'") : nil
+      disposition = csv[14]!=nil ? csv[14].downcase : nil
+      if csv[15]==nil || (csv[15].strip[0..3]!="http" && csv[15].strip[0..2]!="www")
+        source = nil
+      else
+        source = csv[15].strip
+      end
+      illness = csv[16]!=nil ? csv[16].downcase : nil
+      shots = csv[17]!=nil ? csv[17].to_i : nil
+      unarmed = csv[18]!=nil ? (csv[18].downcase == "unarmed") : nil
+      data_from = csv[19]
+      formatted_address = csv[20]
+      lat = csv[21]
+      lon = csv[22]
 
-      Killing.create!(
+      Killing.create(
         victim_name: v_name,
         victim_age: v_age,
         victim_gender: v_gender,
-        victim_unarmed: unarmed,
         victim_race: v_race,
-        victim_hispanic_or_latino_origin: v_hisp,
-        agency_responsible: agency,
+        url_victim_image: url_img,
+        date_of_killing: date,
+        location_of_killing_address: address,
         location_of_killing_city: city,
         location_of_killing_state: state,
+        location_of_killing_zip: zip,
         location_of_killing_county: county,
+        agency_responsible: agency,
+        cause_of_death: cause,
         description: description,
-        shots_fired: shots,
+        official_disposition: disposition,
         source: source,
-        url_victim_image: nil,
-        data_from:  "U.S. Police Shootings Data"
+        symptoms_of_mental_illness: illness,
+        shots_fired: shots,
+        victim_unarmed: unarmed,
+        data_from: data_from,
+        formatted_address: formatted_address,
+        lat: lat,
+        lng: lon
         )
     end
   end
 
-  desc "geocode us lat/lng/formatted address to csv"
-  task :geocode_us do
-    i = 0
-    data = []
-    us_csv = "lib/U.S._Police_Shootings_Data_Responses.csv"
-    CSV.foreach(us_csv, headers: false) do |csv|
-      # enter the boundaries to specify which rows you want to geocode:
-      if i>=1600 && i<1700
-        state = (csv[2]!=nil ? csv[2][0..1]+"+" : "")
-        city = (csv[4]!=nil ? csv[4].downcase.strip.gsub("’","'") : "")+(",+")
-        county = (csv[3]!=nil ? ",+"+csv[3].downcase.strip : "")
-        full_address = "#{city}#{state}#{county}"
-        encoded_address = urlencode(full_address).gsub("%20","+")
-        query = "https://maps.googleapis.com/maps/api/geocode/json?address=#{encoded_address}&key=#{ENV['GEOCODE']}"
-        response = HTTParty.get(query)
-        formatted_address = response["results"][0]["formatted_address"]
-        lat = response["results"][0]["geometry"]["location"]["lat"]
-        lng = response["results"][0]["geometry"]["location"]["lng"]
-        data.push([formatted_address,lat,lng])
-        sleep 4
-      end
-      i += 1
-    end
-    us_csv_2 = "lib/U.S._Police_Shootings_Data_Responses_2.csv"
-    CSV.open(us_csv_2, "a") do |csv|
-      data.each do |arr|
-        csv << arr
-      end
-    end
-  end
-
-  desc "seed data from U.S._Police_Shootings_Data_Responses_2.csv"
-  task :seed_from_us_2 do
-    us_csv_2 = "lib/U.S._Police_Shootings_Data_Responses_2.csv"
-    # set i equal to Killing.all.count + 1, before running :seed_from_us
-    i = 2919
-    CSV.foreach(us_csv_2, headers: false) do |csv|
-      formatted_address = csv[0]
-      lat = csv[1]
-      lng = csv[2]
-      killing = Killing.find(i)
-      killing.update({
-        formatted_address: formatted_address,
-        lat: lat,
-        lng: lng
-        })
-      killing.save!
-      i+=1
-    end
-  end
-
-  desc "seed into Data.csv"
-  task :seed_into_data do
-    data = "lib/Data.csv"
-    #set bounds of how many you wanna seed at a time
-    killings = Killing.where("id >= 0 AND id < 5000")
-    CSV.open(data, "a") do |csv|
+  desc "copy db back to csv to avoid duplicates"
+  task :db_to_csv do
+    killings = Killing.order("id")
+    path = "lib/Complete_Data_No_Duplicates.csv"
+    CSV.open(path, "a") do |csv|
       killings.each do |killing|
         arr = []
         arr.push(killing.victim_name)
         arr.push(killing.victim_age)
-        arr.push(killing.victim_race)
         arr.push(killing.victim_gender)
+        arr.push(killing.victim_race)
+        arr.push(killing.url_victim_image)
         arr.push(killing.date_of_killing)
-        arr.push(killing.description)
-        arr.push(killing.shots_fired)
-        arr.push(killing.victim_unarmed)
-        arr.push(killing.symptoms_of_mental_illness)
-        arr.push(killing.lat)
-        arr.push(killing.lng)
-        arr.push(killing.formatted_address)
+        arr.push(killing.location_of_killing_address)
         arr.push(killing.location_of_killing_city)
         arr.push(killing.location_of_killing_state)
         arr.push(killing.location_of_killing_zip)
         arr.push(killing.location_of_killing_county)
-        arr.push(killing.url_victim_image)
+        arr.push(killing.agency_responsible)
+        arr.push(killing.cause_of_death)
+        arr.push(killing.description)
+        arr.push(killing.official_disposition)
         arr.push(killing.source)
+        arr.push(killing.symptoms_of_mental_illness)
+        arr.push(killing.shots_fired)
+        arr.push(killing.victim_unarmed)
         arr.push(killing.data_from)
+        arr.push(killing.formatted_address)
+        arr.push(killing.lat)
+        arr.push(killing.lng)
         csv << arr
       end
     end
   end
 
-  desc "seed into 10K Arrests"
-  task :seed_into_arrests do
-    data = "lib/Arrests10K.csv"
-    CSV.open(data, "a") do |csv|
-      14.times { csv << ['alaskan and/or pacific islander'] }
-      11.times { csv << ['asian'] }
-      255.times { csv << ['black'] }
-      80.times { csv << ['hispanic and/or latin'] }
-      901.times { csv << ['white'] }
-    end
-  end
 end
+

@@ -2,16 +2,16 @@ var Killing = Backbone.Model.extend({
   urlRoot: '/api/killings'
 })
 
-L.geoJson(data, {
-  style: function (feature) {
-return {color: feature.properties.color};
-  },
-  onEachFeature: function (feature, layer) {
-layer.bindPopup(feature.properties.description);
-  }
-}).addTo(map);
+// L.geoJson(data, {
+//   style: function (feature) {
+// return {color: feature.properties.color};
+//   },
+//   onEachFeature: function (feature, layer) {
+// layer.bindPopup(feature.properties.description);
+//   }
+// }).addTo(map);
 
-var geoLayer = L.geoJson()
+// var geoLayer = L.geoJson()
 
 
 
