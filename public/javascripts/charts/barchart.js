@@ -41,3 +41,7 @@ var barChart = new $jit.barChart({
     }
   },
 });
+
+$(function(){
+  barChart.loadJSON(json);
+});

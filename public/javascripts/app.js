@@ -64,7 +64,7 @@ $(function(){
 
   var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
     scrollWheelZoom: false,
-  }).setView([39.8282,-98.5795],4),
+  }).setView([37.2,-98.5795],4),
   heat = L.heatLayer([]);
 
   killingList.fetch({
