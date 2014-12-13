@@ -39,8 +39,8 @@ function makeHeatMap(map,coords){
   var heatLayer = L.heatLayer(coords, {
     // radius: 25,
     // blur: 0,
-    // gradient: 1,
-    maxZoom: 9,
+    // gradient: 0,
+    maxZoom: 10,
   }).addTo(map);
   // map.fitBounds(heatLayer.getBounds());
 };
