@@ -1,13 +1,56 @@
 var KillingView = Backbone.View.extend({
 
+  events: {
+    "dblclick" : "youClicked"
+  },
+
+  youClicked: function(e){
+    alert('holy shit this worked?');
+  },
+
   initialize: function(){
-    this.listenTo(this.model, 'sync', this.render);
-    alert('synced!');
+    this.listenTo(this.model, 'change', this.render);
   },
 
   render: function(){
-    var attributes = this.model.toJSON();
-    console.log(attributes);
-  }
+    var lat = this.model.get('lat');
+    var lon = this.model.get('lng');
+    var geoMarker = {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          lon,
+          lat
+        ]
+      },
+      "properties": {
+        "marker-color": "#9c89cc",
+        "marker-size": "small",
+      }
+    };
+    console.log(geoMarker);
+    return geoMarker;
+  },
+
+  // geoMarker: function(lat,lon){
+  //   var geoMarker = 
+  //     {
+  //       "type": "Feature",
+  //       "geometry": {
+  //         "type": "Point",
+  //         "coordinates": [
+  //           lon,
+  //           lat
+  //         ]
+  //       },
+  //       "properties": {
+  //         "title": i,
+  //         "marker-color": "#9c89cc",
+  //         "marker-size": "small",
+  //       }
+  //     };
+  //   return geoMarker;
+  // }
 });
 

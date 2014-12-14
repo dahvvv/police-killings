@@ -1,59 +1,11 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd3ZZIn0.VNcoUZ2TFXUuID8JQ2-t2A';
 
-function geoJSONify(geoFeatureArr){
-  return [
-    {
-      "type": "FeatureCollection",
-      "features": geoFeatureArr
-    }
-  ]
-};
-
-function featureToGeoFormat(lat,lon,i){
-  var geoFeature = 
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          lon,
-          lat
-        ]
-      },
-      "properties": {
-        "title": i,
-        "marker-color": "#9c89cc",
-        "marker-size": "small",
-      }
-    };
-  return geoFeature;
-};
-
-var geoStyle = {
-  fillColor: 'red',
-  color: 'black',
-  radius: 7,
-  fillOpacity: 0.8,
-  opacity: 0.8,
-};
-
-function makeMap(map, geojson){
-  // var layer = L.mapbox.featureLayer().addTo(map);
-  // layer.setGeoJSON(geojson);
-  var layer = L.geoJson(geojson, {
-    pointToLayer: function(feature, latlng){
-      return L.circleMarker(latlng, geoStyle);
-    }
-  }).addTo(map);
-};
-
-function makeHeatMaps(map, options){
-
   // var tiles = L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
   //     attribution: '<a href="https://www.mapbox.com/about/maps/">Terms and Feedback</a>',
   //     id: 'examples.map-20v6611k'
   // }).addTo(map);
 
+function makeHeatMaps(map, options){
   var options = options || {};
   var coords1 = options.coords1;
   var radius1 = options.radius1;
@@ -79,6 +31,24 @@ function addLayerTwo(map, coords){
 };
 
 var killingList = new KillingList;
+
+// var killingView = new KillingView({model: Killing, el: $("body")});
+// killingView.render();
+
+var killing = new Killing();
+killing.on('event-name', function(e){
+  alert('ok!');
+});
+
+killing.trigger('event-name');
+
+killing.on('change', doThing);
+
+function doThing(){
+  alert('i dun did a thing');
+  this.set({visible: false});
+};
+
 var geoFeatureArr = [];
 var geoJSON;
 var map;
@@ -119,7 +89,7 @@ $(function(){
         
       });
       var geoJSON = geoJSONify(geoFeatureArr);
-      makeMap(map, geoJSON);
+      addGeoLayer(map, geoJSON);
       var options = {
         coords1 : coordsArr,
         gradient1 : gradient1,

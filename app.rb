@@ -43,6 +43,11 @@ get '/api/killings/state/:state' do
   killings.to_json
 end
 
+get '/api/killings/:id' do
+  content_type :json
+  Killing.find(params[:id]).to_json
+end
+
 get '/api/killings' do
   content_type :json
   Killing.where.not("location_of_killing_state ='HI' OR location_of_killing_state = 'AK'").to_json

@@ -1,10 +1,11 @@
 var KillingListView = Backbone.View.extend({
 
   initialize: function(){
-    this.collection.on('change', this.addOne, this);
+    this.listenTo(this.collection.models, 'sync', this.render);
   },
 
   render: function(){
+    alert('synced!');
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
   },
