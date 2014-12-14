@@ -3,5 +3,14 @@ var Killing = Backbone.Model.extend({
   defaults: {
     visible: true,
     color: 'red'
+  },
+
+  toggleVisibility: function(){
+    if (this.get('visible')===true) {
+      this.set({'visible': false})
+    } else {
+      this.set({'visible': true})
+    };
+    alert('you clicked the armed/unarmed button');
   }
 })

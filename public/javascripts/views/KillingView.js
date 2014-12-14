@@ -1,11 +1,16 @@
 var KillingView = Backbone.View.extend({
 
   events: {
-    "dblclick" : "youClicked"
+    "dblclick" : "youClicked",
+    "click button" : "toggleVisibility"
   },
 
   youClicked: function(e){
     alert('holy shit this worked?');
+  },
+
+  toggleVisibility: function(){
+    this.model.toggleVisibility();
   },
 
   initialize: function(){

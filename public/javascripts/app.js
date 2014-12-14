@@ -30,24 +30,19 @@ function addLayerTwo(map, coords){
   }).addTo(map); 
 };
 
-var killingList = new KillingList;
+
+var killingList = new KillingList();
 
 // var killingView = new KillingView({model: Killing, el: $("body")});
 // killingView.render();
 
-var killing = new Killing();
-killing.on('event-name', function(e){
-  alert('ok!');
-});
 
-killing.trigger('event-name');
+// killing.on('change', doThing);
 
-killing.on('change', doThing);
-
-function doThing(){
-  alert('i dun did a thing');
-  this.set({visible: false});
-};
+// function doThing(){
+//   alert('i dun did a thing');
+//   this.set({visible: false});
+// };
 
 var geoFeatureArr = [];
 var geoJSON;
@@ -65,6 +60,10 @@ var options;
 
 
 $(function(){
+
+  var killing = new Killing({id: 6});
+  var killingView = new KillingView({model: killing, el: $('body')});
+  killing.fetch();
 
   var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
     scrollWheelZoom: false,
@@ -102,11 +101,4 @@ $(function(){
     }
   });
 
-  
-
-  $('.button').on('click', function(e){
-    e.preventDefault();
-    var coords2 = randomCoords();
-    addLayerTwo(map,coords2);
-  });
 });
