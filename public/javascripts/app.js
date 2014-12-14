@@ -16,7 +16,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd
 
 $(function(){
 
-  var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
+  map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
     scrollWheelZoom: false,
   }).setView([37.2,-98.5795],4);
 
@@ -37,11 +37,10 @@ $(function(){
     heat.addTo(map);
   };
 
-  var killing = new Killing({id: 6});
-  var killingView = new KillingView({model: killing, el: $('body')});
-  killing.fetch();
-  var killingList = new KillingList();
-  killingList.on('reset', makeHeatMap);
+
+  var killingList = new KillingList({search: ""});
+  killingList.listenToOnce(killingList, 'reset', makeHeatMap);
+  var killingListView = new KillingListView({collection: killingList, el: $('body')});
 
   killingList.fetch({reset: true});
 

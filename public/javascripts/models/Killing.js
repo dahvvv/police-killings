@@ -11,6 +11,5 @@ var Killing = Backbone.Model.extend({
     } else {
       this.set({'visible': true})
     };
-    alert('you clicked the armed/unarmed button');
   }
 })

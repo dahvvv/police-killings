@@ -48,6 +48,11 @@ get '/api/killings/:id' do
   Killing.find(params[:id]).to_json
 end
 
+get 'api/killings/armed_or_unarmed' do
+  content_type :json
+  Killing.where("victim_unarmed = 'yes' OR victim_unarmed = 'no'").to_json
+end
+
 get '/api/killings' do
   content_type :json
   Killing.all.to_json
