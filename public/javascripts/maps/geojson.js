@@ -36,7 +36,7 @@ var geoStyle = {
 };
 
 function addGeoLayer(geoData){
-  var layer = L.geoJson(geoData, {
+  geoLayer = L.geoJson(geoData, {
     pointToLayer: function(feature, latlng){
       return L.circleMarker(latlng, geoStyle);
     },
@@ -50,7 +50,9 @@ function addGeoLayer(geoData){
         case false: return {fillColor: 'lightblue'};
       }
     }
-  }).addTo(map);
+  });
+  map.removeLayer(heatLayer);
+  geoLayer.addTo(map);
 };
 
 function makeGeoMap(){

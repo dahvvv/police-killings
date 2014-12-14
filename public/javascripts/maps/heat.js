@@ -14,11 +14,14 @@ function makeHeatMap(){
     coords.push([lat,lon]);
   });
   // var radius = radius;
-  var heat = L.heatLayer(coords, {
+  heatLayer = L.heatLayer(coords, {
     radius: 25,
     // blur: 0,
     gradient: gradient1,
     maxZoom: 9,
   });
-  heat.addTo(map);
+  if (map.hasLayer(geoLayer)) {
+    map.removeLayer(geoLayer);
+  };
+  heatLayer.addTo(map);
 };

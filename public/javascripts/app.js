@@ -14,6 +14,8 @@ L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd
 //           };
 //       });
 
+var geoLayer;
+
 $(function(){
 
   map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
