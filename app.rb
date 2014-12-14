@@ -50,7 +50,7 @@ end
 
 get '/api/killings' do
   content_type :json
-  Killing.where.not("location_of_killing_state ='HI' OR location_of_killing_state = 'AK'").to_json
+  Killing.all.to_json
 end
 
 # class MarketsController < ApplicationController
@@ -70,12 +70,6 @@ end
 #   end
 # end
 
-
-# get '/api/killings/:id' do
-#   content_type :json
-#   killing = Killing.find(params[:id])
-#   killing.to_json
-# end
 
 
 

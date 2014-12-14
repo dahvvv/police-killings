@@ -5,23 +5,6 @@ L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd
   //     id: 'examples.map-20v6611k'
   // }).addTo(map);
 
-
-// var killingView = new KillingView({model: Killing, el: $("body")});
-// killingView.render();
-
-
-// killing.on('change', doThing);
-
-// function doThing(){
-//   alert('i dun did a thing');
-//   this.set({visible: false});
-// };
-
-var geoFeatureArr = [];
-var geoJSON;
-var map;
-var options;
-
 // map.featureLayer.eachLayer(function(layer) {
 //           var item = markerList.appendChild(document.createElement('li'));
 //           item.innerHTML = layer.toGeoJSON().properties.title;
@@ -30,7 +13,6 @@ var options;
 //              layer.openPopup();
 //           };
 //       });
-
 
 $(function(){
 
