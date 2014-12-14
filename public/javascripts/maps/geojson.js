@@ -61,10 +61,8 @@ function addGeoLayer(geoData){
 };
 
 function makeGeoMap(){
-  var filter = this.filter;
-  var collection = this.collection;
   var geoFeatureArr = [];
-  collection.toJSON().forEach(function(elem, i){
+  this.toJSON().forEach(function(elem, i){
     var lat = elem.lat;
     var lon = elem.lng;
     var unarmed = elem.victim_unarmed;
@@ -74,3 +72,18 @@ function makeGeoMap(){
   var geoData = geoJSONify(geoFeatureArr);
   addGeoLayer(geoData);
 };
+
+// function makeGeoMap(){
+//   var filter = this.filter;
+//   var collection = this.collection;
+//   var geoFeatureArr = [];
+//   collection.toJSON().forEach(function(elem, i){
+//     var lat = elem.lat;
+//     var lon = elem.lng;
+//     var unarmed = elem.victim_unarmed;
+//     var geoFeature = featureToGeoFormat(lat,lon,i,unarmed);
+//     geoFeatureArr.push(geoFeature);
+//   });
+//   var geoData = geoJSONify(geoFeatureArr);
+//   addGeoLayer(geoData);
+// };

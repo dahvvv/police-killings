@@ -1,17 +1,23 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click .button-unarmed" : "victimUnarmed",
+    "click .button-unarmed" : "armedOrUnarmed",
     "click .button-home" : "home"
   },
 
-  victimUnarmed: function(){
-    var context = {
-      collection: this.collection,
-      filter: "victimUnarmed"
-    };
-    this.collection.listenToOnce(this.collection, 'reset', makeGeoMap.call(context));
-    this.collection.fetch({reset: true});
+  // victimUnarmed: function(){
+  //   var context = {
+  //     collection: this.collection,
+  //     filter: "victimUnarmed"
+  //   };
+  //   this.collection.listenToOnce(this.collection, 'reset', makeGeoMap.call(context));
+  //   this.collection.fetch({reset: true});
+  // },
+
+  armedOrUnarmed: function(){
+    var filteredCollection = this.collection.armedOrUnarmedKillings();
+    filteredCollection.listenToOnce(filteredCollection, 'reset', makeGeoMap);
+    filteredCollection.fetch({reset: true});
   },
 
   home: function(){
