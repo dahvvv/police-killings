@@ -35,21 +35,42 @@ function makeMap(map, geojson){
   map.fitBounds(layer.getBounds());
 };
 
-function makeHeatMap(map,coords){
-  var heatLayer = L.heatLayer(coords, {
-    // radius: 25,
+function makeHeatMaps(map, options){
+
+  // var tiles = L.tileLayer('http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+  //     attribution: '<a href="https://www.mapbox.com/about/maps/">Terms and Feedback</a>',
+  //     id: 'examples.map-20v6611k'
+  // }).addTo(map);
+
+  var options = options || {};
+  var coords1 = options.coords1;
+  var radius1 = options.radius1;
+  var gradient1 = options.gradient1;
+  var coords2 = options.coords2;
+  var radius2 = options.radius2;
+  var gradient2 = options.gradient2;
+  var heat1 = L.heatLayer(coords1, {
+    radius: radius1,
     // blur: 0,
-    // gradient: 0,
+    gradient: gradient1,
     maxZoom: 10,
   }).addTo(map);
-  // map.fitBounds(heatLayer.getBounds());
+};
+
+function addLayerTwo(map, coords){
+  alert('???');
+  var heat2 = L.heatLayer(coords, {
+    gradient: gradient2,
+    radius: 50,
+    maxZoom: 10
+  }).addTo(map); 
 };
 
 var killingList = new KillingList;
 var geoFeatureArr = [];
 var geoJSON;
 var map;
-
+var options;
 
 // map.featureLayer.eachLayer(function(layer) {
 //           var item = markerList.appendChild(document.createElement('li'));
@@ -60,27 +81,50 @@ var map;
 //           };
 //       });
 
+
 $(function(){
 
   var map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
     scrollWheelZoom: false,
-  }).setView([37.2,-98.5795],4),
-  heat = L.heatLayer([]);
+  }).setView([37.2,-98.5795],4);
 
   killingList.fetch({
     reset: true,
     success: function(data){
       var coordsArr = [];
+      var randoCoordsArr = [];
       data.toJSON().forEach(function(elem, i){
         var lat = elem.lat;
         var lon = elem.lng;
+        var rand = Math.random();
+        if (rand > 0.2) {
+          coordsArr.push([lat,lon]);
+        } else {
+          randoCoordsArr.push([lat,lon]);
+        };
         // var geoFeature = featureToGeoFormat(lat,lon,i);
         // geoFeatureArr.push(geoFeature);
-        coordsArr.push([lat,lon])
+        
       });
       // var geoJSON = geoJSONify(geoFeatureArr);
       // makeMap(map, geoJSON);
-      makeHeatMap(map, coordsArr);
+      var options = {
+        coords1 : coordsArr,
+        gradient1 : gradient1,
+        radius1 : 25,
+        coords2 : randoCoordsArr,
+        gradient2 : gradient2,
+        radius2 : 50,
+      };
+      makeHeatMaps(map, options);
     }
+  });
+
+  
+
+  $('.button').on('click', function(e){
+    e.preventDefault();
+    var coords2 = randomCoords();
+    addLayerTwo(map,coords2);
   });
 });
