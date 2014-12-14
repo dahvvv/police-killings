@@ -13,13 +13,6 @@ var KillingListView = Backbone.View.extend({
     this.collection.fetch({reset: true});
   },
 
-  toggleVisibility: function(){
-    this.collection.forEach(function(model){
-      model.toggleVisibility();
-    });
-    alert('damn they all got toggled');
-  },
-
   // initialize: function(){
   //   // this.listenTo(this.collection.models, 'sync', this.render);
   //   this.collection.on('reset', this.addAll, this);

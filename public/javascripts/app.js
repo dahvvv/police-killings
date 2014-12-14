@@ -20,52 +20,10 @@ $(function(){
     scrollWheelZoom: false,
   }).setView([37.2,-98.5795],4);
 
-  function makeHeatMap(){
-    var coords = [];
-    this.toJSON().forEach(function(elem, i){
-      var lat = elem.lat;
-      var lon = elem.lng;
-      coords.push([lat,lon]);
-    });
-    // var radius = radius;
-    var heat = L.heatLayer(coords, {
-      radius: 25,
-      // blur: 0,
-      gradient: gradient1,
-      maxZoom: 9,
-    });
-    heat.addTo(map);
-  };
-
 
   var killingList = new KillingList({search: ""});
   killingList.listenToOnce(killingList, 'reset', makeHeatMap);
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
-
   killingList.fetch({reset: true});
-
-  // killingList.fetch({
-  //   reset: true,
-  //   success: function(data){
-  //     var coordsArr = [];
-  //     var randoCoordsArr = [];
-  //     data.toJSON().forEach(function(elem, i){
-  //       var lat = elem.lat;
-  //       var lon = elem.lng;
-  //       // var rand = Math.random();
-  //       // if (rand > 0.2) {
-  //       //   coordsArr.push([lat,lon]);
-  //       // } else {
-  //       //   randoCoordsArr.push([lat,lon]);
-  //       // };
-  //       // var geoFeature = featureToGeoFormat(lat,lon,i);
-  //       // geoFeatureArr.push(geoFeature);
-        
-  //     });
-  //     // var geoJSON = geoJSONify(geoFeatureArr);
-  //     // addGeoLayer(map, geoJSON);
-  //     makeHeatMap(map, coords, 25, gradient1);
-  //   }
-  // });
-
+  
 });

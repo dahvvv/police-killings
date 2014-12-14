@@ -20,7 +20,6 @@ function featureToGeoFormat(lat,lon,i,unarmed){
       },
       "properties": {
         "title": i,
-        // "marker-color": "#9c89cc",
         "marker-size": "small",
         "unarmed": unarmed
       }
@@ -41,6 +40,10 @@ function addGeoLayer(geoData){
     pointToLayer: function(feature, latlng){
       return L.circleMarker(latlng, geoStyle);
     },
+    filter: function(feature, layer){
+      var unarmed = feature.properties.unarmed
+      return unarmed === true || unarmed === false
+    },
     style: function(feature){
       switch (feature.properties.unarmed){
         case true: return {fillColor: 'black'};
@@ -58,10 +61,8 @@ function makeGeoMap(){
     var lat = elem.lat;
     var lon = elem.lng;
     var unarmed = elem.victim_unarmed;
-    if (unarmed===true || unarmed===false){
-      var geoFeature = featureToGeoFormat(lat,lon,i,unarmed);
-      geoFeatureArr.push(geoFeature);
-    };    
+    var geoFeature = featureToGeoFormat(lat,lon,i,unarmed);
+    geoFeatureArr.push(geoFeature);
   });
   var geoData = geoJSONify(geoFeatureArr);
   addGeoLayer(geoData);
