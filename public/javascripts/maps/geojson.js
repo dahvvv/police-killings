@@ -36,6 +36,12 @@ var geoStyle = {
 };
 
 function addGeoLayer(geoData){
+  if (map.hasLayer(heatLayer)) {
+    map.removeLayer(heatLayer);
+  };
+  if (map.hasLayer(geoLayer)) {
+    map.removeLayer(geoLayer);
+  };
   geoLayer = L.geoJson(geoData, {
     pointToLayer: function(feature, latlng){
       return L.circleMarker(latlng, geoStyle);
@@ -51,7 +57,6 @@ function addGeoLayer(geoData){
       }
     }
   });
-  map.removeLayer(heatLayer);
   geoLayer.addTo(map);
 };
 
