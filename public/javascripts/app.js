@@ -29,10 +29,22 @@ function featureToGeoFormat(lat,lon,i){
   return geoFeature;
 };
 
+var geoStyle = {
+  fillColor: 'red',
+  color: 'black',
+  radius: 7,
+  fillOpacity: 0.8,
+  opacity: 0.8,
+};
+
 function makeMap(map, geojson){
-  var layer = L.mapbox.featureLayer().addTo(map);
-  layer.setGeoJSON(geojson);
-  map.fitBounds(layer.getBounds());
+  // var layer = L.mapbox.featureLayer().addTo(map);
+  // layer.setGeoJSON(geojson);
+  var layer = L.geoJson(geojson, {
+    pointToLayer: function(feature, latlng){
+      return L.circleMarker(latlng, geoStyle);
+    }
+  }).addTo(map);
 };
 
 function makeHeatMaps(map, options){
@@ -53,7 +65,7 @@ function makeHeatMaps(map, options){
     radius: radius1,
     // blur: 0,
     gradient: gradient1,
-    maxZoom: 10,
+    maxZoom: 9,
   }).addTo(map);
 };
 
@@ -102,12 +114,12 @@ $(function(){
         } else {
           randoCoordsArr.push([lat,lon]);
         };
-        // var geoFeature = featureToGeoFormat(lat,lon,i);
-        // geoFeatureArr.push(geoFeature);
+        var geoFeature = featureToGeoFormat(lat,lon,i);
+        geoFeatureArr.push(geoFeature);
         
       });
-      // var geoJSON = geoJSONify(geoFeatureArr);
-      // makeMap(map, geoJSON);
+      var geoJSON = geoJSONify(geoFeatureArr);
+      makeMap(map, geoJSON);
       var options = {
         coords1 : coordsArr,
         gradient1 : gradient1,
