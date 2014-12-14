@@ -7,21 +7,23 @@ function geoJSONify(geoFeatureArr){
   ]
 };
 
-function featureToGeoFormat(lat,lon,i,unarmed){
+function featureToGeoFormat(options){
   var geoFeature = 
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          lon,
-          lat
+          options.lon,
+          options.lat
         ]
       },
       "properties": {
-        "title": i,
         "marker-size": "small",
-        "unarmed": unarmed
+        "name": options.name,
+        "age": options.age,
+        "unarmed": options.unarmed,
+        "filter": options.filter
       }
     };
   return geoFeature;
@@ -35,6 +37,13 @@ var geoStyle = {
   opacity: 0.8,
 };
 
+function styleVictimUnarmed(feature){
+  switch (feature.properties.unarmed){
+    case true: return {fillColor: 'black'};
+    case false: return {fillColor: 'lightblue'};
+  }
+};
+
 function addGeoLayer(geoData){
   if (map.hasLayer(heatLayer)) {
     map.removeLayer(heatLayer);
@@ -46,14 +55,9 @@ function addGeoLayer(geoData){
     pointToLayer: function(feature, latlng){
       return L.circleMarker(latlng, geoStyle);
     },
-    filter: function(feature, layer){
-      var unarmed = feature.properties.unarmed
-      return unarmed === true || unarmed === false
-    },
     style: function(feature){
-      switch (feature.properties.unarmed){
-        case true: return {fillColor: 'black'};
-        case false: return {fillColor: 'lightblue'};
+      switch (feature.properties.filter){
+        case "victim_unarmed": return styleVictimUnarmed(feature);
       }
     }
   });
@@ -62,28 +66,26 @@ function addGeoLayer(geoData){
 
 function makeGeoMap(){
   var geoFeatureArr = [];
-  this.toJSON().forEach(function(elem, i){
-    var lat = elem.lat;
-    var lon = elem.lng;
-    var unarmed = elem.victim_unarmed;
-    var geoFeature = featureToGeoFormat(lat,lon,i,unarmed);
+  var filter = this.filter;
+  this.toJSON().forEach(function(elem){
+    var options = {
+      filter: filter,
+      lat: elem.lat,
+      lon: elem.lng,
+      address: elem.formatted_address,
+      name: elem.victim_name,
+      age: elem.victim_age,
+      gender: elem.victim_gender,
+      img: elem.url_victim_image,
+      source: elem.source,
+      description: elem.description,
+      unarmed: elem.victim_unarmed,
+      shots: elem.shots_fired,
+      illness: elem.symptoms_of_mental_illness
+    };
+    var geoFeature = featureToGeoFormat(options);
     geoFeatureArr.push(geoFeature);
   });
   var geoData = geoJSONify(geoFeatureArr);
   addGeoLayer(geoData);
 };
-
-// function makeGeoMap(){
-//   var filter = this.filter;
-//   var collection = this.collection;
-//   var geoFeatureArr = [];
-//   collection.toJSON().forEach(function(elem, i){
-//     var lat = elem.lat;
-//     var lon = elem.lng;
-//     var unarmed = elem.victim_unarmed;
-//     var geoFeature = featureToGeoFormat(lat,lon,i,unarmed);
-//     geoFeatureArr.push(geoFeature);
-//   });
-//   var geoData = geoJSONify(geoFeatureArr);
-//   addGeoLayer(geoData);
-// };

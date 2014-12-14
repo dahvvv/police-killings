@@ -14,7 +14,11 @@ var KillingList = Backbone.Collection.extend({
     //   return unarmed === true || unarmed === false;
     // });
   //or coule be .map, look at mdn array prototype methods
-    var ArmedOrUnarmedList = Backbone.Collection.extend({model: Killing, url: "/api/killings/armed_or_unarmed"});
+    var ArmedOrUnarmedList = Backbone.Collection.extend({
+      model: Killing,
+      url: "/api/killings/armed_or_unarmed",
+      filter: "victim_unarmed"
+    });
     // return new ArmedOrUnarmedList(armedOrUnarmedList);
     return new ArmedOrUnarmedList();
   },

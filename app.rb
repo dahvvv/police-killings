@@ -45,7 +45,7 @@ end
 
 get '/api/killings/armed_or_unarmed' do
   content_type :json
-  Killing.where("victim_unarmed = 'yes' OR victim_unarmed = 'no'").to_json
+  Killing.where("victim_unarmed = 'true' OR victim_unarmed = 'false'").to_json
 end
 
 get '/api/killings/:id' do
