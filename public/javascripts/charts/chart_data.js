@@ -22,19 +22,36 @@ var ageData =
 0,0,0,0,0,
 0,1,0,0,0];
 
-var chartJSONUnarmed = {
-  'label': ['label A'],
-  'values': [
-    {
-      'label': 'unarmed',
-      'values': [223]
-    }, 
-    {
-      'label': 'armed',
-      'values': [801]
-    }
-  ]
+function selectChartData(){
+  var data = {
+    'label': ['label A'],
+    'values': [
+      {
+        'label': 'unarmed',
+        'values': [223]
+      }, 
+      {
+        'label': 'armed',
+        'values': [801]
+      }
+    ]
+  };
+  return data;
 };
+
+// var chartJSONUnarmed = {
+//   'label': ['label A'],
+//   'values': [
+//     {
+//       'label': 'unarmed',
+//       'values': [223]
+//     }, 
+//     {
+//       'label': 'armed',
+//       'values': [801]
+//     }
+//   ]
+// };
 
 function JSONAgeValues(){
   var values = [0,1];
