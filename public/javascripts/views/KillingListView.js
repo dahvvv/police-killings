@@ -14,7 +14,6 @@ var KillingListView = Backbone.View.extend({
 
   ageMap: function(){
     var filteredCollection = this.collection.ageMap();
-    debugger;
     this.filteredToGeoMap(filteredCollection);
   },
 
