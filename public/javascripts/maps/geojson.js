@@ -30,7 +30,7 @@ function featureToGeoFormat(options){
         "address": options.address,
         "description": options.description,
         "img": options.img,
-        "source": options.source
+        "source": options.source,
       }
     };
   return geoFeature;
@@ -42,6 +42,16 @@ var geoStyle = {
   radius: 7,
   fillOpacity: 0.8,
   opacity: 0.8,
+};
+
+function popupImage(feature){
+  if (feature.properties.img != null) {
+    return '<img src="' + feature.properties.img + '"/>'
+  };
+};
+
+function popupContent(feature){
+  return '<h5>' + feature.properties.name + '</h5>' + popupImage(feature) + '<p>' + feature.properties.description + '</p>'
 };
 
 function addGeoLayer(geoData){
@@ -60,6 +70,11 @@ function addGeoLayer(geoData){
         case "victim_unarmed": return styleVictimUnarmed(feature);
         case "victim_age": return styleVictimAge(feature);
       }
+    },
+    onEachFeature: function(feature,layer){
+      // layer.bindPopup(feature.properties.description)
+      var content = popupContent(feature);
+      layer.bindPopup(content);
     }
   });
   geoLayer.addTo(map);

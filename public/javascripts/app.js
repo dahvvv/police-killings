@@ -19,7 +19,7 @@ var geoLayer;
 $(function(){
 
   map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
-    scrollWheelZoom: false,
+    // scrollWheelZoom: false,
   }).setView([37.2,-98.5795],4);
 
 
