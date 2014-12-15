@@ -261,3 +261,173 @@ namespace :db do
 
 end
 
+def us_pop_by_age(i)
+  if i <= 4
+    return 1.3
+  elsif i <= 9
+    return 1.32
+  elsif i <= 14
+    return 1.34
+  elsif i <= 19
+    return 1.38
+  elsif i <= 24
+    return 1.42
+  elsif i <= 29
+    return 1.36
+  elsif i <= 34
+    return 1.32
+  elsif i <= 39
+    return 1.24
+  elsif i <= 44
+    return 1.34
+  elsif i <= 49
+    return 1.4
+  elsif i <= 54
+    return 1.44
+  elsif i <= 59
+    return 1.32
+  elsif i <= 64
+    return 1.14
+  elsif i <= 69
+    return 0.88
+  elsif i <= 74
+    return 0.64
+  elsif i <= 79
+    return 0.48
+  elsif i <= 84
+    return 0.38
+  else
+    return 0.3
+  end
+end
+
+def percent_arrests_by_age(i)
+  if i <= 10
+    return 0.02
+  elsif i <= 15
+    return 1.3
+  elsif i <= 20
+    return 4.4
+  elsif i <= 25
+    return 3.8
+  elsif i <= 30
+    return 2.9
+  elsif i <= 35
+    return 2.2
+  elsif i <= 40
+    return 1.5
+  elsif i <= 45
+    return 1.3
+  elsif i <= 50
+    return 1.1
+  elsif i <= 55
+    return 0.8
+  elsif i <= 60
+    return 0.4
+  elsif i <= 65
+    return 0.2
+  else
+    return 0.01
+  end
+end
+
+def percent_homs_by_age(i)
+  if i < 10
+    return 0.01
+  elsif i <= 12
+    return 0.2
+  elsif i <= 14
+    return 1.0
+  elsif i == 15
+    return 1.8
+  elsif i == 16
+    return 2.3
+  elsif i == 17
+    return 2.8
+  elsif i == 18
+    return 3.7
+  elsif i == 19
+    return 4.1
+  elsif i == 20
+    return 4.2
+  elsif i == 21
+    return 4.2
+  elsif i == 22
+    return 4.1
+  elsif i == 23
+    return 3.9
+  elsif i == 24
+    return 3.7
+  elsif i <= 29
+    return 3.2
+  elsif i <= 34
+    return 2.5
+  elsif i <= 39
+    return 1.8
+  elsif i <= 44
+    return 1.5
+  elsif i <= 49
+    return 1.3
+  elsif i <= 54
+    return 1.1
+  elsif i <= 59
+    return 0.6
+  elsif i <= 64
+    return 0.3
+  else
+    return 0.01
+  end
+end
+
+def percent_in_poverty_by_age(i)
+  if i <= 4
+    return 3.0
+  elsif i <= 9
+    return 5.02
+  elsif i <= 14
+    return 4.68
+  elsif i <= 19
+    return 3.98
+  elsif i <= 24
+    return 4.26
+  elsif i <= 29
+    return 3.36
+  elsif i <= 34
+    return 2.98
+  elsif i <= 39
+    return 2.7
+  elsif i <= 44
+    return 2.2
+  elsif i <= 49
+    return 2.24
+  elsif i <= 54
+    return 2.12
+  elsif i <= 59
+    return 2.14
+  elsif i <= 64
+    return 2.16
+  elsif i <= 69
+    return 1.5
+  elsif i <= 74
+    return 1.46
+  elsif i <= 79
+    return 2.0
+  elsif i <= 84
+    return 2.0
+  else
+    return 2.3
+  end
+end
+
+path = "lib/ages_data.csv"
+age = 1
+total = 0.0
+CSV.open(path, "a") do |csv|
+  (1..107).each do |i|
+    pop = us_pop_by_age(i)
+    arrests = percent_arrests_by_age(i)
+    homs = percent_homs_by_age(i)
+    pov = percent_in_poverty_by_age(i)
+    csv << [i,pop,arrests,homs,pov]
+  end
+end

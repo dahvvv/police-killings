@@ -32,3 +32,8 @@ body {
   height: 171px;
   width: 380px;
 }
+
+button {
+  display: block;
+  margin: 1em;
+}

@@ -2,6 +2,7 @@ var KillingListView = Backbone.View.extend({
 
   events: {
     "click .button-unarmed" : "armedOrUnarmed",
+    "click .button-markers" : "markerMap",
     "click .button-home" : "home"
   },
 
