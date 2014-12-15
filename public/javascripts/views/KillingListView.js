@@ -23,8 +23,8 @@ var KillingListView = Backbone.View.extend({
   },
 
   filteredToGeoMap: function(filter){
-    filter.listenToOnce(filter, 'reset', makeGeoMap);
     filter.listenToOnce(filter, 'reset', makeChart);
+    filter.listenToOnce(filter, 'reset', makeGeoMap);
     filter.fetch({reset: true});
   },
 

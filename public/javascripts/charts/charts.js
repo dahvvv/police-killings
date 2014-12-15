@@ -13,11 +13,14 @@ function selectChartData(query){
 };
 
 function makeChart(){
+  $('#infovis').empty();
   var query = this.query;
   var chartStyle = selectChartStyle(query);
   var chartData = selectChartData(query);
-  var newChart = new $jit.BarChart(chartStyle);
-  newChart.loadJSON(chartData);
+  if (chartStyle != undefined) {
+    var newChart = new $jit.BarChart(chartStyle);
+    newChart.loadJSON(chartData);
+  };
 };
 
 $(function(){
