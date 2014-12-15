@@ -6,7 +6,7 @@ var KillingList = Backbone.Collection.extend({
     return new KillingList();
   },
 
-  ageMap: function(){
+  ageMarkMap: function(){
     var AgeList =  Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age",

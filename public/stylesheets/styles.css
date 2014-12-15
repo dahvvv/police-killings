@@ -44,3 +44,9 @@ button {
   display: block;
   margin: 1em;
 }
+
+#age-range input, label {
+  display: block;
+  margin: 0.3em 1em;
+  display: none;
+}

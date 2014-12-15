@@ -55,10 +55,10 @@ function popupContent(feature){
 };
 
 function addGeoLayer(geoData){
-  if (map.hasLayer(heatLayer)) {
+  while (map.hasLayer(heatLayer)) {
     map.removeLayer(heatLayer);
   };
-  if (map.hasLayer(geoLayer)) {
+  while (map.hasLayer(geoLayer)) {
     map.removeLayer(geoLayer);
   };
   geoLayer = L.geoJson(geoData, {

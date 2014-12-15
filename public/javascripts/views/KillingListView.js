@@ -1,10 +1,11 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click .button-home" : "home",
-    "click .button-markers" : "markerMap",
-    "click .button-age" : "ageMap",
-    "click .button-unarmed" : "armedOrUnarmed",
+    "click .home" : "home",
+    "click .markers" : "markerMap",
+    // "click .age-heat" : "ageHeatMap",
+    "click .age-marker" : "ageMarkMap",
+    "click .unarmed" : "armedOrUnarmed",
   },
 
   markerMap: function(){
@@ -12,8 +13,13 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  ageMap: function(){
-    var filteredCollection = this.collection.ageMap();
+  ageHeatMap: function(){
+    var filteredCollection = this.collection.ageHeatMap();
+    this.filteredToGeoMap(filteredCollection);
+  },
+
+  ageMarkMap: function(){
+    var filteredCollection = this.collection.ageMarkMap();
     this.filteredToGeoMap(filteredCollection);
   },
 

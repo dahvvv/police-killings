@@ -24,6 +24,9 @@ function makeHeatMap(){
   if (map.hasLayer(geoLayer)) {
     map.removeLayer(geoLayer);
   };
+  if (map.hasLayer(heatLayer)) {
+    map.removeLayer(heatLayer);
+  };
   heatLayer.addTo(map);
 };
 
@@ -62,4 +65,4 @@ function makeJSHeat(){
     data: points
   };
   heatmapInstance.setData(data);
-}
+};

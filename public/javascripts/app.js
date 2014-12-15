@@ -27,5 +27,10 @@ $(function(){
   killingList.listenToOnce(killingList, 'reset', makeHeatMap);
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
   killingList.fetch({reset: true});
+
+  $('.age-heat').on('click', function(e){
+    e.preventDefault();
+    $('#age-range').children().toggle().css({"display":"block"});
+  });
   
 });
