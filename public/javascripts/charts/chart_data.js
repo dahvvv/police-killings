@@ -22,7 +22,7 @@ var ageData =
 0,0,0,0,0,
 0,1,0,0,0];
 
-function selectChartData(){
+function unarmedChartData(){
   var data = {
     'label': ['label A'],
     'values': [
