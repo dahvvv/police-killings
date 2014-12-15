@@ -18,7 +18,46 @@ function unarmedChartStyle(){
       type: labelType,
       size: 13,
       family: 'Arial',
-      color: 'white'
+      color: 'black'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = "<b>" + elem.name + "</b>: " + elem.value;
+      }
+    },
+  };
+  return style;
+};
+
+function ageChartStyle(){
+  var style = {
+    injectInto: 'infovis',
+    animate: true,
+    orientation: 'vertical',
+    barsOffset: 0,
+    Margin: {
+      top:2,
+      left: 0,
+      right: 0,
+      bottom:2
+    },
+    labelOffest: 0,
+    type: 'stacked:gradient',
+    showAggregates: false,
+    showLabels: function(i){
+      if (i%10===0) {
+        return true
+      } else {
+        return false
+      }
+    },
+    Label: {
+      type: 'HTML',
+      size: 12,
+      family: 'Helvetica',
+      color: 'black',
+      weight: 'bold'
     },
     Tips: {
       enable: true,

@@ -12,7 +12,7 @@ body {
 
 .map {
   position: absolute;
-  height: 65%;
+  height: 60%;
   width: 62%;
   top: 0%;
   left: 19%;
@@ -20,17 +20,15 @@ body {
 
 #chart-wrapper {
   position: absolute;
-  height: 25%;
-  width: 30%;
-  left: 35%;
-  bottom: 2%;
-  height: 171px;
-  width: 380px;
+  left: 25%;
+  bottom: 4%;
+  height: 35%;
+  width: 50%;
 }
 
 #infovis {
-  height: 171px;
-  width: 380px;
+  height: 100%;
+  width: 100%;
 }
 
 button {

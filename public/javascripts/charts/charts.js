@@ -3,14 +3,14 @@ var labelType, useGradients, nativeTextSupport, animate;
 function selectChartStyle(query){
   switch(query){
     case "victim_unarmed": return unarmedChartStyle();
-    // case "victim_age": return ageChartStyle();
+    case "victim_age": return ageChartStyle();
   }
 };
 
 function selectChartData(query){
   switch(query){
     case "victim_unarmed": return unarmedChartData();
-    // case "victim_age": return ageChartData();
+    case "victim_age": return ageChartData();
   }
 };
 

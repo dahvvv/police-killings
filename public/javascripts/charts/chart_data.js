@@ -1,4 +1,4 @@
-var ageData = 
+var deathsByAge = 
 [0,1,0,0,2,
 4,3,4,0,0,
 0,2,3,9,5,
@@ -22,9 +22,10 @@ var ageData =
 0,0,0,0,0,
 0,1,0,0,0];
 
+
 function unarmedChartData(){
   var data = {
-    'label': ['label A'],
+    'label': [''],
     'values': [
       {
         'label': 'unarmed',
@@ -35,6 +36,26 @@ function unarmedChartData(){
         'values': [801]
       }
     ]
+  };
+  return data;
+};
+
+function ageChartValues(){
+  var values = [];
+  for (var age = 0; age < 110; age++) {
+    var value = {
+      'label': age,
+      'values': deathsByAge[age]
+    };
+    values.push(value);
+  };
+  return values;
+};
+
+function ageChartData(){
+  var data = {
+    'label': [''],
+    'values': ageChartValues()
   };
   return data;
 };
@@ -53,19 +74,3 @@ function unarmedChartData(){
 //   ]
 // };
 
-function JSONAgeValues(){
-  var values = [0,1];
-  for (var age = 0; age < 110; age++) {
-    var value = {
-      'label': age,
-      'values': ageData[age]
-    };
-    values.push(value);
-  };
-  return values;
-};
-
-chartJSONAge = {
-  'label': [''],
-  'values': JSONAgeValues()
-};
