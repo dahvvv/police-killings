@@ -1,25 +1,26 @@
 var KillingList = Backbone.Collection.extend({
-  url: "/api/killings",
   model: Killing,
+  url: "/api/killings",
 
-  // maleContacts:  function(){
-  //   return this.models.filter(function(contact){
-  //     return contact.get('gender') === 'Male'
-  //   });
-  // },
+  markerMap: function(){
+    return new KillingList();
+  },
+
+  ageMap: function(){
+    var AgeList =  Backbone.Collection.extend({
+      model: Killing,
+      url: "/api/killings",
+      query: "victim_age"
+    });
+    return new AgeList();
+  },
 
   armedOrUnarmedKillings: function(){
-    // var armedOrUnarmedList = this.models.filter(function(killing){
-    //   var unarmed = killing.get('victim_unarmed');
-    //   return unarmed === true || unarmed === false;
-    // });
-  //or coule be .map, look at mdn array prototype methods
     var ArmedOrUnarmedList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/armed_or_unarmed",
-      filter: "victim_unarmed"
+      query: "victim_unarmed"
     });
-    // return new ArmedOrUnarmedList(armedOrUnarmedList);
     return new ArmedOrUnarmedList();
   },
 });

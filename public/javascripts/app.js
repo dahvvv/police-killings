@@ -23,7 +23,7 @@ $(function(){
   }).setView([37.2,-98.5795],4);
 
 
-  var killingList = new KillingList({search: ""});
+  var killingList = new KillingList();
   killingList.listenToOnce(killingList, 'reset', makeHeatMap);
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
   killingList.fetch({reset: true});

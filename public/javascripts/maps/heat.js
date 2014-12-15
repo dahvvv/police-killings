@@ -15,8 +15,8 @@ function makeHeatMap(){
   });
   // var radius = radius;
   heatLayer = L.heatLayer(coords, {
-    radius: 25,
-    // blur: 0,
+    radius: 27,
+    // blur: 10,
     gradient: gradient1,
     maxZoom: 9,
   });

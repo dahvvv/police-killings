@@ -20,10 +20,17 @@ function featureToGeoFormat(options){
       },
       "properties": {
         "marker-size": "small",
+        "query": options.query,
         "name": options.name,
         "age": options.age,
+        "gender": options.gender,
         "unarmed": options.unarmed,
-        "filter": options.filter
+        "shots": options.shots,
+        "illness": options.illness,
+        "address": options.address,
+        "description": options.description,
+        "img": options.img,
+        "source": options.source
       }
     };
   return geoFeature;
@@ -35,13 +42,6 @@ var geoStyle = {
   radius: 7,
   fillOpacity: 0.8,
   opacity: 0.8,
-};
-
-function styleVictimUnarmed(feature){
-  switch (feature.properties.unarmed){
-    case true: return {fillColor: 'black'};
-    case false: return {fillColor: 'lightblue'};
-  }
 };
 
 function addGeoLayer(geoData){
@@ -56,8 +56,9 @@ function addGeoLayer(geoData){
       return L.circleMarker(latlng, geoStyle);
     },
     style: function(feature){
-      switch (feature.properties.filter){
+      switch (feature.properties.query){
         case "victim_unarmed": return styleVictimUnarmed(feature);
+        case "victim_age": return styleVictimAge(feature);
       }
     }
   });
@@ -66,10 +67,10 @@ function addGeoLayer(geoData){
 
 function makeGeoMap(){
   var geoFeatureArr = [];
-  var filter = this.filter;
+  var query = this.query;
   this.toJSON().forEach(function(elem){
     var options = {
-      filter: filter,
+      query: query,
       lat: elem.lat,
       lon: elem.lng,
       address: elem.formatted_address,

@@ -8,8 +8,6 @@ $(function(){
   nativeCanvasSupport = (typeOfCanvas == 'object' || typeOfCanvas == 'function'),
   textSupport = nativeCanvasSupport 
     && (typeof document.createElement('canvas').getContext('2d').fillText == 'function');
-  //I'm setting this based on the fact that ExCanvas provides text support for IE
-  //and that as of today iPhone/iPad current text support is lame
   labelType = (!nativeCanvasSupport || (textSupport && !iStuff))? 'Native' : 'HTML';
   nativeTextSupport = labelType == 'Native';
   useGradients = nativeCanvasSupport;
@@ -26,21 +24,7 @@ $(function(){
     }
   };
 
-  var jsonUnarmed = {
-    'label': ['label A'],
-    'values': [
-      {
-        'label': 'unarmed',
-        'values': [223]
-      }, 
-      {
-        'label': 'armed',
-        'values': [801]
-      }
-    ]
-  };
-
-  var barChart = new $jit.BarChart({
+  var victimArmedChart = new $jit.BarChart({
     injectInto: 'infovis',
     animate: true,
     orientation: 'vertical',
@@ -69,5 +53,5 @@ $(function(){
     },
   });
 
-  barChart.loadJSON(jsonUnarmed);
+  victimArmedChart.loadJSON(chartJSONUnarmed);
 });

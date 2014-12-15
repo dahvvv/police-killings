@@ -1,9 +1,21 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click .button-unarmed" : "armedOrUnarmed",
+    "click .button-home" : "home",
     "click .button-markers" : "markerMap",
-    "click .button-home" : "home"
+    "click .button-age" : "ageMap",
+    "click .button-unarmed" : "armedOrUnarmed",
+  },
+
+  markerMap: function(){
+    var filteredCollection = this.collection.markerMap();
+    this.filteredToGeoMap(filteredCollection);
+  },
+
+  ageMap: function(){
+    var filteredCollection = this.collection.ageMap();
+    debugger;
+    this.filteredToGeoMap(filteredCollection);
   },
 
   armedOrUnarmed: function(){
