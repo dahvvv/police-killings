@@ -51,7 +51,7 @@ function popupImage(feature){
 };
 
 function popupContent(feature){
-  return '<h5>' + feature.properties.name + '</h5>' + popupImage(feature) + '<p>' + feature.properties.description + '</p>'
+  return '<h5>' + feature.properties.name + ', ' + feature.properties.age + '</h5>' + popupImage(feature) + '<p>' + feature.properties.description + '</p><a href="' + feature.properties.source + '" target="_blank">Source</a>'
 };
 
 function addGeoLayer(geoData){

@@ -39,6 +39,7 @@ var KillingListView = Backbone.View.extend({
       filter: "none"
     };
     this.collection.listenToOnce(this.collection, 'reset', makeHeatMap);
+    // this.collection.listenToOnce(this.collection, 'reset', makeJSHeat);
     this.collection.fetch({reset: true});
   },
 });

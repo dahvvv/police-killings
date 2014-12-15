@@ -419,7 +419,7 @@ end
 #   end
 # end
 
-# path = "lib/ages_data.csv"
+# path = "lib/column_weights/ages_data.csv"
 # age = 1
 # total = 0.0
 # CSV.open(path, "a") do |csv|

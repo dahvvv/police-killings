@@ -2,6 +2,7 @@ body {
   background-color: rgb(206,213,173);
   margin: 0;
   padding: 0;
+  font-family: Helvetica;
 }
 
 #container {
@@ -16,6 +17,14 @@ body {
   width: 62%;
   top: 0%;
   left: 19%;
+}
+
+.program {
+  position: absolute;
+  height: 67%;
+  width: 22%;
+  bottom: 10%;
+  left: 2%;
 }
 
 #chart-wrapper {

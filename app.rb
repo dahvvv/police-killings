@@ -12,19 +12,6 @@ get '/console' do
   binding.pry
 end
 
-
-get '/api/killings/age/:min/:max' do
-  content_type :json
-  if params[:min]!="nil" && params[:max]!="nil"
-    killings = Killing.where("victim_age >= ? AND victim_age <= ?", params[:min], params[:max])
-  elsif params[:min]!="nil"
-    killings = Killing.where("victim_age >= ?", params[:min])
-  else
-    killings = Killing.where("victim_age <= ?", params[:max])
-  end
-  killings.to_json
-end
-
 get '/api/killings/name/:name' do
   content_type :json
   killings = Killing.where("victim_name = ?", params[:name])
@@ -46,6 +33,11 @@ end
 get '/api/killings/armed_or_unarmed' do
   content_type :json
   Killing.where("victim_unarmed = 'true' OR victim_unarmed = 'false'").to_json
+end
+
+get '/api/killings/victim_age' do
+  content_type :json
+  Killing.where("victim_age > '0'").to_json
 end
 
 get '/api/killings/:id' do
