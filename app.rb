@@ -35,6 +35,11 @@ get '/api/killings/armed_or_unarmed' do
   Killing.where("victim_unarmed = 'true' OR victim_unarmed = 'false'").to_json
 end
 
+get "/api/killings/victim_age/min/:min/max/:max" do
+  content_type :json
+  Killing.where("victim_age >= ? AND victim_age <= ?", params[:min], params[:max]).to_json
+end
+
 get '/api/killings/victim_age' do
   content_type :json
   Killing.where("victim_age > '0'").to_json

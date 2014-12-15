@@ -11,6 +11,12 @@
   <script src="/javascripts/lib/heatmap.js"></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 
+
+
+  <title>Police Killings</title>
+</head>
+<body>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.0/leaflet-heat.js'></script>
   <script src="/javascripts/models/Killing.js"></script>
   <script src="/javascripts/collections/KillingList.js"></script>
   <script src="/javascripts/views/KillingView.js"></script>
@@ -22,11 +28,6 @@
   <script src="/javascripts/charts/chart_data.js"></script>
   <script src="/javascripts/charts/chart_styles.js"></script>
   <script src="/javascripts/app.js"></script>
-
-  <title>Police Killings</title>
-</head>
-<body>
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.0/leaflet-heat.js'></script>
 
   <%= yield %>
 </body>

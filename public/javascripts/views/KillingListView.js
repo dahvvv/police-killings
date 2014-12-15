@@ -1,11 +1,26 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click .home" : "home",
+    "click .home" : "heatMap",
     "click .markers" : "markerMap",
-    // "click .age-heat" : "ageHeatMap",
+    "submit #age-range" : "ageHeatMap",
     "click .age-marker" : "ageMarkMap",
     "click .unarmed" : "armedOrUnarmed",
+  },
+
+  heatMap: function(){
+    var filteredCollection = this.collection.heatMap();
+    this.filteredToHeatMap(filteredCollection);
+  },
+
+  home: function(){
+    var context = {
+      collection: this.collection,
+      filter: "none"
+    };
+    this.collection.listenToOnce(this.collection, 'reset', makeHeatMap);
+    this.collection.listenToOnce(this.collection, 'reset', makeJSHeat);
+    this.collection.fetch({reset: true});
   },
 
   markerMap: function(){
@@ -13,9 +28,13 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  ageHeatMap: function(){
-    var filteredCollection = this.collection.ageHeatMap();
-    this.filteredToGeoMap(filteredCollection);
+  ageHeatMap: function(e){
+    alert('boom')
+    e.preventDefault();
+    var ageMin = this.$el.find($('#age-min')).val();
+    var ageMax = this.$el.find($('#age-max')).val();
+    var filteredCollection = this.collection.ageHeatMap(ageMin,ageMax);
+    this.filteredToHeatMap(filteredCollection);
   },
 
   ageMarkMap: function(){
@@ -34,18 +53,9 @@ var KillingListView = Backbone.View.extend({
     filter.fetch({reset: true});
   },
 
-  filteredToHeatMap: function(){
-    this.listenToOnce(this, 'reset', makeHeatMap);
-    this.fetch({reset: true});
-  },
-
-  home: function(){
-    var context = {
-      collection: this.collection,
-      filter: "none"
-    };
-    this.collection.listenToOnce(this.collection, 'reset', makeHeatMap);
-    // this.collection.listenToOnce(this.collection, 'reset', makeJSHeat);
-    this.collection.fetch({reset: true});
+  filteredToHeatMap: function(filter){
+    // filter.listenToOnce(filter, 'reset', makeChart);
+    filter.listenToOnce(filter, 'reset', makeHeatMap);
+    filter.fetch({reset: true});
   },
 });
