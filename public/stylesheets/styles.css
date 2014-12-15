@@ -1,5 +1,5 @@
 body {
-  background-color: lightblue;
+  background-color: rgb(206,213,173);
   margin: 0;
   padding: 0;
 }
@@ -12,10 +12,10 @@ body {
 
 .map {
   position: absolute;
-  height: 60%;
-  width: 60%;
-  top: 10%;
-  left: 20%;
+  height: 65%;
+  width: 62%;
+  top: 0%;
+  left: 19%;
 }
 
 #chart-wrapper {

@@ -17,8 +17,8 @@ L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd
 var geoLayer;
 
 $(function(){
-
-  map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
+  // map = L.mapbox.map('map-one', 'examples.map-i86l3621', {
+  map = L.mapbox.map('map-one', 'marpborxmarrrpborrrrrx.kg7bjg5l', {
     // scrollWheelZoom: false,
   }).setView([37.2,-98.5795],4);
 
