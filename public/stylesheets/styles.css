@@ -10,6 +10,21 @@ body {
   height: 43em;
   width: 100%;
   margin: 0px;
+  padding: 1em;
+}
+
+.frustrated-button {
+  margin-bottom: 1em;
+}
+
+.button-filter {
+  display: block;
+  margin-bottom: 1em;
+}
+
+#age-range input, label {
+  margin: 0.5em 1em;
+  display: none;
 }
 
 .map {
@@ -19,6 +34,31 @@ body {
   width: 62%;
   top: 0%;
   left: 19%;
+}
+
+#display-selectors {
+  position: absolute;
+  height: 6%;
+  width: 62%;
+  top: 62%;
+  left: 19%;
+  background: rgba(214,154,137,0.4);
+}
+
+.display-selector {
+  display: inline;
+  top: 33%;
+  position: absolute;
+}
+
+#heatmap-selector {
+  left: 10%;
+}
+#markers-selector {
+  left: 45%;
+}
+#graph-selector {
+  right: 10%;
 }
 
 .program {
@@ -40,14 +80,4 @@ body {
 #infovis {
   height: 100%;
   width: 100%;
-}
-
-.button-filter {
-  display: block;
-  margin: 1em;
-}
-
-#age-range input, label {
-  margin: 0.3em 1em;
-  display: none;
 }

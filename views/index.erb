@@ -1,14 +1,13 @@
 <div id='container' class="">
-  <div id='map-one' class='map'> </div>
 
+  <button class="frustrated-button" id="heatmap-fru">Heatmap</button>
+  <button class="frustrated-button" id="marker-fru">Marker</button>
+  <button class="frustrated-button" id="graph-fru">Graph</button>
+
+  
   <button class="button-filter" id="heatmap">heatmap</button>
   <button class="button-filter" id="markers">markermap</button>
   <button class="button-filter" id="age-heat">by age heat</button>
-  <button class="button-filter" id="age-marker">by age marker</button>
-  <button class="button-filter" id="unarmed">victim armed/unarmed</button>
-
-  <%= erb :'_fifty_states_dropdown' %>
-
   <form id="age-range">
     <label for="age-min">Age Min:</label>
     <input type="text" id="age-min" name="age-min" />
@@ -16,6 +15,19 @@
     <input type="text" id="age-max" name="age-max" />
     <input class="age-range-submit" type="submit" value="Submit Age Range">
   </form>
+  <button class="button-filter" id="age-marker">by age marker</button>
+  <button class="button-filter" id="unarmed">victim armed/unarmed</button>
+
+  <%= erb :'_fifty_states_dropdown' %>
+
+  <div id='map-one' class='map'> </div>
+
+  <div id="display-selectors">
+    <span class="display-selector" id="heatmap-selector">Heatmap</span>
+    <span class="display-selector" id="markers-selector">Markers</span>
+    <span class="display-selector" id="graph-selector">Graph</span>
+  </div>
+
 
   <div class="program">
     <script type="template" id="pop-template">

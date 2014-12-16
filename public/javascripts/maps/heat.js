@@ -23,7 +23,10 @@ function makeHeatMap(){
     $('.map').animate({"height":"73%"},500);
     var state = this.state;
     setMapToStateView(state);
-  }
+  } else {
+    $('.map').animate({"height":"62%"},500);
+    map.setView([defaultLat,defaultLon],defaultZoom);
+  };
   heatLayer = L.heatLayer(coords, {
     radius: 27,
     // blur: 10,

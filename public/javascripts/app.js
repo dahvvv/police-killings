@@ -11,21 +11,37 @@ L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd
 
 var geoLayer;
 var heatLayer;
+var defaultLat = 38.376115424036016;
+var defaultLon = -97.470703125;
+var defaultZoom = 4;
+
+function changeDisplayType(){
+  alert(this);
+};
 
 $(function(){
   map = L.mapbox.map('map-one', 'marpborxmarrrpborrrrrx.kg7bjg5l', {
     scrollWheelZoom: false,
     draggable: true
-  }).setView([38.376115424036016,-97.470703125],4);
-
+  }).setView([defaultLat,defaultLon],defaultZoom);
 
   var killingList = new KillingList();
   killingList.listenToOnce(killingList, 'reset', makeHeatMap);
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
   killingList.fetch({reset: true});
 
+  $('.frustrated-button').on('click', function(e){
+    debugger;
+  });
+
   $('#age-heat').on('click', function(e){
     $('#age-range').children().toggle().css({"display":"block"});
   });
+
+  $('.display-selector').on('click', function(e){
+    alert('ay');
+  });
+
+
   
 });
