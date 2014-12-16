@@ -1,27 +1,17 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click .home" : "heatMap",
-    "click .markers" : "markerMap",
+    "click #heatmap" : "heatMap",
+    "click #markers" : "markerMap",
     "submit #age-range" : "ageHeatMap",
-    "click .age-marker" : "ageMarkMap",
-    "submit #state-selector" : "stateViewHeatMap",
-    "click .unarmed" : "armedOrUnarmed",
+    "click #age-marker" : "ageMarkMap",
+    "change #state-selector" : "stateViewHeatMap",
+    "click #unarmed" : "armedOrUnarmed",
   },
 
   heatMap: function(){
     var filteredCollection = this.collection.heatMap();
     this.filteredToHeatMap(filteredCollection);
-  },
-
-  home: function(){
-    var context = {
-      collection: this.collection,
-      filter: "none"
-    };
-    this.collection.listenToOnce(this.collection, 'reset', makeHeatMap);
-    this.collection.listenToOnce(this.collection, 'reset', makeJSHeat);
-    this.collection.fetch({reset: true});
   },
 
   markerMap: function(){
@@ -45,7 +35,7 @@ var KillingListView = Backbone.View.extend({
 
   stateViewHeatMap: function(e){
     e.preventDefault();
-    var state = this.$el.find($('#state')).val();
+    var state = this.$el.find('#state-dropdown').val();
     var filteredCollection = this.collection.stateViewHeatMap(state);
     this.filteredToHeatMap(filteredCollection);
   },

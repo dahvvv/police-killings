@@ -24,8 +24,7 @@ $(function(){
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
   killingList.fetch({reset: true});
 
-  $('.age-heat').on('click', function(e){
-    e.preventDefault();
+  $('#age-heat').on('click', function(e){
     $('#age-range').children().toggle().css({"display":"block"});
   });
   

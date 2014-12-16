@@ -42,12 +42,7 @@ body {
   width: 100%;
 }
 
-button {
-  display: block;
-  margin: 1em;
-}
-
-#state-selector input, label {
+.button-filter {
   display: block;
   margin: 1em;
 }

@@ -1,16 +1,13 @@
 <div id='container' class="">
   <div id='map-one' class='map'> </div>
 
-  <button class="home">heatmap</button>
-  <button class="markers">markermap</button>
-  <button class="age-heat">by age heat</button>
-  <button class="age-marker">by age marker</button>
-  <button class="unarmed">victim armed/unarmed</button>
+  <button class="button-filter" id="heatmap">heatmap</button>
+  <button class="button-filter" id="markers">markermap</button>
+  <button class="button-filter" id="age-heat">by age heat</button>
+  <button class="button-filter" id="age-marker">by age marker</button>
+  <button class="button-filter" id="unarmed">victim armed/unarmed</button>
 
-  <form id="state-selector" action="">
-    <input type="text" id="state" name="state" placeholder="...AK">
-    <input type="submit" value="state view">
-  </form>
+  <%= erb :'_fifty_states_dropdown' %>
 
   <form id="age-range">
     <label for="age-min">Age Min:</label>
