@@ -84,21 +84,7 @@ function makeGeoMap(){
   var geoFeatureArr = [];
   var query = this.query;
   this.toJSON().forEach(function(elem){
-    var options = {
-      query: query,
-      lat: elem.lat,
-      lon: elem.lng,
-      address: elem.formatted_address,
-      name: elem.victim_name,
-      age: elem.victim_age,
-      gender: elem.victim_gender,
-      img: elem.url_victim_image,
-      source: elem.source,
-      description: elem.description,
-      unarmed: elem.victim_unarmed,
-      shots: elem.shots_fired,
-      illness: elem.symptoms_of_mental_illness
-    };
+    var options = jsonElemToObjLiteral(elem,query);
     var geoFeature = featureToGeoFormat(options);
     geoFeatureArr.push(geoFeature);
   });

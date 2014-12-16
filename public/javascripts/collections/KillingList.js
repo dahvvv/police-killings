@@ -18,6 +18,15 @@ var KillingList = Backbone.Collection.extend({
     return new KillingList();
   },
 
+  usPopGraph: function(){
+    var CityList = Backbone.Collection.extend({
+      model: Killing,
+      url: "/api/killings",
+      query: "city"
+    });
+    return new CityList();
+  },
+
   ageHeat: function(ageMin,ageMax){
     var min = ageMin;
     var max = ageMax;

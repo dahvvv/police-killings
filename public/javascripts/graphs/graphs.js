@@ -4,6 +4,7 @@ function selectGraphStyle(query){
   switch(query){
     case "victim_unarmed": return unarmedGraphStyle();
     case "victim_age": return ageGraphStyle();
+    case "city": return cityGraphStyle();
   }
 };
 
@@ -11,6 +12,7 @@ function selectGraphData(query){
   switch(query){
     case "victim_unarmed": return unarmedGraphData();
     case "victim_age": return ageGraphData();
+    case "city": return cityGraphData();
   }
 };
 

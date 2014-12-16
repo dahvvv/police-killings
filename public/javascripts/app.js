@@ -1,20 +1,5 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd3ZZIn0.VNcoUZ2TFXUuID8JQ2-t2A';
 
-// map.featureLayer.eachLayer(function(layer) {
-//           var item = markerList.appendChild(document.createElement('li'));
-//           item.innerHTML = layer.toGeoJSON().properties.title;
-//           item.onclick = function() {
-//              map.setView(layer.getLatLng(), 14);
-//              layer.openPopup();
-//           };
-//       });
-
-var geoLayer;
-var heatLayer;
-var defaultLat = 37.78808138412046;
-var defaultLon = -94.39453125;
-var defaultZoom = 4;
-
 function triggerBang(context){
   $(context).trigger('change');
 };
@@ -25,6 +10,31 @@ function replaceDisplaySelector(context){
   $(that).addClass('display-type');
   triggerBang(that);
 };
+
+function jsonElemToObjLiteral(elem,query){
+  var options = {
+    query: query,
+    lat: elem.lat,
+    lon: elem.lng,
+    address: elem.formatted_address,
+    name: elem.victim_name,
+    age: elem.victim_age,
+    gender: elem.victim_gender,
+    img: elem.url_victim_image,
+    source: elem.source,
+    description: elem.description,
+    unarmed: elem.victim_unarmed,
+    shots: elem.shots_fired,
+    illness: elem.symptoms_of_mental_illness
+  };
+  return options;
+};
+
+var geoLayer;
+var heatLayer;
+var defaultLat = 37.78808138412046;
+var defaultLon = -94.39453125;
+var defaultZoom = 4;
 
 $(function(){
   map = L.mapbox.map('map-one', 'marpborxmarrrpborrrrrx.kg7bjg5l', {

@@ -24,7 +24,6 @@ var KillingListView = Backbone.View.extend({
 
   markerMap: function(){
     var filter = $('.filter-type').attr('id');
-    debugger;
     if (filter==="usPop-filter") {
       this.usPopMarker();
     } else if (filter==="age-filter") {
@@ -35,7 +34,6 @@ var KillingListView = Backbone.View.extend({
   },
 
   graph: function(){
-    debugger;
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
       this.usPopGraph();
@@ -79,7 +77,8 @@ var KillingListView = Backbone.View.extend({
   },
 
   usPopGraph: function(){
-    alert('do this once you get the one graph you actually have to work');
+    var filteredCollection = this.collection.usPopGraph();
+    this.filteredToGraph(filteredCollection);
   },
 
   ageHeat: function(){
