@@ -5,6 +5,7 @@ var KillingListView = Backbone.View.extend({
     "click .markers" : "markerMap",
     "submit #age-range" : "ageHeatMap",
     "click .age-marker" : "ageMarkMap",
+    "submit #state-selector" : "stateViewHeatMap",
     "click .unarmed" : "armedOrUnarmed",
   },
 
@@ -40,6 +41,13 @@ var KillingListView = Backbone.View.extend({
   ageMarkMap: function(){
     var filteredCollection = this.collection.ageMarkMap();
     this.filteredToGeoMap(filteredCollection);
+  },
+
+  stateViewHeatMap: function(e){
+    e.preventDefault();
+    var state = this.$el.find($('#state')).val();
+    var filteredCollection = this.collection.stateViewHeatMap(state);
+    this.filteredToHeatMap(filteredCollection);
   },
 
   armedOrUnarmed: function(){

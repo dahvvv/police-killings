@@ -28,7 +28,7 @@ function styleVictimAge(feature){
   var upperBound = 107;
   var regR = 5;
   var maxR = 10;
-  switch(true){
+  switch (true){
     case (x < 6): return {fillColor: "#0D0000", radius: rScaleLower(x,lowStandDev,regR,maxR)};
     case (x < 11 && x > 5): return {fillColor: "#260000", radius: rScaleLower(x,lowStandDev,regR,maxR)};
     case (x < 16 && x > 10): return {fillColor: "#5A0000", radius: rScaleLower(x,lowStandDev,regR,maxR)};

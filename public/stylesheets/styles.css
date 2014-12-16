@@ -47,6 +47,11 @@ button {
   margin: 1em;
 }
 
+#state-selector input, label {
+  display: block;
+  margin: 1em;
+}
+
 #age-range input, label {
   margin: 0.3em 1em;
   display: none;

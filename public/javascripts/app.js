@@ -28,8 +28,5 @@ $(function(){
     e.preventDefault();
     $('#age-range').children().toggle().css({"display":"block"});
   });
-
-
-
   
 });

@@ -30,6 +30,17 @@ var KillingList = Backbone.Collection.extend({
     return new AgeListRanged();
   },
 
+  stateViewHeatMap: function(state){
+    var state = state;
+    var StateList = Backbone.Collection.extend({
+      model: Killing,
+      url: "/api/killings/state/" + state,
+      query: "state",
+      state: state
+    });
+    return new StateList();
+  },
+
   armedOrUnarmedKillings: function(){
     var ArmedOrUnarmedList = Backbone.Collection.extend({
       model: Killing,
