@@ -16,7 +16,7 @@ $(function(){
   map = L.mapbox.map('map-one', 'marpborxmarrrpborrrrrx.kg7bjg5l', {
     scrollWheelZoom: false,
     draggable: true
-  }).setView([37.2,-98.5795],4);
+  }).setView([38.376115424036016,-97.470703125],4);
 
 
   var killingList = new KillingList();
@@ -27,9 +27,6 @@ $(function(){
   $('.age-heat').on('click', function(e){
     e.preventDefault();
     $('#age-range').children().toggle().css({"display":"block"});
-    // $('#age-range').on('submit', function(e){
-    //   alert('ok');
-    // });
   });
 
 

@@ -9,11 +9,13 @@ body {
   position: relative;
   height: 43em;
   width: 100%;
+  margin: 0px;
 }
 
 .map {
   position: absolute;
-  height: 60%;
+  height: 62%; /* for main view */
+/*  height: 73%; */ /* for state view */
   width: 62%;
   top: 0%;
   left: 19%;

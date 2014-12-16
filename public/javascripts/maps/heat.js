@@ -1,8 +1,17 @@
 var gradient1 = {
+  0: 'black',
+  0.2: 'purple',
+  0.4: 'blue',
+  0.6: 'green',
+  0.9: 'yellow',
+  1: 'red'
+};
+
+var gradientStateView = {
   0: 'purple',
-  0.6: 'blue',
-  0.8: 'green',
-  0.98: 'yellow',
+  0.1: 'blue',
+  0.2: 'green',
+  0.4: 'yellow',
   1: 'red'
 };
 
@@ -37,7 +46,8 @@ function makeHeatMap(){
     radius: 27,
     // blur: 10,
     gradient: gradient1,
-    maxZoom: setMaxZoom(numDatapoints),
+    // maxZoom: setMaxZoom(numDatapoints),
+    maxZoom: 10,
     max: 1
   });
   heatLayer.addTo(map);
