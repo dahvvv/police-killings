@@ -11,8 +11,8 @@ L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd
 
 var geoLayer;
 var heatLayer;
-var defaultLat = 38.376115424036016;
-var defaultLon = -97.470703125;
+var defaultLat = 37.78808138412046;
+var defaultLon = -94.39453125;
 var defaultZoom = 4;
 
 $(function(){
@@ -30,9 +30,13 @@ $(function(){
     $('#age-range').children().toggle().css({"display":"block"});
   });
 
-  $('.display-selector').on('click', function(){
+  $('.display-selector').on('click', function(e){
+    // e.preventDefault();
     $('.display-selector').removeClass('display-type');
     $(this).addClass('display-type');
+    // var filterType = $('.filter-type').attr('id');
+    // $('body').data("filter", filterType);
+    // $(this).trigger('custom');
   });
 
   $('.button-filter').on('click', function(){

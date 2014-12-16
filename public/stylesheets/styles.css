@@ -1,8 +1,8 @@
 body {
-  background-color: rgba(206,213,173,1);
+  background-color: #c8cdcf;
   margin: 0px;
   padding: 0px;
-  font-family: Helvetica;
+  font-family: Arial black;
 }
 
 #container {
@@ -37,37 +37,41 @@ body {
 
 .map {
   position: absolute;
-  height: 62%; /* for main view */
+  height: 65%; /* for main view */
 /*  height: 73%; */ /* for state view */
-  width: 62%;
+  width: 69%;
   top: 0%;
-  left: 19%;
+  left: 15%;
 }
 
 .display-selector {
   display: inline;
   position: absolute;
   border: none;
-  font-size: 1.2em;
+  font-size: 1.3em;
+  letter-spacing: 2px;
   border-radius: 6px;
   font-family: 'Oswald';
-  height: 6%;
-  width: 21%;
-  top: 62%;}
+  height: 8%;
+  width: 23%;
+  top: 65%;
+  background-color: rgba(136,123,107,0.4);
+  cursor: pointer;
+}
 
 #heatmaps-selector {
-  left: 19%;
+  left: 15%;
 }
 #markers-selector {
-  left: 40%;
+  left: 38%;
 }
 #graph-selector {
   left: 61%;
 }
 
 .display-selector.display-type {
-  background-color: #ddd;
-  font-size: 1.4em;
+  background-color: rgba(136,123,107,0.6);
+  font-size: 1.7em;
 }
 
 .program {

@@ -9,7 +9,7 @@ var KillingListView = Backbone.View.extend({
     "click #markers" : "usPopMarker",
     "submit #age-range" : "ageHeat",
     "click #age-marker" : "ageMarker",
-    "change #state-selector" : "stateHeat",
+    "change #state" : "stateHeat",
     "click #unarmed" : "armedOrUnarmed",
   },
 
@@ -63,6 +63,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   usPopMarker: function(){
+    debugger;
     var filteredCollection = this.collection.usPopMarker();
     this.filteredToGeoMap(filteredCollection);
   },
@@ -91,7 +92,7 @@ var KillingListView = Backbone.View.extend({
 
   stateHeat: function(e){
     e.preventDefault();
-    var state = this.$el.find('#state-dropdown').val();
+    var state = this.$el.find('#state').val();
     var filteredCollection = this.collection.stateHeat(state);
     this.filteredToHeatMap(filteredCollection);
   },

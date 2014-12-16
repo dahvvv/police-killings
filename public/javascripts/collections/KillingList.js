@@ -2,6 +2,14 @@ var KillingList = Backbone.Collection.extend({
   model: Killing,
   url: "/api/killings",
 
+  // heatMap: function(){
+  //   return new KillingList();
+  // },
+
+  // markerMap: function(){
+  //   return new KillingList();
+  // },
+
   usPopHeat: function(){
     return new KillingList();
   },
@@ -10,7 +18,16 @@ var KillingList = Backbone.Collection.extend({
     return new KillingList();
   },
 
-  ageHeat: function(ageMin,ageMax){
+  ageMarkMap: function(){
+    var AgeList =  Backbone.Collection.extend({
+      model: Killing,
+      url: "/api/killings/victim_age",
+      query: "victim_age"
+    });
+    return new AgeList();
+  },
+
+  ageHeatMap: function(ageMin,ageMax){
     var min = ageMin;
     var max = ageMax;
     var AgeListRanged =  Backbone.Collection.extend({
@@ -21,22 +38,12 @@ var KillingList = Backbone.Collection.extend({
     return new AgeListRanged();
   },
 
-  ageMarker: function(){
-    var AgeList =  Backbone.Collection.extend({
-      model: Killing,
-      url: "/api/killings/victim_age",
-      query: "victim_age"
-    });
-    return new AgeList();
-  },
-
-  stateHeat: function(state){
+  stateViewHeatMap: function(state){
     var state = state;
     var StateList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/state/" + state,
-      query: "state",
-      state: state
+      query: "state"
     });
     return new StateList();
   },
