@@ -1,47 +1,47 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click #heatmaps-selector" : "heatMap",
-    "click #markers-selector" : "markerMap",
-    "click #graph-selector" : "graph",
-    "click #usPop" : "usPop",
-    "click #heatmap" : "usPopHeat",
-    "click #markers" : "usPopMarker",
+    "change #heatmaps-selector" : "heatMap",
+    "change #markers-selector" : "markerMap",
+    "change #graphs-selector" : "graph",
+    "click #usPop-filter" : "usPop",
+    "click #age-filter" : "age",
     "submit #age-range" : "ageHeat",
-    "click #age-marker" : "ageMarker",
     "change #state" : "stateHeat",
     "click #unarmed" : "armedOrUnarmed",
   },
 
   heatMap: function(){
     var filter = $('.filter-type').attr('id');
-    if (filter==="usPop") {
+    if (filter==="usPop-filter") {
       this.usPopHeat();
-    } else if (filter==="age") {
+    } else if (filter==="age-filter") {
       this.ageHeat();
-    } else if (filter==="state") {
+    } else if (filter==="state-filter") {
       this.stateHeat();
     };
   },
 
   markerMap: function(){
     var filter = $('.filter-type').attr('id');
-    if (filter==="usPop") {
+    debugger;
+    if (filter==="usPop-filter") {
       this.usPopMarker();
-    } else if (filter==="age") {
+    } else if (filter==="age-filter") {
       this.ageMarker();
-    } else if (filter==="state") {
+    } else if (filter==="state-filter") {
       this.stateMarker();
     };
   },
 
   graph: function(){
+    debugger;
     var filter = $('.filter-type').attr('id');
-    if (filter==="usPop") {
+    if (filter==="usPop-filter") {
       this.usPopGraph();
-    } else if (filter==="age") {
+    } else if (filter==="age-filter") {
       this.ageGraph();
-    } else if (filter==="state") {
+    } else if (filter==="state-filter") {
       this.stateGraph();
     };
   },
@@ -57,23 +57,32 @@ var KillingListView = Backbone.View.extend({
     };
   },
 
+  age: function(){
+    var displayStyle = $('.displayType').attr('id');
+    if (displayStyle==="heatmaps-selector") {
+      return null
+    } else if (displayStyle==="markers-selector") {
+      this.ageMarker();
+    } else {
+      this.ageGraph();
+    };
+  },
+
   usPopHeat: function(){
     var filteredCollection = this.collection.usPopHeat();
     this.filteredToHeatMap(filteredCollection);
   },
 
   usPopMarker: function(){
-    debugger;
     var filteredCollection = this.collection.usPopMarker();
     this.filteredToGeoMap(filteredCollection);
   },
 
   usPopGraph: function(){
-    alert('fun');
+    alert('do this once you get the one graph you actually have to work');
   },
 
-  ageHeat: function(e){
-    e.preventDefault();
+  ageHeat: function(){
     var ageMin = this.$el.find($('#age-min')).val();
     var ageMax = this.$el.find($('#age-max')).val();
     $('#age-range').children().toggle().css;
@@ -87,7 +96,8 @@ var KillingListView = Backbone.View.extend({
   },
 
   ageGraph: function(){
-    alert('agegraph!');
+    var filteredCollection = this.collection.ageGraph();
+    this.filteredToGraph(filteredCollection);
   },
 
   stateHeat: function(e){
@@ -111,7 +121,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   filteredToGeoMap: function(filter){
-    filter.listenToOnce(filter, 'reset', makeChart);
+    // filter.listenToOnce(filter, 'reset', makeChart);
     filter.listenToOnce(filter, 'reset', makeGeoMap);
     filter.fetch({reset: true});
   },
@@ -119,6 +129,11 @@ var KillingListView = Backbone.View.extend({
   filteredToHeatMap: function(filter){
     // filter.listenToOnce(filter, 'reset', makeChart);
     filter.listenToOnce(filter, 'reset', makeHeatMap);
+    filter.fetch({reset: true});
+  },
+
+  filteredToGraph: function(filter){
+    filter.listenToOnce(filter, 'reset', makeGraph);
     filter.fetch({reset: true});
   },
 });

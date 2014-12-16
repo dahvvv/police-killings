@@ -1,29 +1,40 @@
 var labelType, useGradients, nativeTextSupport, animate;
 
-function selectChartStyle(query){
+function selectGraphStyle(query){
   switch(query){
-    case "victim_unarmed": return unarmedChartStyle();
-    case "victim_age": return ageChartStyle();
+    case "victim_unarmed": return unarmedGraphStyle();
+    case "victim_age": return ageGraphStyle();
   }
 };
 
-function selectChartData(query){
+function selectGraphData(query){
   switch(query){
-    case "victim_unarmed": return unarmedChartData();
-    case "victim_age": return ageChartData();
+    case "victim_unarmed": return unarmedGraphData();
+    case "victim_age": return ageGraphData();
   }
 };
 
-function makeChart(){
+function makeGraph(){
   $('#infovis').empty();
   var query = this.query;
-  var chartStyle = selectChartStyle(query);
-  var chartData = selectChartData(query);
-  if (chartStyle != undefined) {
-    var newChart = new $jit.BarChart(chartStyle);
-    newChart.loadJSON(chartData);
+  var graphStyle = selectGraphStyle(query);
+  var graphData = selectGraphData(query);
+  if (graphStyle != undefined) {
+    var newGraph = new $jit.BarChart(graphStyle);
+    newGraph.loadJSON(graphData);
   };
 };
+
+// function makeChart(){
+//   $('#infovis').empty();
+//   var query = this.query;
+//   var chartStyle = selectChartStyle(query);
+//   var chartData = selectChartData(query);
+//   if (chartStyle != undefined) {
+//     var newChart = new $jit.BarChart(chartStyle);
+//     newChart.loadJSON(chartData);
+//   };
+// };
 
 $(function(){
 

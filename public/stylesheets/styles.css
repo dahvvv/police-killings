@@ -10,7 +10,7 @@ body {
   height: 43em;
   width: 100%;
   margin: 0px;
-  padding: 1em;
+  padding: 0px;
 }
 
 .button-filter {
@@ -22,11 +22,12 @@ body {
   font-family: 'Oswald';
   font-size: 0.9em;
   padding: 0.6em 0.8em;
-  border: 1px solid #ccd;
+  background-color: rgba(136,123,107,0.4);
+  cursor: pointer;
 }
 
 .button-filter.filter-type {
-  background-color: #ddd;
+  background-color: rgba(136,123,107,0.6);
   font-size: 1.2em;
 }
 
@@ -65,7 +66,7 @@ body {
 #markers-selector {
   left: 38%;
 }
-#graph-selector {
+#graphs-selector {
   left: 61%;
 }
 

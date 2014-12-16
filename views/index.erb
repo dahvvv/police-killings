@@ -1,7 +1,6 @@
 <div id='container' class="">
-
-  <button class="button-filter filter-type" id="usPop">U.S. Population</button>
-  <button class="button-filter" id="age">Age</button>
+  <button class="button-filter filter-type" id="usPop-filter">U.S. Population</button>
+  <button class="button-filter" id="age-filter">Age</button>
   <form id="age-range">
     <label for="age-min">Age Min:</label>
     <input type="text" id="age-min" name="age-min" />
@@ -9,7 +8,7 @@
     <input type="text" id="age-max" name="age-max" />
     <input class="age-range-submit" type="submit" value="Submit Age Range">
   </form>
-  <button class="button-filter" id="age-marker">by age marker</button>
+<!--   <button class="button-filter" id="age-marker">by age marker</button> -->
   <button class="button-filter" id="unarmed">victim armed/unarmed</button>
 
   <%= erb :'_fifty_states_dropdown' %>
@@ -18,7 +17,7 @@
 
   <button class="display-selector display-type" id="heatmaps-selector">Heatmap</button>
   <button class="display-selector" id="markers-selector">Marker Map</button>
-  <button class="display-selector" id="graph-selector">Graph</button>
+  <button class="display-selector" id="graphs-selector">Graph</button>
 
 
   <div class="program">

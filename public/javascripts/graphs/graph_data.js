@@ -23,7 +23,7 @@ var deathsByAge =
 0,1,0,0,0];
 
 
-function unarmedChartData(){
+function unarmedGraphData(){
   var data = {
     'label': [''],
     'values': [
@@ -40,7 +40,7 @@ function unarmedChartData(){
   return data;
 };
 
-function ageChartValues(){
+function ageGraphValues(){
   var values = [];
   for (var age = 0; age < 110; age++) {
     var value = {
@@ -52,7 +52,7 @@ function ageChartValues(){
   return values;
 };
 
-function ageChartData(){
+function ageGraphData(){
   var data = {
     'label': [''],
     'values': ageChartValues()

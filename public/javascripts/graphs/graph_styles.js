@@ -1,4 +1,4 @@
-function unarmedChartStyle(){
+function unarmedGraphStyle(){
   var style = {
     injectInto: 'infovis',
     animate: true,
@@ -30,7 +30,7 @@ function unarmedChartStyle(){
   return style;
 };
 
-function ageChartStyle(){
+function ageGraphStyle(){
   var style = {
     injectInto: 'infovis',
     animate: true,

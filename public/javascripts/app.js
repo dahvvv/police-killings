@@ -15,9 +15,20 @@ var defaultLat = 37.78808138412046;
 var defaultLon = -94.39453125;
 var defaultZoom = 4;
 
+function triggerBang(context){
+  $(context).trigger('change');
+};
+
+function replaceDisplaySelector(context){
+  var that = context;
+  $('.display-selector').removeClass('display-type');
+  $(that).addClass('display-type');
+  triggerBang(that);
+};
+
 $(function(){
   map = L.mapbox.map('map-one', 'marpborxmarrrpborrrrrx.kg7bjg5l', {
-    scrollWheelZoom: false,
+    scrollWheelZoom: true,
     draggable: true
   }).setView([defaultLat,defaultLon],defaultZoom);
 
@@ -26,17 +37,15 @@ $(function(){
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
   killingList.fetch({reset: true});
 
-  $('#age-heat').on('click', function(e){
+  $('#age-filter').on('click', function(e){
+    debugger;
     $('#age-range').children().toggle().css({"display":"block"});
   });
 
   $('.display-selector').on('click', function(e){
-    // e.preventDefault();
-    $('.display-selector').removeClass('display-type');
-    $(this).addClass('display-type');
-    // var filterType = $('.filter-type').attr('id');
-    // $('body').data("filter", filterType);
-    // $(this).trigger('custom');
+    e.preventDefault();
+    var that = this;
+    replaceDisplaySelector(that);
   });
 
   $('.button-filter').on('click', function(){
@@ -44,6 +53,4 @@ $(function(){
     $(this).addClass('filter-type');
   });
 
-
-  
 });
