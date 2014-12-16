@@ -15,10 +15,6 @@ var defaultLat = 38.376115424036016;
 var defaultLon = -97.470703125;
 var defaultZoom = 4;
 
-function changeDisplayType(){
-  alert(this);
-};
-
 $(function(){
   map = L.mapbox.map('map-one', 'marpborxmarrrpborrrrrx.kg7bjg5l', {
     scrollWheelZoom: false,
@@ -30,16 +26,13 @@ $(function(){
   var killingListView = new KillingListView({collection: killingList, el: $('body')});
   killingList.fetch({reset: true});
 
-  $('.frustrated-button').on('click', function(e){
-    debugger;
-  });
-
   $('#age-heat').on('click', function(e){
     $('#age-range').children().toggle().css({"display":"block"});
   });
 
-  $('.display-selector').on('click', function(e){
-    alert('ay');
+  $('.display-selector').on('click', function(){
+    $('.display-selector').removeClass('display-type');
+    $(this).addClass('display-type');
   });
 
 

@@ -15,6 +15,7 @@ body {
 
 .frustrated-button {
   margin-bottom: 1em;
+  border: none;
 }
 
 .button-filter {
@@ -47,18 +48,28 @@ body {
 
 .display-selector {
   display: inline;
-  top: 33%;
   position: absolute;
-}
+  border: none;
+  font-size: 1.2em;
+  border-radius: 6px;
+  font-family: 'Oswald';
+  height: 6%;
+  width: 21%;
+  top: 62%;}
 
-#heatmap-selector {
-  left: 10%;
+#heatmaps-selector {
+  left: 19%;
 }
 #markers-selector {
-  left: 45%;
+  left: 40%;
 }
 #graph-selector {
-  right: 10%;
+  left: 61%;
+}
+
+.display-selector.display-type {
+  background-color: #ddd;
+  font-size: 1.4em;
 }
 
 .program {
@@ -69,13 +80,14 @@ body {
   left: 2%;
 }
 
-#chart-wrapper {
+/*#chart-wrapper {
   position: absolute;
   left: 25%;
-  bottom: 4%;
-  height: 35%;
+  bottom: 5%;
+  height: 30%;
   width: 50%;
-}
+  background: blue;
+}*/
 
 #infovis {
   height: 100%;

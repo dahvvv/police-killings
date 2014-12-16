@@ -1,7 +1,7 @@
 var gradientMain = {
   0: 'black',
-  0.2: 'purple',
-  0.3: 'blue',
+  0.3: 'purple',
+  0.4: 'blue',
   0.5: 'green',
   0.9: 'yellow',
   0.995: 'orange',

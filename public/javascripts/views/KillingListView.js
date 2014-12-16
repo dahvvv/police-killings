@@ -1,22 +1,38 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "click #heatmap" : "heatMap",
-    "click #markers" : "markerMap",
+    "click #usPop" : "usPop",
+    "click #heatmap" : "usPopHeat",
+    "click #markers" : "usPopMarker",
     "submit #age-range" : "ageHeatMap",
     "click #age-marker" : "ageMarkMap",
     "change #state-selector" : "stateViewHeatMap",
     "click #unarmed" : "armedOrUnarmed",
   },
 
-  heatMap: function(){
-    var filteredCollection = this.collection.heatMap();
+  usPop: function(){
+    var displayStyle = $('.displayType').attr('id');
+    if (displayStyle==="heatmaps-selector") {
+      this.usPopHeat();
+    } else if (displayStyle==="markers-selector") {
+      this.usPopMarker();
+    } else {
+      this.usPopGraph();
+    };
+  },
+
+  usPopHeat: function(){
+    var filteredCollection = this.collection.usPopHeat();
     this.filteredToHeatMap(filteredCollection);
   },
 
-  markerMap: function(){
-    var filteredCollection = this.collection.markerMap();
+  usPopMarker: function(){
+    var filteredCollection = this.collection.usPopMarker();
     this.filteredToGeoMap(filteredCollection);
+  },
+
+  usPopGraph: function(){
+    alert('fun');
   },
 
   ageHeatMap: function(e){

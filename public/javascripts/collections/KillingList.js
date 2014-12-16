@@ -2,11 +2,11 @@ var KillingList = Backbone.Collection.extend({
   model: Killing,
   url: "/api/killings",
 
-  heatMap: function(){
+  usPopHeat: function(){
     return new KillingList();
   },
 
-  markerMap: function(){
+  usPopMarker: function(){
     return new KillingList();
   },
 
