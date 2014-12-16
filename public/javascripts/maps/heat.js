@@ -6,8 +6,21 @@ var gradient1 = {
   1: 'red'
 };
 
+function setMaxZoom(numDatapoints){
+  switch (true){
+    case (numDatapoints <= 10): return 1;
+    case (numDatapoints > 10 && numDatapoints <= 70): return 4;
+    case (numDatapoints > 70 && numDatapoints <= 200): return 5;
+    case (numDatapoints > 200 && numDatapoints <= 500) : return 6;
+    case (numDatapoints > 500 && numDatapoints <= 1000): return 7;
+    case (numDatapoints > 1000 && numDatapoints <= 1750): return 8;
+    default: return 9
+  }
+};
+
 function makeHeatMap(){
   var coords = [];
+  var numDatapoints = this.toJSON().length;
   this.toJSON().forEach(function(elem, i){
     var lat = elem.lat;
     var lon = elem.lng;
@@ -24,10 +37,9 @@ function makeHeatMap(){
     radius: 27,
     // blur: 10,
     gradient: gradient1,
-    maxZoom: 9,
+    maxZoom: setMaxZoom(numDatapoints),
     max: 1
   });
-  debugger;
   heatLayer.addTo(map);
 };
 

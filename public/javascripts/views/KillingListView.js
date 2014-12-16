@@ -29,7 +29,6 @@ var KillingListView = Backbone.View.extend({
   },
 
   ageHeatMap: function(e){
-    alert('boom')
     e.preventDefault();
     var ageMin = this.$el.find($('#age-min')).val();
     var ageMax = this.$el.find($('#age-max')).val();

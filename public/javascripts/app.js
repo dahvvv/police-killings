@@ -27,9 +27,9 @@ $(function(){
   $('.age-heat').on('click', function(e){
     e.preventDefault();
     $('#age-range').children().toggle().css({"display":"block"});
-    $('#age-range').on('submit', function(e){
-      alert('ok');
-    });
+    // $('#age-range').on('submit', function(e){
+    //   alert('ok');
+    // });
   });
 
 

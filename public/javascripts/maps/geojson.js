@@ -105,27 +105,3 @@ function makeGeoMap(){
   var geoData = geoJSONify(geoFeatureArr);
   addGeoLayer(geoData);
 };
-
-function makeHeatMap(){
-  var coords = [];
-  this.toJSON().forEach(function(elem, i){
-    var lat = elem.lat;
-    var lon = elem.lng;
-    coords.push([lat,lon]);
-  });
-  // var radius = radius;
-  if (map.hasLayer(geoLayer)) {
-    map.removeLayer(geoLayer);
-  };
-  if (map.hasLayer(heatLayer)) {
-    map.removeLayer(heatLayer);
-  };
-  heatLayer = L.heatLayer(coords, {
-    radius: 27,
-    // blur: 10,
-    gradient: gradient1,
-    maxZoom: 9,
-    max: 1
-  });
-  heatLayer.addTo(map);
-};
