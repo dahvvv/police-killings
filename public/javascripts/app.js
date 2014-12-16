@@ -35,6 +35,11 @@ $(function(){
     $(this).addClass('display-type');
   });
 
+  $('.button-filter').on('click', function(){
+    $('.button-filter').removeClass('filter-type');
+    $(this).addClass('filter-type');
+  });
+
 
   
 });

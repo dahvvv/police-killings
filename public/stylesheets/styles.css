@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(206,213,173);
+  background-color: rgba(206,213,173,1);
   margin: 0px;
   padding: 0px;
   font-family: Helvetica;
@@ -13,14 +13,21 @@ body {
   padding: 1em;
 }
 
-.frustrated-button {
-  margin-bottom: 1em;
-  border: none;
-}
-
 .button-filter {
   display: block;
+  height: 6%;
   margin-bottom: 1em;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Oswald';
+  font-size: 0.9em;
+  padding: 0.6em 0.8em;
+  border: 1px solid #ccd;
+}
+
+.button-filter.filter-type {
+  background-color: #ddd;
+  font-size: 1.2em;
 }
 
 #age-range input, label {
@@ -35,15 +42,6 @@ body {
   width: 62%;
   top: 0%;
   left: 19%;
-}
-
-#display-selectors {
-  position: absolute;
-  height: 6%;
-  width: 62%;
-  top: 62%;
-  left: 19%;
-  background: rgba(214,154,137,0.4);
 }
 
 .display-selector {
