@@ -3,14 +3,15 @@
     <div id='filters-container'>
       <button class="button-filter filter-type" id="usPop-filter">Population</button>
       <%= erb :'_fifty_states_dropdown' %>
+      <form id="age-range">
+        <label for="age-min">Age Min:</label>
+        <input type="text" id="age-min" name="age-min" />
+        <label for="age-max">Age Max:</label>
+        <input type="text" id="age-max" name="age-max" />
+        <input class="age-range-submit" type="submit" />
+      </form>
+      <button class="button-filter" id="race-filter">Race</button>
       <button class="button-filter" id="age-filter">Age</button>
-        <form id="age-range">
-          <label for="age-min">Age Min:</label>
-          <input type="text" id="age-min" name="age-min" />
-          <label for="age-max">Age Max:</label>
-          <input type="text" id="age-max" name="age-max" />
-          <input class="age-range-submit" type="submit" />
-        </form>
       <button class="button-filter" id="unarmed">Armed</button>
     </div>
 

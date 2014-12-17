@@ -1,42 +1,4 @@
-function geoJSONify(geoFeatureArr){
-  return [
-    {
-      "type": "FeatureCollection",
-      "features": geoFeatureArr
-    }
-  ]
-};
-
-function featureToGeoFormat(options){
-  var geoFeature = 
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          options.lon,
-          options.lat
-        ]
-      },
-      "properties": {
-        "marker-size": "small",
-        "query": options.query,
-        "name": options.name,
-        "age": options.age,
-        "gender": options.gender,
-        "unarmed": options.unarmed,
-        "shots": options.shots,
-        "illness": options.illness,
-        "address": options.address,
-        "description": options.description,
-        "img": options.img,
-        "source": options.source,
-      }
-    };
-  return geoFeature;
-};
-
-var geoStyle = {
+var geoStyleGeneric = {
   fillColor: 'red',
   color: 'black',
   radius: 7,
@@ -63,12 +25,13 @@ function addGeoLayer(geoData){
   };
   geoLayer = L.geoJson(geoData, {
     pointToLayer: function(feature, latlng){
-      return L.circleMarker(latlng, geoStyle);
+      return L.circleMarker(latlng, geoStyleGeneric);
     },
     style: function(feature){
       switch (feature.properties.query){
-        case "victim_unarmed": return styleVictimUnarmed(feature);
+        case "victim_race": return styleVictimRace(feature);
         case "victim_age": return styleVictimAge(feature);
+        case "victim_unarmed": return styleVictimUnarmed(feature);
       }
     },
     onEachFeature: function(feature,layer){
@@ -85,6 +48,65 @@ function addGeoLayer(geoData){
   } else {
     geoLayer.addTo(map);
   }
+};
+
+function geoJSONify(geoFeatureArr){
+  return [
+    {
+      "type": "FeatureCollection",
+      "features": geoFeatureArr
+    }
+  ]
+};
+
+function featureToGeoFormat(options){
+  var geoFeature = 
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          options.lon,
+          options.lat
+        ]
+      },
+      "properties": {
+        "marker-size": "small",
+        "query": options.query,
+        "name": options.name,
+        "race": options.race,
+        "age": options.age,
+        "gender": options.gender,
+        "unarmed": options.unarmed,
+        "shots": options.shots,
+        "illness": options.illness,
+        "address": options.address,
+        "description": options.description,
+        "img": options.img,
+        "source": options.source,
+      }
+    };
+  return geoFeature;
+};
+
+function jsonElemToObjLiteral(elem,query){
+  var options = {
+    query: query,
+    lat: elem.lat,
+    lon: elem.lng,
+    address: elem.formatted_address,
+    name: elem.victim_name,
+    race: elem.victim_race,
+    age: elem.victim_age,
+    gender: elem.victim_gender,
+    img: elem.url_victim_image,
+    source: elem.source,
+    description: elem.description,
+    unarmed: elem.victim_unarmed,
+    shots: elem.shots_fired,
+    illness: elem.symptoms_of_mental_illness
+  };
+  return options;
 };
 
 function makeGeoMap(){

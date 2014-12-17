@@ -24,25 +24,6 @@ function replaceFilter(context){
   triggerBang(that);
 };
 
-function jsonElemToObjLiteral(elem,query){
-  var options = {
-    query: query,
-    lat: elem.lat,
-    lon: elem.lng,
-    address: elem.formatted_address,
-    name: elem.victim_name,
-    age: elem.victim_age,
-    gender: elem.victim_gender,
-    img: elem.url_victim_image,
-    source: elem.source,
-    description: elem.description,
-    unarmed: elem.victim_unarmed,
-    shots: elem.shots_fired,
-    illness: elem.symptoms_of_mental_illness
-  };
-  return options;
-};
-
 var geoLayer;
 var heatLayer;
 var graph;

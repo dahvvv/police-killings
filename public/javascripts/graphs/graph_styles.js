@@ -63,7 +63,7 @@ function ageGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = "<p>Age: " + elem.label + "</p><p>Total: " + elem.value + " people</p>";
+        tip.innerHTML = "<p>Age: " + elem.label + "</p><p>Total: " + elem.value;
       }
     },
   };

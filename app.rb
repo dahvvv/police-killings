@@ -12,15 +12,14 @@ get '/console' do
   binding.pry
 end
 
+get '/api/killings/race' do
+  content_type :json
+  Killing.where.not(victim_race: nil).to_json
+end
+
 get '/api/killings/name/:name' do
   content_type :json
   killings = Killing.where("victim_name = ?", params[:name])
-  killings.to_json
-end
-
-get '/api/killings/gender/:gender' do
-  content_type :json
-  killings = Killing.where("victim_gender = ?", params[:gender])
   killings.to_json
 end
 
