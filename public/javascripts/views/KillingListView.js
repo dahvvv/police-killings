@@ -128,7 +128,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   graphProgram: function(query){
-    this.$el.find($('.program-text')).text(programs.graphs[query]);
+    this.$el.find($('.program-text')).html(programs.graphs[query]);
   },
 
   // filteredToGraph: function(filter){
