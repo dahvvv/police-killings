@@ -36,11 +36,11 @@ var KillingListView = Backbone.View.extend({
   graph: function(){
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
-      this.usPopGraph();
-    } else if (filter==="age-filter") {
-      this.ageGraph();
-    } else if (filter==="state-filter") {
-      this.stateGraph();
+      makeGraph("city");
+    // } else if (filter==="age-filter") {
+    //   this.ageGraph();
+    // } else if (filter==="state-filter") {
+    //   this.stateGraph();
     };
   },
 
@@ -51,7 +51,7 @@ var KillingListView = Backbone.View.extend({
     } else if (displayStyle==="markers-selector") {
       this.usPopMarker();
     } else {
-      this.usPopGraph();
+      makeGraph("city");
     };
   },
 
@@ -76,10 +76,10 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  usPopGraph: function(){
-    var filteredCollection = this.collection.usPopGraph();
-    this.filteredToGraph(filteredCollection);
-  },
+  // usPopGraph: function(){
+  //   var filteredCollection = this.collection.usPopGraph();
+  //   this.filteredToGraph(filteredCollection);
+  // },
 
   ageHeat: function(){
     var ageMin = this.$el.find($('#age-min')).val();
@@ -131,8 +131,8 @@ var KillingListView = Backbone.View.extend({
     filter.fetch({reset: true});
   },
 
-  filteredToGraph: function(filter){
-    filter.listenToOnce(filter, 'reset', makeGraph);
-    filter.fetch({reset: true});
-  },
+  // filteredToGraph: function(filter){
+  //   filter.listenToOnce(filter, 'reset', makeGraph);
+  //   filter.fetch({reset: true});
+  // },
 });

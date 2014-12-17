@@ -1,5 +1,13 @@
 var labelType, useGradients, nativeTextSupport, animate;
 
+function selectGraphData(query){
+  switch(query){
+    case "city": return cityGraphData();
+    case "victim_unarmed": return unarmedGraphData();
+    case "victim_age": return ageGraphData();
+  }
+};
+
 function selectGraphStyle(query){
   switch(query){
     case "victim_unarmed": return unarmedGraphStyle();
@@ -8,19 +16,10 @@ function selectGraphStyle(query){
   }
 };
 
-function selectGraphData(query){
-  switch(query){
-    case "victim_unarmed": return unarmedGraphData();
-    case "victim_age": return ageGraphData();
-    case "city": return cityGraphData();
-  }
-};
-
-function makeGraph(){
+function makeGraph(query){
   $('#infovis').empty();
-  var query = this.query;
-  var graphStyle = selectGraphStyle(query);
   var graphData = selectGraphData(query);
+  var graphStyle = selectGraphStyle(query);
   if (graphStyle != undefined) {
     var newGraph = new $jit.BarChart(graphStyle);
     newGraph.loadJSON(graphData);

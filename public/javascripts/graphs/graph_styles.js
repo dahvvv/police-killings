@@ -1,3 +1,36 @@
+function cityGraphStyle(){
+  var style = {
+    injectInto: 'map-one',
+    animate: true,
+    orientation: 'horizontal',
+    barsOffset: 2,
+    Margin: {
+      top:5,
+      left: 5,
+      right: 5,
+      bottom:5
+    },
+    labelOffest: 0,
+    type: 'stacked:gradient',
+    showAggregates: true,
+    showLabels: true,
+    Label: {
+      type: 'HTML',
+      size: 12,
+      family: 'Helvetica',
+      color: 'black',
+      weight: 'bold'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = "<b>" + elem.name + "</b>: " + elem.value;
+      }
+    },
+  };
+  return style;
+};
+
 function unarmedGraphStyle(){
   var style = {
     injectInto: 'infovis',
