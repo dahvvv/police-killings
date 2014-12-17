@@ -32,6 +32,7 @@ function jsonElemToObjLiteral(elem,query){
 
 var geoLayer;
 var heatLayer;
+var graph;
 var defaultLat = 37.78808138412046;
 var defaultLon = -94.39453125;
 var defaultZoom = 4;

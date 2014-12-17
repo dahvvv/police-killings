@@ -19,14 +19,19 @@ function selectGraphStyle(query){
 function makeGraph(query){
   var graphData = selectGraphData(query);
   var graphStyle = selectGraphStyle(query);
-  var newGraph = new $jit.BarChart(graphStyle);
-  newGraph.loadJSON(graphData);
+  var graph = new $jit.BarChart(graphStyle);
+  graph.loadJSON(graphData);
 };
 
 function emptyGraph(query){
-  $('#map-one').slideToggle(1000, function(e){
+  if ($('#map-one').css('display') != "none") {
+    $('#map-one').slideToggle(1000, function(e){
+      makeGraph(query);
+    });
+  } else {
+    $('#infovis-canvaswidget').remove();
     makeGraph(query);
-  });
+  }
 };
 
 
