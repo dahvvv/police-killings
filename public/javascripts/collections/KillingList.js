@@ -32,7 +32,7 @@ var KillingList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age/min/" + min + "/max/" + max,
       query: "victim_age",
-      program: "This heatmap is scaled to show similar total heat for any ages, in order to emphasize changes in locations."
+      program: "This heatmap is scaled to show similar total heat for any age range, in order to emphasize changes in locations."
     });
     return new AgeListRanged();
   },
@@ -42,7 +42,7 @@ var KillingList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age",
       query: "victim_age",
-      program: "Weird dots represent outlierz."
+      program: "Size and brightness represent distance from the standard deviation.  A lot of very young or very old people have been killed in Texas and Arkansas.  Zoom in and click for more information."
     });
     return new AgeList();
   },
