@@ -69,6 +69,7 @@ var KillingListView = Backbone.View.extend({
 
   usPopHeat: function(){
     var filteredCollection = this.collection.usPopHeat();
+    this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
   },
 
