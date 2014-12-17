@@ -73,6 +73,7 @@ var KillingListView = Backbone.View.extend({
 
   usPopMarker: function(){
     var filteredCollection = this.collection.usPopMarker();
+    this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
   },
 

@@ -1,8 +1,9 @@
 body {
   background-color: #c8cdcf;
-  margin: 0px;
-  padding: 0px;
-  font-family: Arial black;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Oswald';
 }
 
 #container {
@@ -13,14 +14,18 @@ body {
   padding: 0px;
 }
 
+button {
+  color: #101535;
+}
+
 .button-filter {
   display: block;
   height: 6%;
   margin-bottom: 1em;
   border: none;
   border-radius: 6px;
-  font-family: 'Oswald';
-  font-size: 0.9em;
+/*  font-family: 'Oswald';
+*/  font-size: 0.9em;
   padding: 0.6em 0.8em;
   background-color: rgba(136,123,107,0.4);
   cursor: pointer;
@@ -83,23 +88,25 @@ body {
 
 .display-selector.display-type {
   background-color: rgba(136,123,107,0.8);
-  font-size: 1.7em;
+  font-size: 1.6em;
+  color: black;
 }
 
 .program {
   position: absolute;
-  height: 67%;
-  width: 22%;
-  bottom: 10%;
-  left: 2%;
+  height: 27%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
 }
 
-/*#chart-wrapper {
-  position: absolute;
-  left: 25%;
-  bottom: 5%;
-  height: 30%;
-  width: 50%;
-  background: blue;
+.program p {
+  text-align: center;
+  position: relative;
+  font-size: 1.5em;
+  color: #101535;
+  opacity: 0.8;
+  top: 2.5em;
+  font-family: Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+  letter-spacing: 1.5px;
 }
-*/

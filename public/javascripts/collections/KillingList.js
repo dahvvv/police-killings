@@ -1,6 +1,7 @@
 var KillingList = Backbone.Collection.extend({
   model: Killing,
   url: "/api/killings",
+  program: "Concentrations of people killed by police officers in the united states.",
 
   // heatMap: function(){
   //   return new KillingList();
@@ -14,8 +15,21 @@ var KillingList = Backbone.Collection.extend({
     return new KillingList();
   },
 
+  // usPopMarker: function(){
+  //   return new KillingList({
+  //     model: Killing,
+  //     url: "/api/killings",
+  //     program: "Click on a dot or zoom to get more information."
+  //   });
+  // },
+
   usPopMarker: function(){
-    return new KillingList();
+    var PopList = Backbone.Collection.extend({
+      model: Killing,
+      url: "/api/killings",
+      program: "Click on a dot or zoom in for more information."
+    });
+    return new PopList();
   },
 
   // usPopGraph: function(){

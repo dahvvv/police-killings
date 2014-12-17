@@ -45,7 +45,7 @@ $(function(){
 
   var killingList = new KillingList();
   killingList.listenToOnce(killingList, 'reset', makeHeatMap);
-  var killingListView = new KillingListView({collection: killingList, el: $('body')});
+  var killingListView = new KillingListView({collection: killingList, el: $('body'), program: "Concentrations of people killed by police officers in the united states."});
   killingList.fetch({reset: true});
 
   $('#age-filter').on('click', function(e){
