@@ -24,11 +24,11 @@ button {
   margin-bottom: 1em;
   border: none;
   border-radius: 6px;
-/*  font-family: 'Oswald';
-*/  font-size: 0.9em;
+  font-size: 0.9em;
   padding: 0.6em 0.8em;
   background-color: rgba(136,123,107,0.4);
   cursor: pointer;
+  display: none;
 }
 
 .button-filter.filter-type {

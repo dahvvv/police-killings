@@ -36,6 +36,7 @@ var KillingListView = Backbone.View.extend({
   graph: function(){
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
+      this.graphProgram("city");
       emptyGraph("city");
     // } else if (filter==="age-filter") {
     //   this.ageGraph();
@@ -130,6 +131,12 @@ var KillingListView = Backbone.View.extend({
     // filter.listenToOnce(filter, 'reset', makeChart);
     filter.listenToOnce(filter, 'reset', makeHeatMap);
     filter.fetch({reset: true});
+  },
+
+  graphProgram: function(query){
+    if (query === "city"){
+      this.$el.find($('.program-text')).text(programs.graphs.us_pop);
+    }
   },
 
   // filteredToGraph: function(filter){
