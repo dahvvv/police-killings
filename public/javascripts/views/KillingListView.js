@@ -36,7 +36,7 @@ var KillingListView = Backbone.View.extend({
   graph: function(){
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
-      makeGraph("city");
+      emptyGraph("city");
     // } else if (filter==="age-filter") {
     //   this.ageGraph();
     // } else if (filter==="state-filter") {

@@ -36,13 +36,24 @@ body {
   display: none;
 }
 
-.map {
+#infovis {
   position: absolute;
   height: 65%; /* for main view */
 /*  height: 73%; */ /* for state view */
   width: 69%;
   top: 0%;
   left: 15%;
+  background: black;
+}
+
+.map {
+  position: absolute;
+  height: 100%; /* for main view */
+/*  height: 73%; */ /* for state view */
+  width: 100%;
+  bottom: 0;
+/*  top: 0%;
+  left: 15%;*/
 }
 
 .display-selector {
@@ -92,7 +103,3 @@ body {
   background: blue;
 }
 */
-#infovis {
-  height: 100%;
-  width: 100%;
-}

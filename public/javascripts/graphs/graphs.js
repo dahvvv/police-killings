@@ -17,14 +17,18 @@ function selectGraphStyle(query){
 };
 
 function makeGraph(query){
-  $('#infovis').empty();
   var graphData = selectGraphData(query);
   var graphStyle = selectGraphStyle(query);
-  if (graphStyle != undefined) {
-    var newGraph = new $jit.BarChart(graphStyle);
-    newGraph.loadJSON(graphData);
-  };
+  var newGraph = new $jit.BarChart(graphStyle);
+  newGraph.loadJSON(graphData);
 };
+
+function emptyGraph(query){
+  $('#map-one').slideToggle(1000, function(e){
+    makeGraph(query);
+  });
+};
+
 
 // function makeChart(){
 //   $('#infovis').empty();

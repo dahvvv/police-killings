@@ -1,6 +1,6 @@
 function cityGraphStyle(){
   var style = {
-    injectInto: 'map-one',
+    injectInto: 'infovis',
     animate: true,
     orientation: 'horizontal',
     barsOffset: 2,

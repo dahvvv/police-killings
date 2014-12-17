@@ -20,11 +20,11 @@ function makeHeatMap(){
     map.removeLayer(heatLayer);
   };
   if (query==="state") {
-    $('.map').animate({"height":"73%"},500);
+    $('.infovis').animate({"height":"73%"},500);
     var state = this.state;
     setMapToStateView(state);
   } else {
-    $('.map').animate({"height":"65%"},500);
+    $('.infovis').animate({"height":"65%"},500);
     map.setView([defaultLat,defaultLon],defaultZoom);
   };
   heatLayer = L.heatLayer(coords, {
