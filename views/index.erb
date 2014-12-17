@@ -1,18 +1,18 @@
 <div id='container' class="">
   <div id='content'>
-    <button class="button-filter filter-type" id="usPop-filter">U.S. Population</button>
-    <button class="button-filter" id="age-filter">Age</button>
-    <form id="age-range">
-      <label for="age-min">Age Min:</label>
-      <input type="text" id="age-min" name="age-min" />
-      <label for="age-max">Age Max:</label>
-      <input type="text" id="age-max" name="age-max" />
-      <input class="age-range-submit" type="submit" value="Submit Age Range">
-    </form>
-  <!--   <button class="button-filter" id="age-marker">by age marker</button> -->
-    <button class="button-filter" id="unarmed">victim armed/unarmed</button>
-
-    <%= erb :'_fifty_states_dropdown' %>
+    <div id='filters-container'>
+      <button class="button-filter filter-type" id="usPop-filter">Population</button>
+      <%= erb :'_fifty_states_dropdown' %>
+      <button class="button-filter" id="age-filter">Age</button>
+        <form id="age-range">
+          <label for="age-min">Age Min:</label>
+          <input type="text" id="age-min" name="age-min" />
+          <label for="age-max">Age Max:</label>
+          <input type="text" id="age-max" name="age-max" />
+          <input class="age-range-submit" type="submit" />
+        </form>
+      <button class="button-filter" id="unarmed">Armed</button>
+    </div>
 
     <div id="infovis">
       <div id='map-one' class='map'></div>
@@ -23,7 +23,6 @@
     <button class="display-selector" id="graphs-selector">Graph</button>
   </div>
   <div class="program">
-    <p class="program-text">Concentrations of people killed by police officers in the United States.</p>
+    <p class="program-text">People killed by police officers in the United States.</p>
   </div>
 </div>
-<!-- <ul id='marker-list'></ul> -->

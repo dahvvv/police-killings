@@ -11,6 +11,16 @@ function replaceDisplaySelector(context){
   triggerBang(that);
 };
 
+function replaceFilter(context){
+  var that = context;
+  if (that.id != "age-filter") {
+    $('#age-range').children().css({"display":"none"});
+  };
+  $('.button-filter').removeClass('filter-type');
+  $(that).addClass('filter-type');
+  triggerBang(that);
+};
+
 function jsonElemToObjLiteral(elem,query){
   var options = {
     query: query,
@@ -48,20 +58,16 @@ $(function(){
   var killingListView = new KillingListView({collection: killingList, el: $('body'), program: "Concentrations of people killed by police officers in the united states."});
   killingList.fetch({reset: true});
 
-  $('#age-filter').on('click', function(e){
-    debugger;
-    $('#age-range').children().toggle().css({"display":"block"});
-  });
-
   $('.display-selector').on('click', function(e){
     e.preventDefault();
     var that = this;
     replaceDisplaySelector(that);
   });
 
-  $('.button-filter').on('click', function(){
-    $('.button-filter').removeClass('filter-type');
-    $(this).addClass('filter-type');
+  $('.button-filter').on('click', function(e){
+    e.preventDefault();
+    var that = this;
+    replaceFilter(that);
   });
 
 });

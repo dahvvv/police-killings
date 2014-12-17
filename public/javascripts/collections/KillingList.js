@@ -1,7 +1,7 @@
 var KillingList = Backbone.Collection.extend({
   model: Killing,
   url: "/api/killings",
-  program: "Concentrations of people killed by police officers in the united states.",
+  program: "People killed by police officers in the united states.",
 
   usPopHeat: function(){
     return new KillingList();

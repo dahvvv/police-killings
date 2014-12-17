@@ -4,8 +4,8 @@ var KillingListView = Backbone.View.extend({
     "change #heatmaps-selector" : "heatMap",
     "change #markers-selector" : "markerMap",
     "change #graphs-selector" : "graph",
-    "click #usPop-filter" : "usPop",
-    "click #age-filter" : "age",
+    "change #usPop-filter" : "usPop",
+    "change #age-filter" : "age",
     "submit #age-range" : "ageHeat",
     "change #state" : "stateHeat",
     "click #unarmed" : "armedOrUnarmed",
@@ -46,24 +46,26 @@ var KillingListView = Backbone.View.extend({
   },
 
   usPop: function(){
-    var displayStyle = $('.displayType').attr('id');
+    var displayStyle = $('.display-type').attr('id');
     if (displayStyle==="heatmaps-selector") {
       this.usPopHeat();
     } else if (displayStyle==="markers-selector") {
       this.usPopMarker();
     } else {
-      makeGraph("city");
+      this.graphProgram("pop");
+      emptyGraph("pop");
     };
   },
 
   age: function(){
-    var displayStyle = $('.displayType').attr('id');
+    var displayStyle = $('.display-type').attr('id');
     if (displayStyle==="heatmaps-selector") {
-      return null
+      this.ageHeatDisplay();
     } else if (displayStyle==="markers-selector") {
       this.ageMarker();
     } else {
-      this.ageGraph();
+      this.graphProgram("age");
+      emptyGraph("age");
     };
   },
 
@@ -79,12 +81,15 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  // usPopGraph: function(){
-  //   var filteredCollection = this.collection.usPopGraph();
-  //   this.filteredToGraph(filteredCollection);
-  // },
+  ageHeatDisplay: function(){
+    var ageForm = $('#age-range');
+    if (ageForm.find('label:first-child').css('display') === "none") {
+      ageForm.children().toggle().css({"display":"block"});
+    };
+  },
 
   ageHeat: function(){
+    debugger;
     var ageMin = this.$el.find($('#age-min')).val();
     var ageMax = this.$el.find($('#age-max')).val();
     $('#age-range').children().toggle().css;
@@ -97,11 +102,6 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  ageGraph: function(){
-    var filteredCollection = this.collection.ageGraph();
-    this.filteredToGraph(filteredCollection);
-  },
-
   stateHeat: function(e){
     e.preventDefault();
     var state = this.$el.find('#state').val();
@@ -112,10 +112,6 @@ var KillingListView = Backbone.View.extend({
   stateMarker: function(){
     alert('statemarker!');
   },
-
-  stateGraph: function(){
-    alert('stategraph!');
-  },  
 
   armedOrUnarmed: function(){
     var filteredCollection = this.collection.armedOrUnarmedKillings();
