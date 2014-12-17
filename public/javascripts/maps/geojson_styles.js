@@ -53,13 +53,14 @@ function styleVictimAge(feature){
   var upperBound = 107;
   var lowStandDev = 21;
   var highStandDev = 48;
-  var regR = 5;
+  var regR = 3;
   var maxR = 13;
-  var regRGB = {r: 102, g: 102, b: 0};
+  var regRGB = {r: 0, g: 76, b: 153};
   var maxRGB = {r: 255, g: 51, b: 51};
   if (i < lowStandDev) {
     return {
       fillColor: colorScaleLower(i,lowerBound,lowStandDev,regRGB,maxRGB),
+      // color: colorScaleLower(i,lowerBound,lowStandDev,regRGB,maxRGB),
       radius: rScaleLower(i,lowerBound,lowStandDev,regR,maxR)
     };
   } else if (i >= lowStandDev && i <= highStandDev) {
@@ -67,12 +68,14 @@ function styleVictimAge(feature){
     var g = regRGB.g;
     var b = regRGB.b;
     return {
-      fillColor: "rgb(" + r + "," + b + "," + g + ")",
+      fillColor: "rgb(" + r + "," + g + "," + b + ")",
+      // color: "rgb(" + r + "," + g + "," + b + ")",
       radius: regR
     }
   } else if (i > highStandDev) {
     return {
       fillColor: colorScaleUpper(i,upperBound,highStandDev,regRGB,maxRGB),
+      // color: colorScaleUpper(i,upperBound,highStandDev,regRGB,maxRGB),
       radius: rScaleUpper(i,upperBound,highStandDev,regR,maxR)
     }
   }

@@ -42,7 +42,7 @@ var KillingList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age",
       query: "victim_age",
-      program: "Size and brightness represent distance from the standard deviation.  A lot of very young or very old people have been killed in Texas and Arkansas.  Zoom in and click for more information."
+      program: "A point's size and brightness represent its distance from the standard deviation.  An unusual amount of very young or very old people have been killed in Texas and Arkansas.  Zoom in and click for more information."
     });
     return new AgeList();
   },
