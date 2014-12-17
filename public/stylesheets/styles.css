@@ -127,3 +127,7 @@ select.button-filter {
   letter-spacing: 1.5px;
   padding: 0 5em;
 }
+
+.tip {
+  color: white;
+}

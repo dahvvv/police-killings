@@ -24,39 +24,7 @@ function cityGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = "<b>" + elem.name + "</b>: " + elem.value;
-      }
-    },
-  };
-  return style;
-};
-
-function unarmedGraphStyle(){
-  var style = {
-    injectInto: 'infovis',
-    animate: true,
-    orientation: 'vertical',
-    barsOffset: 20,
-    Margin: {
-      top:5,
-      left: 5,
-      right: 5,
-      bottom:5
-    },
-    labelOffest: 5,
-    type: useGradients? 'stacked:gradient' : 'stacked',
-    showAggregates: true,
-    showLabels: true,
-    Label: {
-      type: labelType,
-      size: 13,
-      family: 'Arial',
-      color: 'black'
-    },
-    Tips: {
-      enable: true,
-      onShow: function(tip, elem) {
-        tip.innerHTML = "<b>" + elem.name + "</b>: " + elem.value;
+        tip.innerHTML = elem.value + " people killed in " + elem.label;
       }
     },
   };
@@ -91,6 +59,38 @@ function ageGraphStyle(){
       family: 'Helvetica',
       color: 'white',
       weight: 'bold'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = "<p>Age: " + elem.label + "</p><p>Total: " + elem.value + " people</p>";
+      }
+    },
+  };
+  return style;
+};
+
+function unarmedGraphStyle(){
+  var style = {
+    injectInto: 'infovis',
+    animate: true,
+    orientation: 'vertical',
+    barsOffset: 20,
+    Margin: {
+      top:5,
+      left: 5,
+      right: 5,
+      bottom:5
+    },
+    labelOffest: 5,
+    type: useGradients? 'stacked:gradient' : 'stacked',
+    showAggregates: true,
+    showLabels: true,
+    Label: {
+      type: labelType,
+      size: 13,
+      family: 'Arial',
+      color: 'black'
     },
     Tips: {
       enable: true,

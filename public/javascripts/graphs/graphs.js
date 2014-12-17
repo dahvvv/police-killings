@@ -3,16 +3,16 @@ var labelType, useGradients, nativeTextSupport, animate;
 function selectGraphData(query){
   switch(query){
     case "city": return cityGraphData();
+    case "age": return ageGraphData();
     case "victim_unarmed": return unarmedGraphData();
-    case "victim_age": return ageGraphData();
   }
 };
 
 function selectGraphStyle(query){
   switch(query){
-    case "victim_unarmed": return unarmedGraphStyle();
-    case "victim_age": return ageGraphStyle();
     case "city": return cityGraphStyle();
+    case "age": return ageGraphStyle();
+    case "victim_unarmed": return unarmedGraphStyle();
   }
 };
 

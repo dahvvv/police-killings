@@ -38,10 +38,9 @@ var KillingListView = Backbone.View.extend({
     if (filter==="usPop-filter") {
       this.graphProgram("city");
       emptyGraph("city");
-    // } else if (filter==="age-filter") {
-    //   this.ageGraph();
-    // } else if (filter==="state-filter") {
-    //   this.stateGraph();
+    } else if (filter==="age-filter") {
+      this.graphProgram("age");
+      emptyGraph("age");
     };
   },
 
@@ -52,8 +51,8 @@ var KillingListView = Backbone.View.extend({
     } else if (displayStyle==="markers-selector") {
       this.usPopMarker();
     } else {
-      this.graphProgram("pop");
-      emptyGraph("pop");
+      this.graphProgram("city");
+      emptyGraph("city");
     };
   },
 
@@ -98,6 +97,7 @@ var KillingListView = Backbone.View.extend({
 
   ageMarker: function(){
     var filteredCollection = this.collection.ageMarker();
+    this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
   },
 
@@ -118,21 +118,17 @@ var KillingListView = Backbone.View.extend({
   },
 
   filteredToGeoMap: function(filter){
-    // filter.listenToOnce(filter, 'reset', makeChart);
     filter.listenToOnce(filter, 'reset', makeGeoMap);
     filter.fetch({reset: true});
   },
 
   filteredToHeatMap: function(filter){
-    // filter.listenToOnce(filter, 'reset', makeChart);
     filter.listenToOnce(filter, 'reset', makeHeatMap);
     filter.fetch({reset: true});
   },
 
   graphProgram: function(query){
-    if (query === "city"){
-      this.$el.find($('.program-text')).text(programs.graphs.us_pop);
-    }
+    this.$el.find($('.program-text')).text(programs.graphs[query]);
   },
 
   // filteredToGraph: function(filter){

@@ -72,6 +72,26 @@ function cityGraphData(){
   return data;
 };
 
+function ageGraphValues(){
+  var values = [];
+  for (var age = 0; age < 110; age++) {
+    var value = {
+      'label': [age],
+      'values': deathsByAge[age]
+    };
+    values.push(value);
+  };
+  return values;
+};
+
+function ageGraphData(){
+  var data = {
+    'label': ['age'],
+    'values': ageGraphValues()
+  };
+  return data;
+};
+
 function unarmedGraphData(){
   var data = {
     'label': [''],
@@ -85,26 +105,6 @@ function unarmedGraphData(){
         'values': [801]
       }
     ]
-  };
-  return data;
-};
-
-function ageGraphValues(){
-  var values = [];
-  for (var age = 0; age < 110; age++) {
-    var value = {
-      'label': age,
-      'values': deathsByAge[age]
-    };
-    values.push(value);
-  };
-  return values;
-};
-
-function ageGraphData(){
-  var data = {
-    'label': [''],
-    'values': ageChartValues()
   };
   return data;
 };

@@ -41,16 +41,8 @@ var KillingList = Backbone.Collection.extend({
     var AgeList =  Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age",
-      query: "victim_age"
-    });
-    return new AgeList();
-  },
-
-  ageGraph: function(){
-    var AgeList =  Backbone.Collection.extend({
-      model: Killing,
-      url: "/api/killings/victim_age",
-      query: "victim_age"
+      query: "victim_age",
+      program: "Weird dots represent outlierz."
     });
     return new AgeList();
   },
