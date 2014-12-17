@@ -35,7 +35,14 @@ function makeHeatMap(){
     maxZoom: setMaxZoom(numDatapoints),
     max: 1
   });
-  heatLayer.addTo(map);
+  if ($('#map-one').css('display') === "none") {
+    $('#infovis-canvaswidget').remove();
+    $('#map-one').slideToggle(750, function(e){
+      heatLayer.addTo(map);
+    });
+  } else {
+    heatLayer.addTo(map);
+  }
 };
 
 

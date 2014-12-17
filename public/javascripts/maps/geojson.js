@@ -77,7 +77,14 @@ function addGeoLayer(geoData){
       layer.bindPopup(content);
     }
   });
-  geoLayer.addTo(map);
+  if ($('#map-one').css('display') === "none") {
+    $('#infovis-canvaswidget').remove();
+    $('#map-one').slideToggle(750, function(e){
+      geoLayer.addTo(map);
+    });
+  } else {
+    geoLayer.addTo(map);
+  }
 };
 
 function makeGeoMap(){

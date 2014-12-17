@@ -27,7 +27,7 @@ body {
 }
 
 .button-filter.filter-type {
-  background-color: rgba(136,123,107,0.6);
+  background-color: rgba(136,123,107,0.8);
   font-size: 1.2em;
 }
 
@@ -82,7 +82,7 @@ body {
 }
 
 .display-selector.display-type {
-  background-color: rgba(136,123,107,0.6);
+  background-color: rgba(136,123,107,0.8);
   font-size: 1.7em;
 }
 

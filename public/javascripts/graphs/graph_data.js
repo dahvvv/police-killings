@@ -24,31 +24,32 @@ var deathsByAge =
 
 function cityGraphData(){
   var data = {
+    'color': ['#0066CC'],
     'label': [''],
     'values': [
       {
         'label': 'NYC',
-        'values': [220]
+        'values': [220], // 44,44,44,44,44
       },
       {
         'label': 'Las Vegas',
-        'values': [136]
+        'values': [136] // 44,44,44,4
       },
       {
         'label': 'LA',
-        'values': [57]
+        'values': [57] // 44,13
       },
       {
         'label': 'Chicago',
-        'values': [53]
+        'values': [53] // 44,9
       },
       {
         'label': 'Albuquerque',
-        'values': [52]
+        'values': [52] // 44,8
       },
       {
         'label': 'Portland',
-        'values': [51]
+        'values': [51] // 44,7
       },
       {
         'label': 'Oakland',
@@ -57,15 +58,15 @@ function cityGraphData(){
       {
         'label': 'Cleveland',
         'values': [38]
-      },
-      {
-        'label': 'Baltimore',
-        'values': [34]
-      },
-      {
-        'label': 'Houston',
-        'values': [31]
       }
+      // {
+      //   'label': 'Baltimore',
+      //   'values': [34]
+      // },
+      // {
+      //   'label': 'Houston',
+      //   'values': [31]
+      // }
     ]
   };
   return data;

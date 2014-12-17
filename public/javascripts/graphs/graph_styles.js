@@ -3,14 +3,14 @@ function cityGraphStyle(){
     injectInto: 'infovis',
     animate: true,
     orientation: 'horizontal',
-    barsOffset: 2,
+    barsOffset: 10,
     Margin: {
       top:5,
-      left: 5,
-      right: 5,
+      left: 0,
+      right: 15,
       bottom:5
     },
-    labelOffest: 0,
+    labelOffest:5,
     type: 'stacked:gradient',
     showAggregates: true,
     showLabels: true,
@@ -18,8 +18,8 @@ function cityGraphStyle(){
       type: 'HTML',
       size: 12,
       family: 'Helvetica',
-      color: 'black',
-      weight: 'bold'
+      color: '#c8cdcf',
+      // weight: 'bold'
     },
     Tips: {
       enable: true,
@@ -87,9 +87,9 @@ function ageGraphStyle(){
     },
     Label: {
       type: 'HTML',
-      size: 12,
+      size: 13,
       family: 'Helvetica',
-      color: 'black',
+      color: 'white',
       weight: 'bold'
     },
     Tips: {

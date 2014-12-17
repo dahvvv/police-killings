@@ -25,7 +25,7 @@ function makeGraph(query){
 
 function emptyGraph(query){
   if ($('#map-one').css('display') != "none") {
-    $('#map-one').slideToggle(1000, function(e){
+    $('#map-one').slideToggle(750, function(e){
       makeGraph(query);
     });
   } else {
