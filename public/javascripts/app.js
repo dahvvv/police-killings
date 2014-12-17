@@ -1,7 +1,7 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoibWFycGJvcnhtYXJycnBib3JycnJyeCIsImEiOiJ3Y0hUd3ZZIn0.VNcoUZ2TFXUuID8JQ2-t2A';
 
 function triggerBang(context){
-  $(context).trigger('change');
+  $(context).trigger('dblclick');
 };
 
 function replaceDisplaySelector(context){
@@ -68,6 +68,11 @@ $(function(){
     e.preventDefault();
     var that = this;
     replaceFilter(that);
+  });
+
+  $('form').on('submit', function(e){
+    e.preventDefault();
+    $(this).trigger('dblclick');
   });
 
 });

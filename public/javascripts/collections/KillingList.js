@@ -31,7 +31,8 @@ var KillingList = Backbone.Collection.extend({
     var AgeListRanged =  Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age/min/" + min + "/max/" + max,
-      query: "victim_age"
+      query: "victim_age",
+      program: "This heatmap is scaled to show similar total heat for any ages, in order to emphasize changes in locations."
     });
     return new AgeListRanged();
   },

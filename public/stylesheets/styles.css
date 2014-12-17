@@ -122,7 +122,8 @@ select.button-filter {
   font-size: 1.5em;
   color: #101535;
   opacity: 0.8;
-  top: 2.5em;
+  top: 1.5em;
   font-family: Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;
   letter-spacing: 1.5px;
+  padding: 0 5em;
 }

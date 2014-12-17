@@ -1,13 +1,13 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
-    "change #heatmaps-selector" : "heatMap",
-    "change #markers-selector" : "markerMap",
-    "change #graphs-selector" : "graph",
-    "change #usPop-filter" : "usPop",
-    "change #age-filter" : "age",
-    "submit #age-range" : "ageHeat",
-    "change #state" : "stateHeat",
+    "dblclick #heatmaps-selector" : "heatMap",
+    "dblclick #markers-selector" : "markerMap",
+    "dblclick #graphs-selector" : "graph",
+    "dblclick #usPop-filter" : "usPop",
+    "dblclick #age-filter" : "age",
+    "dblclick #age-range" : "ageHeat",
+    "dblclick #state" : "stateHeat",
     "click #unarmed" : "armedOrUnarmed",
   },
 
@@ -89,11 +89,10 @@ var KillingListView = Backbone.View.extend({
   },
 
   ageHeat: function(){
-    debugger;
     var ageMin = this.$el.find($('#age-min')).val();
     var ageMax = this.$el.find($('#age-max')).val();
-    $('#age-range').children().toggle().css;
     var filteredCollection = this.collection.ageHeat(ageMin,ageMax);
+    this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
   },
 

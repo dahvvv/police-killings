@@ -24,7 +24,7 @@ function makeHeatMap(){
     var state = this.state;
     setMapToStateView(state);
   } else {
-    $('.infovis').animate({"height":"65%"},500);
+    $('.infovis').animate({"height":"65%"},100);
     map.setView([defaultLat,defaultLon],defaultZoom);
   };
   heatLayer = L.heatLayer(coords, {
