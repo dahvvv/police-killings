@@ -16,7 +16,7 @@ var KillingListView = Backbone.View.extend({
     if (filter==="usPop-filter") {
       this.usPopHeat();
     } else if (filter==="age-filter") {
-      this.ageHeat();
+      this.ageHeatDisplay();
     } else if (filter==="state-filter") {
       this.stateHeat();
     };

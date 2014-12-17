@@ -6,6 +6,9 @@ function triggerBang(context){
 
 function replaceDisplaySelector(context){
   var that = context;
+  if (that.id != "heatmaps-selector"){
+    $('#age-range').children().css({"display":"none"});
+  };
   $('.display-selector').removeClass('display-type');
   $(that).addClass('display-type');
   triggerBang(that);
