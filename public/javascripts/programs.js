@@ -16,4 +16,3 @@ var programs = {
     race_popWeight: "When weighted against the US population, the percentage of victims who are white drops from 49.3% to 10.6%."
   }
 };
-

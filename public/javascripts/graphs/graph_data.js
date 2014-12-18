@@ -78,7 +78,7 @@ function race_popWeightGraphData(){
         'values': [11.6,0,0.3],
       },
       {
-        'label': 'black', //889, total weight 10.6
+        'label': 'black', //889, total weight 44.2
         'values': [35.0,9.2],
       },
       {

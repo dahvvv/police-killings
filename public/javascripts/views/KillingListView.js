@@ -14,6 +14,45 @@ var KillingListView = Backbone.View.extend({
     "dblclick #usPop-weight" : "usPopWeight"
   },
 
+  detectDisplayStyle: function(){
+    var displayStyle = $('.display-type').attr('id');
+    if (displayStyle==="heatmaps-selector") {
+      return "heatmap";
+    } else if (displayStyle==="markers-selector") {
+      return "marker";
+    } else {
+      return "graph";
+    };
+  },
+
+  detectFilter: function(){
+    var filter = $('.filter-type').attr('id');
+    if (filter==="usPop-filter") {
+      return "usPop";
+    } else if (filter==="race-filter") {
+      return "race";
+    } else if (filter==="age-filter") {
+      return "age";
+    } else if (filter==="state-filter") {
+      return "state";
+    };
+  },
+
+  detectWeight: function(){
+    var weight = $('.weight-type').attr('id');
+    if (weight===undefined) {
+      return "none";
+    } else if (weight==="usPop-weight") {
+      return "usPop";
+    } else if (weight==="race-weight") {
+      return "race";
+    } else if (weight==="age-weight") {
+      return "age";
+    } else if (weight==="state-weight") {
+      return "state";
+    };
+  },
+
   heatMap: function(){
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
@@ -28,16 +67,20 @@ var KillingListView = Backbone.View.extend({
   },
 
   markerMap: function(){
-    var filter = $('.filter-type').attr('id');
-    if (filter==="usPop-filter") {
-      this.usPopMarker();
-    } else if (filter==="race-filter") {
-      this.raceCheckboxes();
-    } else if (filter==="age-filter") {
-      this.ageMarker();
-    } else if (filter==="state-filter") {
-      this.stateMarker();
-    };
+    var filter = this.detectFilter();
+    var weight = this.detectWeight();
+    if (weight === "none") {
+      switch (filter) {
+        case "usPop" : this.usPopMarker();
+        case "race" : this.raceCheckboxes();
+        case "age" : this.ageMarker();
+        case "state" : this.stateMarker();
+      };
+    } else if (weight === "usPop") {
+      switch (filter) {
+        case "race" : this.raceCheckboxesPopweight();
+      }
+    }
   },
 
   graph: function(){
@@ -92,6 +135,10 @@ var KillingListView = Backbone.View.extend({
     };
   },
 
+  raceCheckboxesPopweight: function(){
+    debugger;
+  },
+
   age: function(){
     var displayStyle = $('.display-type').attr('id');
     if (displayStyle==="heatmaps-selector") {
@@ -113,30 +160,6 @@ var KillingListView = Backbone.View.extend({
       this.stateHeat();
     } else if (displayStyle==="markers-selector") {
       this.stateMarker();
-    };
-  },
-
-  detectDisplayStyle: function(){
-    var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector") {
-      return "heatmap";
-    } else if (displayStyle==="markers-selector") {
-      return "marker";
-    } else {
-      return "graph";
-    };
-  },
-
-  detectFilter: function(){
-    var filter = $('.filter-type').attr('id');
-    if (filter==="usPop-filter") {
-      return "usPop";
-    } else if (filter==="race-filter") {
-      return "race";
-    } else if (filter==="age-filter") {
-      return "age";
-    } else if (filter==="state-filter") {
-      return "state";
     };
   },
 

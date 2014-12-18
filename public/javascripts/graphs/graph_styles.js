@@ -57,7 +57,7 @@ function race_popWeightGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = elem.name;
+        tip.innerHTML = elem.label + ": " elem.name;
       }
     },
   };
