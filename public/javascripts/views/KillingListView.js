@@ -11,6 +11,7 @@ var KillingListView = Backbone.View.extend({
     "dblclick #age-range" : "ageHeat",
     "change #state-filter" : "state",
     "click #unarmed" : "armedOrUnarmed",
+    "dblclick #usPop-weight" : "usPopWeight"
   },
 
   heatMap: function(){
@@ -115,6 +116,54 @@ var KillingListView = Backbone.View.extend({
     };
   },
 
+  detectDisplayStyle: function(){
+    var displayStyle = $('.display-type').attr('id');
+    if (displayStyle==="heatmaps-selector") {
+      return "heatmap";
+    } else if (displayStyle==="markers-selector") {
+      return "marker";
+    } else {
+      return "graph";
+    };
+  },
+
+  detectFilter: function(){
+    var filter = $('.filter-type').attr('id');
+    if (filter==="usPop-filter") {
+      return "usPop";
+    } else if (filter==="race-filter") {
+      return "race";
+    } else if (filter==="age-filter") {
+      return "age";
+    } else if (filter==="state-filter") {
+      return "state";
+    };
+  },
+
+  usPopWeight: function(){
+    var display = this.detectDisplayStyle();
+    var filter = this.detectFilter();
+    if (display === "heatmap") {
+      // switch (filter) {
+      //   case "race" : this.raceHeatPopweight();
+      //   case "age" : this.ageHeatPopweight();
+      //   case "state" : this.stateHeatPopweight();
+      // };
+    } else if (display === "marker") {
+      // switch (filter) {
+      //   case "race" : this.raceMarkerPopweight();
+      //   case "age" : this.ageMarkerPopweight();
+      //   case "state" : this.stateMarkerPopweight();
+      // };
+    } else if (display === "graph") {
+      switch (filter) {
+        case "race" : this.raceGraphPopweight();
+        // case "age" : this.ageGraphPopweight();
+        // case "state" : this.stateGraphPopweight();
+      };
+    }
+  },
+
   usPopHeat: function(){
     var filteredCollection = this.collection.usPopHeat();
     this.$el.find($('.program-text')).text(filteredCollection.program);
@@ -185,6 +234,11 @@ var KillingListView = Backbone.View.extend({
   armedOrUnarmed: function(){
     var filteredCollection = this.collection.armedOrUnarmedKillings();
     this.filteredToGeoMap(filteredCollection);
+  },
+
+  raceGraphPopweight: function(){
+    this.graphProgram("race_popWeight");
+    emptyGraph("race_popWeight");
   },
 
   filteredToHeatMap: function(filter){

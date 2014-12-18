@@ -27,6 +27,13 @@ function replaceFilter(context){
   triggerBang(that);
 };
 
+function replaceWeight(context){
+  var that = context;
+  $('.button-filter').removeClass('weight-type');
+  $(that).addClass('weight-type');
+  triggerBang(that);
+};
+
 var geoLayer;
 var heatLayer;
 var graph;
@@ -55,6 +62,12 @@ $(function(){
     e.preventDefault();
     var that = this;
     replaceFilter(that);
+  });
+
+  $('.button-weight').on('click', function(e){
+    e.preventDefault();
+    var that = this;
+    replaceWeight(that);
   });
 
   $('form').on('submit', function(e){

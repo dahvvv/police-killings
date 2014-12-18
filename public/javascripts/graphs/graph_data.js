@@ -56,6 +56,40 @@ function raceGraphData(){
   return data;
 };
 
+function race_popWeightGraphData(){
+  var data = {
+    'color': ['#0066CC','#1975D1','#001F3D'],
+    'label': ['victims by race','victims by race per us population'],
+    'values': [
+      {
+        'label': 'other',
+        'values': [0.9,5.4], //24, total weighted percent 6.3
+      },
+      {
+        'label': 'alaskan/p.i.', //29, total weight 15.3%
+        'values': [1.1,14.2],
+      },
+      {
+        'label': 'asian',
+        'values': [1.7,3.6], //44, total weight 5.3%
+      },
+      {
+        'label': 'hispanic/latin', //302, total weight 11.6
+        'values': [11.6,0,0.3],
+      },
+      {
+        'label': 'black', //889, total weight 10.6
+        'values': [35.0,9.2],
+      },
+      {
+        'label': 'white', //1252, total weight 10.6, -38.7
+        'values': [10.6,0,38.7], // add extra 38.7 to all
+      }
+    ]
+  };
+  return data;
+};
+
 function cityGraphData(){
   var data = {
     'color': ['#0066CC'],
@@ -143,17 +177,4 @@ function unarmedGraphData(){
   return data;
 };
 
-// var chartJSONUnarmed = {
-//   'label': ['label A'],
-//   'values': [
-//     {
-//       'label': 'unarmed',
-//       'values': [223]
-//     }, 
-//     {
-//       'label': 'armed',
-//       'values': [801]
-//     }
-//   ]
-// };
 

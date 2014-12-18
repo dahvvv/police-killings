@@ -6,6 +6,7 @@ function selectGraphData(query){
     case "race": return raceGraphData();
     case "age": return ageGraphData();
     case "victim_unarmed": return unarmedGraphData();
+    case "race_popWeight": return race_popWeightGraphData();
   }
 };
 
@@ -15,6 +16,7 @@ function selectGraphStyle(query){
     case "race": return raceGraphStyle();
     case "age": return ageGraphStyle();
     case "victim_unarmed": return unarmedGraphStyle();
+    case "race_popWeight": return race_popWeightGraphStyle();
   }
 };
 
