@@ -130,7 +130,7 @@ var KillingListView = Backbone.View.extend({
     })
     .get();
     var filteredCollection = this.collection.filterByRaces(checkedNames);
-    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.$el.find($('.program-text')).text(programs.heatmaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
     filteredCollection.trigger('change');
   },

@@ -1,7 +1,8 @@
 var programs = {
   heatmaps: {
     us_pop: "Concentrations of people killed by police officers in the united states.",
-    age: ""
+    age: "",
+    race: "Heatmap scaled to emphasize differences in location."
   },
   markermaps: {
     us_pop: "",
