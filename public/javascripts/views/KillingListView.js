@@ -1,9 +1,11 @@
 var KillingListView = Backbone.View.extend({
 
   events: {
+    // display selectors
     "dblclick #heatmaps-selector" : "heatMap",
     "dblclick #markers-selector" : "markerMap",
     "dblclick #graphs-selector" : "graph",
+    // type filters
     "dblclick #usPop-filter" : "usPop",
     "dblclick #race-filter" : "race",
     "dblclick #race-selection" : "raceCheckboxes",
@@ -11,8 +13,12 @@ var KillingListView = Backbone.View.extend({
     "dblclick #age-range" : "ageHeat",
     "change #state-filter" : "state",
     "click #unarmed" : "armedOrUnarmed",
+    // weights
     "dblclick #usPop-weight" : "usPopWeight"
   },
+
+
+  // methods for grabbing which filters/displays/weights have been selected:
 
   detectDisplayStyle: function(){
     var displayStyle = $('.display-type').attr('id');
@@ -53,17 +59,26 @@ var KillingListView = Backbone.View.extend({
     };
   },
 
+  // methods for the DISPLAY styles, to redirect more specifically:
+
   heatMap: function(){
-    var filter = $('.filter-type').attr('id');
-    if (filter==="usPop-filter") {
-      this.usPopHeat();
-    } else if (filter==="race-filter") {
-      this.raceCheckboxes();
-    } else if (filter==="age-filter") {
-      this.ageHeatDisplay();
-    } else if (filter==="state-filter") {
-      this.stateHeat();
-    };
+    var filter = this.detectFilter();
+    var weight = this.detectWeight();
+    if (weight === "none") {
+      switch (filter) {
+        case "usPop" : this.usPopHeat();
+        case "race" : this.raceCheckboxes();
+        case "age" : this.ageHeatDisplay();
+        case "state" : this.stateHeat();
+      };
+    } else {
+      switch (filter) {
+        case "usPop" : this.usPopHeat();
+        case "race" : this.raceCheckboxes();
+        case "age" : this.ageHeatDisplay();
+        case "state" : this.stateHeat();
+      };
+    }
   },
 
   markerMap: function(){
@@ -79,75 +94,129 @@ var KillingListView = Backbone.View.extend({
     } else if (weight === "usPop") {
       switch (filter) {
         case "race" : this.raceCheckboxesPopweight();
-      }
+      };
+    } else {
+      switch (filter) {
+        case "usPop" : this.usPopMarker();
+        case "race" : this.raceCheckboxes();
+        case "age" : this.ageMarker();
+        case "state" : this.stateMarker();
+      };
     }
   },
 
   graph: function(){
-    var filter = $('.filter-type').attr('id');
-    if (filter==="usPop-filter") {
-      this.graphProgram("city");
-      emptyGraph("city");
-    } else if (filter==="race-filter") {
-      this.graphProgram("race");
-      emptyGraph("race");
-    } else if (filter==="age-filter") {
-      this.graphProgram("age");
-      emptyGraph("age");
-    };
-  },
-
-  usPop: function(){
-    var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector") {
-      this.usPopHeat();
-    } else if (displayStyle==="markers-selector") {
-      this.usPopMarker();
+    var filter = this.detectFilter();
+    var weight = this.detectWeight();
+    if (weight === "none") {
+      switch (filter) {
+        case "usPop" : this.usPopGraph();
+        case "race" : this.raceGraph();
+        case "age" : this.ageGraph();
+        // case "state" : this.stateGraph();
+      };
+    } else if (weight === "usPop") {
+      switch (filter) {
+        case "race" : this.raceCheckboxesPopweight();
+      };
     } else {
-      this.graphProgram("city");
-      emptyGraph("city");
-    };
-  },
-
-  race: function(){
-    var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector" || displayStyle==="markers-selector") {
-      this.raceDisplay();
-    } else {
-      alert("make a race graph!");
-      // this.graphProgram("race");
-      // emptyGraph("race");
+      switch (filter) {
+        case "usPop" : this.usPopGraph();
+        case "race" : this.raceGraph();
+        case "age" : this.ageGraph();
+        // case "state" : this.stateGraph();
+      };
     }
   },
 
+  // methods for the FILTERS, to redirect them more specifically:
+
+
+  usPop: function(){
+    var display = this.detectDisplayStyle();
+    var weight = this.detectWeight();
+    if (weight === "none") {
+      switch (display) {
+        case "heatmap" : this.usPopHeat();
+        case "marker" : this.usPopMarker();
+        case "graph" : this.usPopGraph();
+      };
+    } else {
+      switch (display) {
+        case "heatmap" : this.usPopHeat();
+        case "marker" : this.usPopMarker();
+        case "graph" : this.usPopGraph();
+      };
+    }
+  },
+
+  race: function(){
+    var display = this.detectDisplayStyle();
+    if (display != "graph") {
+      this.raceDisplay();
+    } else {
+      this.raceGraph();
+    }
+  },
+
+  raceDisplay: function(){
+    var raceForm = $('#race-selection');
+    if ($(raceForm).css('display') === "none") {
+      $(raceForm).css({"display":"block"});
+    };
+  },
+
   raceCheckboxes: function(){
+    var display = this.detectDisplayStyle();
+    var weight = this.detectWeight();
     var checkedBoxes = $('#race-selection').children('input:checked');
     var checkedNames = $(checkedBoxes).map(function(){
       return this.name;
     })
     .get();
     var filteredCollection = this.collection.filterByRaces(checkedNames);
-    var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector") {
-      this.raceHeat(filteredCollection);
-    } else if (displayStyle==="markers-selector") {
-      this.raceMarker(filteredCollection);
+
+    if (weight === "none") {
+      switch (display) {
+        case "heatmap" : this.raceHeat(filteredCollection);
+        case "marker" : this.raceMarker(filteredCollection);
+      };
+    } else if (weight === "usPop") {
+      switch (display) {
+        // case "heatmap" : this.usPopHeat();
+        case "marker" : this.raceHeatPopweight();
+        case "graph" : this.raceGraphPopweight();
+      };
+    } else {
+      switch (display) {
+        case "heatmap" : this.raceHeat(filteredCollection);
+        case "marker" : this.raceMarker(filteredCollection);
+      };
     };
   },
 
-  raceCheckboxesPopweight: function(){
-    debugger;
+  age: function(){
+    var display = this.detectDisplayStyle();
+    var weight = this.detectWeight();
+    if (weight === "none") {
+      switch (display) {
+        case "heatmap" : this.ageHeatDisplay();
+        case "marker" : this.ageMarker();
+        case "graph" : this.ageGraph();
+      };
+    } else {
+      switch (display) {
+        case "heatmap" : this.ageHeatDisplay();
+        case "marker" : this.ageMarker();
+        case "graph" : this.ageGraph();
+      };
+    }
   },
 
-  age: function(){
-    var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector") {
-      this.ageHeatDisplay();
-    } else if (displayStyle==="markers-selector") {
-      this.ageMarker();
-    } else {
-      this.graphProgram("age");
-      emptyGraph("age");
+  ageHeatDisplay: function(){
+    var ageForm = $('#age-range');
+    if (ageForm.find('label:first-child').css('display') === "none") {
+      ageForm.children().toggle().css({"display":"block"});
     };
   },
 
@@ -155,13 +224,29 @@ var KillingListView = Backbone.View.extend({
     e.preventDefault();
     var that = this;
     replaceFilter(that);
-    var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector") {
-      this.stateHeat();
-    } else if (displayStyle==="markers-selector") {
-      this.stateMarker();
-    };
+    var display = this.detectDisplayStyle();
+    var weight = this.detectWeight();
+    if (weight === "none") {
+      switch (display) {
+        case "heatmap" : this.stateHeat();
+        case "marker" : this.stateMarker();
+        // case "graph" : this.stateGraph();
+      };
+    } else {
+      switch (display) {
+        case "heatmap" : this.stateHeat();
+        case "marker" : this.stateMarker();
+        // case "graph" : this.stateGraph();
+      };
+    }
   },
+
+  armedOrUnarmed: function(){
+    var filteredCollection = this.collection.armedOrUnarmedKillings();
+    this.filteredToGeoMap(filteredCollection);
+  },
+
+  // methods for WEIGHTS, to redirect the more specifically
 
   usPopWeight: function(){
     var display = this.detectDisplayStyle();
@@ -187,6 +272,8 @@ var KillingListView = Backbone.View.extend({
     }
   },
 
+  /////// methods for settings to call upon their info (aka filter) (or call it and use it, if display === graph)
+
   usPopHeat: function(){
     var filteredCollection = this.collection.usPopHeat();
     this.$el.find($('.program-text')).text(filteredCollection.program);
@@ -199,11 +286,9 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  raceDisplay: function(){
-    var raceForm = $('#race-selection');
-    if ($(raceForm).css('display') === "none") {
-      $(raceForm).css({"display":"block"});
-    };
+  usPopGraph: function(){
+    this.graphProgram("city");
+    emptyGraph("city");
   },
 
   raceHeat: function(filteredCollection){
@@ -218,12 +303,24 @@ var KillingListView = Backbone.View.extend({
     filteredCollection.trigger('change');
   },
 
-  ageHeatDisplay: function(){
-    var ageForm = $('#age-range');
-    if (ageForm.find('label:first-child').css('display') === "none") {
-      ageForm.children().toggle().css({"display":"block"});
-    };
+  raceGraph: function(){
+    this.graphProgram("race");
+    emptyGraph("race");
   },
+
+  raceHeatPopweight: function(){
+    debugger;
+  },
+
+  raceMarkerPopweight: function(){
+    debugger;
+  },
+
+  raceGraphPopweight: function(){
+    this.graphProgram("race_popWeight");
+    emptyGraph("race_popWeight");
+  },
+
 
   ageHeat: function(){
     var ageMin = this.$el.find($('#age-min')).val();
@@ -237,6 +334,11 @@ var KillingListView = Backbone.View.extend({
     var filteredCollection = this.collection.ageMarker();
     this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
+  },
+
+  ageGraph: function(){
+    this.graphProgram("age");
+    emptyGraph("age");
   },
 
   stateHeat: function(){
@@ -254,15 +356,7 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  armedOrUnarmed: function(){
-    var filteredCollection = this.collection.armedOrUnarmedKillings();
-    this.filteredToGeoMap(filteredCollection);
-  },
-
-  raceGraphPopweight: function(){
-    this.graphProgram("race_popWeight");
-    emptyGraph("race_popWeight");
-  },
+///////AAAAND calling it
 
   filteredToHeatMap: function(filter){
     filter.listenToOnce(filter, 'reset', makeHeatMap);
@@ -278,8 +372,4 @@ var KillingListView = Backbone.View.extend({
     this.$el.find($('.program-text')).html(programs.graphs[query]);
   },
 
-  // filteredToGraph: function(filter){
-  //   filter.listenToOnce(filter, 'reset', makeGraph);
-  //   filter.fetch({reset: true});
-  // },
 });
