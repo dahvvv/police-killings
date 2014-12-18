@@ -27,6 +27,8 @@ var KillingListView = Backbone.View.extend({
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
       this.usPopMarker();
+    } else if (filter==="race-filter") {
+      this.raceMarker();
     } else if (filter==="age-filter") {
       this.ageMarker();
     } else if (filter==="state-filter") {
