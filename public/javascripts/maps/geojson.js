@@ -107,9 +107,14 @@ function jsonElemToObjLiteral(elem,query){
 };
 
 function makeGeoMap(){
-  var geoFeatureArr = [];
   var query = this.query;
-  this.toJSON().forEach(function(elem){
+  var that = this;
+  setGeoMap(that,query);
+};
+
+function setGeoMap(context,query){
+  var geoFeatureArr = [];  
+  context.toJSON().forEach(function(elem){
     var options = jsonElemToObjLiteral(elem,query);
     var geoFeature = featureToGeoFormat(options);
     geoFeatureArr.push(geoFeature);
@@ -123,8 +128,8 @@ function makeGeoMap(){
   };
   if (query==="state") {
     $('.display-selector').animate({"top":"73%"},500);
-    $('#infovis').animate({"height":"73%"},500);    
-    var state = this.state;
+    $('#infovis').animte({"height":"73%"},500);    
+    var state = context.state;
     setMapToStateView(state);
   } else {
     $('.display-selector').animate({"top":"65%"},500);
