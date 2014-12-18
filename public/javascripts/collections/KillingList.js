@@ -8,7 +8,6 @@ var KillingList = Backbone.Collection.extend({
   },
 
   usPopMarker: function(){
-    debugger;
     var PopList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings",

@@ -107,7 +107,6 @@ function jsonElemToObjLiteral(elem,query){
 };
 
 function makeGeoMap(){
-  debugger;
   var query = this.query;
   var that = this;
   setGeoMap(that,query);
