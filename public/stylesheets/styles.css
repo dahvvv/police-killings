@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Oswald';
+  font-family: Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;
 }
 
 #container {
@@ -12,6 +12,22 @@ body {
   width: 100%;
   margin: 0px;
   padding: 0px;
+}
+
+input[type=submit] {
+    border-radius: 5px;
+    border: 0;
+    width: 80px;
+    height:30px;
+    font-size: 1em;
+    font-family: Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;    background: #f4f4f4;
+    background: -moz-linear-gradient(top, #f4f4f4 1%, #ededed 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #f4f4f4), color-stop(100%, #ededed));
+    background: -webkit-linear-gradient(top, #f4f4f4 1%, #ededed 100%);
+    background: -o-linear-gradient(top, #f4f4f4 1%, #ededed 100%);
+    background: -ms-linear-gradient(top, #f4f4f4 1%, #ededed 100%);
+    background: linear-gradient(to bottom, #f4f4f4 1%, #ededed 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#ededed', GradientType=0);
 }
 
 #filters-container {
@@ -55,14 +71,14 @@ select.button-filter {
 
 .race-selection-submit {
   position: absolute;
-  top: 56%;
-  right: 33%;
+  top: 61%;
+  right: 10%;
 }
 
 #race-selection {
   margin: 0.5em 1em;
-  display: none;
-}
+/*  display: none;
+*/}
 
 #age-range input, label {
   margin: 0.5em 1em;
