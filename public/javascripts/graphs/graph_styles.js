@@ -2,7 +2,7 @@ function raceGraphStyle(){
   var style = {
     injectInto: 'infovis',
     animate: true,
-    orientation: 'horizontal',
+    orientation: 'vertical',
     barsOffset: 10,
     Margin: {
       top:5,
@@ -16,7 +16,7 @@ function raceGraphStyle(){
     showLabels: true,
     Label: {
       type: 'HTML',
-      size: 12,
+      size: 16,
       family: 'Helvetica',
       color: '#c8cdcf',
       // weight: 'bold'
@@ -36,7 +36,7 @@ function cityGraphStyle(){
     injectInto: 'infovis',
     animate: true,
     orientation: 'horizontal',
-    barsOffset: 10,
+    barsOffset: 15,
     Margin: {
       top:5,
       left: 0,

@@ -28,29 +28,29 @@ function raceGraphData(){
     'label': ['race'],
     'values': [
       {
-        'label': 'white',
-        'values': [1252],
+        'label': 'other',
+        'values': [24],
       },
       {
-        'label': 'black',
-        'values': [889],
-      },
-      {
-        'label': 'hispanic and/or latin',
-        'values': [302],
+        'label': 'alaskan/p.i.',
+        'values': [29],
       },
       {
         'label': 'asian',
         'values': [44],
       },
       {
-        'label': 'alaskan and/or pacific islander',
-        'values': [29],
+        'label': 'hispanic/latin',
+        'values': [302],
       },
       {
-        'label': 'other',
-        'values': [24],
+        'label': 'black',
+        'values': [889],
       },
+      {
+        'label': 'white',
+        'values': [1252],
+      }
     ]
   };
   return data;

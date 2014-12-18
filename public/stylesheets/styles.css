@@ -35,7 +35,14 @@ input[type=submit] {
   height: 30em;
   width: 15%;
   top: 8em;
-  background-color: lightblue: ;
+}
+
+#weights-container {
+  position: absolute;
+  height: 30em;
+  width: 15%;
+  top: 8em;
+  right: 0;
 }
 
 button {
@@ -62,7 +69,37 @@ select.button-filter {
   cursor: pointer;
 }
 
+.button-header {
+  display: block;
+  text-align: center;
+  height: 8%;
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+}
+
+.button-weight {
+  display: block;
+  height: 8%;
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(136,123,107,0.2);
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
 .button-filter.filter-type {
+  background-color: rgba(136,123,107,0.6);
+  font-size: 1.2em;
+  height: 10%;
+  color: black;
+}
+
+.button-weight.weight-type {
   background-color: rgba(136,123,107,0.6);
   font-size: 1.2em;
   height: 10%;

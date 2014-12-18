@@ -19,7 +19,6 @@ function selectGraphStyle(query){
 };
 
 function makeGraph(query){
-  debugger;
   var graphData = selectGraphData(query);
   var graphStyle = selectGraphStyle(query);
   var graph = new $jit.BarChart(graphStyle);
