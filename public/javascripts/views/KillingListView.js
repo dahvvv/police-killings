@@ -1,5 +1,4 @@
 var KillingListView = Backbone.View.extend({
-
   events: {
     // display selectors
     "dblclick #heatmaps-selector" : "heatMap",
@@ -8,7 +7,7 @@ var KillingListView = Backbone.View.extend({
     // type filters
     "dblclick #usPop-filter" : "usPop",
     "dblclick #race-filter" : "race",
-    "dblclick #race-selection" : "raceCheckboxes",
+    // "dblclick #race-selection" : "raceCheckboxes",
     "dblclick #age-filter" : "age",
     "dblclick #age-range" : "ageHeat",
     "change #state-filter" : "state",
@@ -65,19 +64,25 @@ var KillingListView = Backbone.View.extend({
     var filter = this.detectFilter();
     var weight = this.detectWeight();
     if (weight === "none") {
-      switch (filter) {
-        case "usPop" : this.usPopHeat();
-        case "race" : this.raceCheckboxes();
-        case "age" : this.ageHeatDisplay();
-        case "state" : this.stateHeat();
-      };
+      if (filter === "usPop") {
+        this.usPopHeat();
+      } else if (filter === "race") {
+        this.raceCheckboxes();
+      } else if (filter === "age") {
+        this.ageHeatDisplay();
+      } else if (filter === "state") {
+        this.stateHeat();
+      }
     } else {
-      switch (filter) {
-        case "usPop" : this.usPopHeat();
-        case "race" : this.raceCheckboxes();
-        case "age" : this.ageHeatDisplay();
-        case "state" : this.stateHeat();
-      };
+      if (filter === "usPop") {
+        this.usPopHeat();
+      } else if (filter === "race") {
+        this.raceCheckboxes();
+      } else if (filter === "age") {
+        this.ageHeatDisplay();
+      } else if (filter === "state") {
+        this.stateHeat();
+      }
     }
   },
 
@@ -85,23 +90,29 @@ var KillingListView = Backbone.View.extend({
     var filter = this.detectFilter();
     var weight = this.detectWeight();
     if (weight === "none") {
-      switch (filter) {
-        case "usPop" : this.usPopMarker();
-        case "race" : this.raceCheckboxes();
-        case "age" : this.ageMarker();
-        case "state" : this.stateMarker();
-      };
+      if (filter === "usPop") {
+        this.usPopMarker();
+      } else if (filter === "race") {
+        this.raceCheckboxes();
+      } else if (filter === "age") {
+        this.ageMarker();
+      } else if (filter === "state") {
+        this.stateMarker();
+      }
     } else if (weight === "usPop") {
-      switch (filter) {
-        case "race" : this.raceCheckboxesPopweight();
-      };
+      if (filter === "race") {
+        this.raceCheckboxesPopweight();
+      }
     } else {
-      switch (filter) {
-        case "usPop" : this.usPopMarker();
-        case "race" : this.raceCheckboxes();
-        case "age" : this.ageMarker();
-        case "state" : this.stateMarker();
-      };
+      if (filter === "usPop") {
+        this.usPopMarker();
+      } else if (filter === "race") {
+        this.raceCheckboxes();
+      } else if (filter === "age") {
+        this.ageMarker();
+      } else if (filter === "state") {
+        this.stateMarker();
+      }
     }
   },
 
@@ -109,25 +120,32 @@ var KillingListView = Backbone.View.extend({
     var filter = this.detectFilter();
     var weight = this.detectWeight();
     if (weight === "none") {
-      switch (filter) {
-        case "usPop" : this.usPopGraph();
-        case "race" : this.raceGraph();
-        case "age" : this.ageGraph();
-        // case "state" : this.stateGraph();
-      };
+      if (filter === "usPop") {
+        this.usPopGraph();
+      } else if (filter === "race") {
+        this.raceGraph();
+      } else if (filter === "age") {
+        this.ageGraph();
+      // } else if (filter === "state") {
+      //   this.stateGraph();
+      }
     } else if (weight === "usPop") {
-      switch (filter) {
-        case "race" : this.raceCheckboxesPopweight();
-      };
+      if (filter === "race") {
+        this.raceCheckboxesPopweight();
+      }
     } else {
-      switch (filter) {
-        case "usPop" : this.usPopGraph();
-        case "race" : this.raceGraph();
-        case "age" : this.ageGraph();
-        // case "state" : this.stateGraph();
+      if (filter === "usPop") {
+        this.usPopGraph();
+      } else if (filter === "race") {
+        this.raceGraph();
+      } else if (filter === "age") {
+        this.ageGraph();
+      // } else if (filter === "state") {
+      //   this.stateGraph();
       };
     }
   },
+
 
   // methods for the FILTERS, to redirect them more specifically:
 
@@ -136,18 +154,22 @@ var KillingListView = Backbone.View.extend({
     var display = this.detectDisplayStyle();
     var weight = this.detectWeight();
     if (weight === "none") {
-      switch (display) {
-        case "heatmap" : this.usPopHeat();
-        case "marker" : this.usPopMarker();
-        case "graph" : this.usPopGraph();
-      };
+      if (display === "heatmap") {
+        this.usPopHeat();
+      } else if (display === "marker") {
+        this.usPopMarker();
+      } else if (display === "graph") {
+        this.usPopGraph();
+      }
     } else {
-      switch (display) {
-        case "heatmap" : this.usPopHeat();
-        case "marker" : this.usPopMarker();
-        case "graph" : this.usPopGraph();
-      };
-    }
+      if (display === "heatmap") {
+        this.usPopHeat();
+      } else if (display === "marker") {
+        this.usPopMarker();
+      } else if (display === "graph") {
+        this.usPopGraph();
+      }
+    };
   },
 
   race: function(){
@@ -167,6 +189,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceCheckboxes: function(){
+    alert('in raceCheckboxes!');
     var display = this.detectDisplayStyle();
     var weight = this.detectWeight();
     var checkedBoxes = $('#race-selection').children('input:checked');
@@ -298,6 +321,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceMarker: function(filteredCollection){
+    alert('in raceMarker!');
     this.$el.find($('.program-text')).text(programs.markermaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', setRaceQuery);
     filteredCollection.trigger('change');
