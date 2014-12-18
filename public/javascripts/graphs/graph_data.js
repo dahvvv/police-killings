@@ -29,27 +29,27 @@ function raceGraphData(){
     'values': [
       {
         'label': 'other',
-        'values': [24],
+        'values': [0.9], //24
       },
       {
         'label': 'alaskan/p.i.',
-        'values': [29],
+        'values': [1.1], //29
       },
       {
         'label': 'asian',
-        'values': [44],
+        'values': [1.7], //44
       },
       {
         'label': 'hispanic/latin',
-        'values': [302],
+        'values': [11.9], //302
       },
       {
         'label': 'black',
-        'values': [889],
+        'values': [35.0], //889
       },
       {
         'label': 'white',
-        'values': [1252],
+        'values': [49.3], //1252
       }
     ]
   };
@@ -59,7 +59,7 @@ function raceGraphData(){
 function race_popWeightGraphData(){
   var data = {
     'color': ['#0066CC','#1975D1','#001F3D'],
-    'label': ['victims by race','victims by race per us population'],
+    'label': ['unweighted portion','additional portion gained by weighting against us population','portion lost by weighting against us population'],
     'values': [
       {
         'label': 'other',

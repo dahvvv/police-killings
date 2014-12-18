@@ -57,7 +57,7 @@ function race_popWeightGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = elem.label + ": " + (Number((elem.value/2450).toFixed(3))*100) + "%";
+        tip.innerHTML = elem.name;
       }
     },
   };
