@@ -24,7 +24,7 @@ function raceGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = elem.value + " people killed in " + elem.label;
+        tip.innerHTML = elem.label + ": " + (Number((elem.value/2450).toFixed(3))*100) + "%";
       }
     },
   };
