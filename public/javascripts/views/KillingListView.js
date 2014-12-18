@@ -94,6 +94,8 @@ var KillingListView = Backbone.View.extend({
 
   state: function(e){
     e.preventDefault();
+    var that = this;
+    replaceFilter(that);
     var displayStyle = $('.display-type').attr('id');
     if (displayStyle==="heatmaps-selector") {
       this.stateHeat();
@@ -127,10 +129,10 @@ var KillingListView = Backbone.View.extend({
       return this.name;
     })
     .get();
-    var filteredCollection = this.collection.raceHeat(checkedNames);
-    debugger;
+    var filteredCollection = this.collection.filterByRaces(checkedNames);
     this.$el.find($('.program-text')).text(filteredCollection.program);
-    this.filteredToHeatMap(filteredCollection);
+    filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
+    filteredCollection.trigger('change');
   },
 
   raceMarker: function(){

@@ -47,7 +47,6 @@ $(function(){
 
   $('.display-selector').on('click', function(e){
     e.preventDefault();
-    debugger;
     var that = this;
     replaceDisplaySelector(that);
   });

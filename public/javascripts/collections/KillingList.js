@@ -16,40 +16,53 @@ var KillingList = Backbone.Collection.extend({
     return new PopList();
   },
 
-  raceHeat: function(races){
-    var races = races;
-    var urlBase = "/api/killings/race";
-    // races.forEach(function(elem){
-    //   var elem = elem.split(" ").join("%20").split("/").join("%2F");
-    //   urlstring = urlstring + "/" + elem;
-    // });
-
-
-    //shit, I'm running out of time and can't do this gracefully.
-
-    if (races.length === 0) {
-      var urlAddendum = "";
-    } else if (races.length === 1) {
-      var urlAddendum = "/one/" + races[0];
-    } else if (races.length === 2) {
-      var urlAddendum = "/one/" + races[0] + "/two/" + races[1];
-    } else if (races.length === 3) {
-      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2];
-    } else if (races.length === 4) {
-      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3];
-    } else if (races.length === 5) {
-      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3] + "/five/" + races[4];
-    } else if (races.length === 6) {
-      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3] + "/five/" + races[4] + "/six/" + races[5];
-    };
-    var url = urlBase + urlAddendum;
-    var RaceHeatList = Backbone.Collection.extend({
-      model: Killing,
-      url: url,
-      query: "victim_race",
-      program: "This heatmap is scaled to show similar total heat for any age range, in order to emphasize changes in locations."
+  filterByRace: function(race){
+    return this.filter(function(victim){
+      return victim.get("victim_race") === race;
     });
-    return new RaceHeatList();
+  },
+
+  filterByRaces: function(races){
+    var arr = []
+    var that = this;
+    _.each(races, function(race){
+      var filtered = that.filterByRace(race);
+      arr = arr.concat(filtered);
+    });
+    return new KillingList(arr);
+    // var races = races;
+    // var urlBase = "/api/killings/race";
+    // // races.forEach(function(elem){
+    // //   var elem = elem.split(" ").join("%20").split("/").join("%2F");
+    // //   urlstring = urlstring + "/" + elem;
+    // // });
+
+
+    // //shit, I'm running out of time and can't do this gracefully.
+
+    // if (races.length === 0) {
+    //   var urlAddendum = "";
+    // } else if (races.length === 1) {
+    //   var urlAddendum = "/one/" + races[0];
+    // } else if (races.length === 2) {
+    //   var urlAddendum = "/one/" + races[0] + "/two/" + races[1];
+    // } else if (races.length === 3) {
+    //   var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2];
+    // } else if (races.length === 4) {
+    //   var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3];
+    // } else if (races.length === 5) {
+    //   var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3] + "/five/" + races[4];
+    // } else if (races.length === 6) {
+    //   var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3] + "/five/" + races[4] + "/six/" + races[5];
+    // };
+    // var url = urlBase + urlAddendum;
+    // var RaceHeatList = Backbone.Collection.extend({
+    //   model: Killing,
+    //   url: url,
+    //   query: "victim_race",
+    //   program: "This heatmap is scaled to show similar total heat for any age range, in order to emphasize changes in locations."
+    // });
+    // return new RaceHeatList();
   },
 
   raceMarker: function(){

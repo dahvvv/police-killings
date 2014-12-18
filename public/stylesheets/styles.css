@@ -158,3 +158,12 @@ select.button-filter {
   font-weight: bold;
   font-family: Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;
 }
+
+#popup-template {
+  color: red;
+}
+
+#popup-template img {
+  max-height: 150px;
+  max-width: 150px;
+}

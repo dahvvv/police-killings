@@ -29,9 +29,12 @@ function addGeoLayer(geoData){
       }
     },
     onEachFeature: function(feature,layer){
+      var template = _.template($('#popup-template').html());
       // layer.bindPopup(feature.properties.description)
-      var content = popupContent(feature);
-      layer.bindPopup(content);
+      // template(feature.properties)
+      // var content = popupContent(feature);
+      // layer.bindPopup(content);
+      layer.bindPopup(template(feature.properties));
     }
   });
   if ($('#map-one').css('display') === "none") {
