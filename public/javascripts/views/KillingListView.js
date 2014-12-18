@@ -17,6 +17,8 @@ var KillingListView = Backbone.View.extend({
     var filter = $('.filter-type').attr('id');
     if (filter==="usPop-filter") {
       this.usPopHeat();
+    } else if (filter==="race-filter") {
+      this.raceCheckboxes();
     } else if (filter==="age-filter") {
       this.ageHeatDisplay();
     } else if (filter==="state-filter") {
@@ -29,7 +31,7 @@ var KillingListView = Backbone.View.extend({
     if (filter==="usPop-filter") {
       this.usPopMarker();
     } else if (filter==="race-filter") {
-      this.raceMarker();
+      this.raceCheckboxes();
     } else if (filter==="age-filter") {
       this.ageMarker();
     } else if (filter==="state-filter") {
@@ -72,11 +74,17 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceCheckboxes: function(){
+    var checkedBoxes = $('#race-selection').children('input:checked');
+    var checkedNames = $(checkedBoxes).map(function(){
+      return this.name;
+    })
+    .get();
+    var filteredCollection = this.collection.filterByRaces(checkedNames);
     var displayStyle = $('.display-type').attr('id');
     if (displayStyle==="heatmaps-selector") {
-      this.raceHeat();
+      this.raceHeat(filteredCollection);
     } else if (displayStyle==="markers-selector") {
-      this.raceMarker();
+      this.raceMarker(filteredCollection);
     };
   },
 
@@ -123,22 +131,16 @@ var KillingListView = Backbone.View.extend({
     };
   },
 
-  raceHeat: function(){
-    var checkedBoxes = $('#race-selection').children('input:checked');
-    var checkedNames = $(checkedBoxes).map(function(){
-      return this.name;
-    })
-    .get();
-    var filteredCollection = this.collection.filterByRaces(checkedNames);
+  raceHeat: function(filteredCollection){
     this.$el.find($('.program-text')).text(programs.heatmaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
     filteredCollection.trigger('change');
   },
 
-  raceMarker: function(){
-    var filteredCollection = this.collection.raceMarker();
-    this.$el.find($('.program-text')).text(filteredCollection.program);
-    this.filteredToGeoMap(filteredCollection);
+  raceMarker: function(filteredCollection){
+    this.$el.find($('.program-text')).text(programs.markermaps["race"]);
+    filteredCollection.listenToOnce(filteredCollection, 'change', makeGeoMap);
+    filteredCollection.trigger('change');
   },
 
   ageHeatDisplay: function(){

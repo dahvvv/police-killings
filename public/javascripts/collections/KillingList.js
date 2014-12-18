@@ -65,15 +65,15 @@ var KillingList = Backbone.Collection.extend({
     // return new RaceHeatList();
   },
 
-  raceMarker: function(){
-    var RaceMarkerList = Backbone.Collection.extend({
-      model: Killing,
-      url: "/api/killings/race",
-      query: "victim_race",
-      program: "race program :("
-    });
-    return new RaceMarkerList();
-  },
+  // raceMarker: function(){
+  //   var RaceMarkerList = Backbone.Collection.extend({
+  //     model: Killing,
+  //     url: "/api/killings/race",
+  //     query: "victim_race",
+  //     program: "race program :("
+  //   });
+  //   return new RaceMarkerList();
+  // },
 
   ageHeat: function(ageMin,ageMax){
     var min = ageMin;

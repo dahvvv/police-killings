@@ -6,7 +6,8 @@ var programs = {
   },
   markermaps: {
     us_pop: "",
-    age: ""
+    age: "",
+    race: "...info about racial distribution here..."
   },
   graphs: {
     city: "New York and Las Vegas have far more deaths by Police Officers than any other city.",
