@@ -43,6 +43,14 @@ function styleVictimRace(feature){
   }
 };
 
+function styleVictimRacePopweight(feature){
+  debugger;
+  return {
+    fillColor: raceToFillColor(feature.properties.race),
+    radius: 7
+  }
+};
+
 function styleVictimAge(feature){
   var i = feature.properties.age;
   var lowerBound = 0;

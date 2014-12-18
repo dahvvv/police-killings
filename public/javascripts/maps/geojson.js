@@ -24,6 +24,7 @@ function addGeoLayer(geoData){
     style: function(feature){
       switch (feature.properties.query){
         case "race": return styleVictimRace(feature);
+        case "race_popweight": return styleVictimRacePopweight(feature);
         case "victim_age": return styleVictimAge(feature);
         case "victim_unarmed": return styleVictimUnarmed(feature);
       }
@@ -114,6 +115,12 @@ function makeGeoMap(){
 
 function setRaceQuery(){
   var query = "race";
+  var that = this;
+  setGeoMap(that,query);
+};
+
+function setRacePopweightQuery(){
+  var query = "race_popweight";
   var that = this;
   setGeoMap(that,query);
 };

@@ -101,7 +101,7 @@ var KillingListView = Backbone.View.extend({
       }
     } else if (weight === "usPop") {
       if (filter === "race") {
-        this.raceCheckboxesPopweight();
+        this.raceCheckboxes();
       }
     } else {
       if (filter === "usPop") {
@@ -131,7 +131,7 @@ var KillingListView = Backbone.View.extend({
       }
     } else if (weight === "usPop") {
       if (filter === "race") {
-        this.raceCheckboxesPopweight();
+        this.raceGraphPopweight();
       }
     } else {
       if (filter === "usPop") {
@@ -202,14 +202,15 @@ var KillingListView = Backbone.View.extend({
       if (display === "heatmap") {
         this.raceHeat(filteredCollection);
       } else if (display === "marker") {
-        debugger;
         this.raceMarker(filteredCollection);
       }
     } else if (weight === "usPop") {
-      if (display === "marker") {
-        this.raceHeatPopweight();
+      if (display === "heatmap") {
+        this.raceHeatPopweight(filteredCollection);
+      } else if (display === "marker") {
+        this.raceMarkerPopweight(filteredCollection);
       } else if (display === "graph") {
-        this.raceGraphPopweight();
+        this.raceGraphPopweight(filteredCollection);
       }
     } else {
       if (display === "heatmap") {
@@ -291,8 +292,10 @@ var KillingListView = Backbone.View.extend({
       //   case "state" : this.stateHeatPopweight();
       // };
     } else if (display === "marker") {
+      if (filter === "race") {
+        this.raceCheckboxes();
+      }
       // switch (filter) {
-      //   case "race" : this.raceMarkerPopweight();
       //   case "age" : this.ageMarkerPopweight();
       //   case "state" : this.stateMarkerPopweight();
       // };
@@ -347,8 +350,10 @@ var KillingListView = Backbone.View.extend({
     debugger;
   },
 
-  raceMarkerPopweight: function(){
-    debugger;
+  raceMarkerPopweight: function(filteredCollection){
+    this.$el.find($('.program-text')).text(programs.markermaps["race_popWeight"]);
+    filteredCollection.listenToOnce(filteredCollection, 'change', setRacePopweightQuery);
+    filteredCollection.trigger('change');
   },
 
   raceGraphPopweight: function(){

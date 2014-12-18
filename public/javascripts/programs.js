@@ -7,7 +7,8 @@ var programs = {
   markermaps: {
     us_pop: "",
     age: "",
-    race: "...info about racial distribution here..."
+    race: "...info about racial distribution here...",
+    race_popWeight: "A marker map of police shooting by race, weighted by US population."
   },
   graphs: {
     city: "New York and Las Vegas have far more deaths by Police Officers than any other city.",
