@@ -6,6 +6,7 @@ var KillingListView = Backbone.View.extend({
     "dblclick #graphs-selector" : "graph",
     "dblclick #usPop-filter" : "usPop",
     "dblclick #race-filter" : "race",
+    "dblclick #race-selection" : "raceCheckboxes",
     "dblclick #age-filter" : "age",
     "dblclick #age-range" : "ageHeat",
     "dblclick #state" : "stateHeat",
@@ -61,15 +62,22 @@ var KillingListView = Backbone.View.extend({
 
   race: function(){
     var displayStyle = $('.display-type').attr('id');
-    if (displayStyle==="heatmaps-selector") {
-      this.raceHeatDisplay();
-    } else if (displayStyle==="markers-selector") {
-      this.raceMarker();
+    if (displayStyle==="heatmaps-selector" || displayStyle==="markers-selector") {
+      this.raceDisplay();
     } else {
       alert("make a race graph!");
       // this.graphProgram("race");
       // emptyGraph("race");
     }
+  },
+
+  raceCheckboxes: function(){
+    var displayStyle = $('.display-type').attr('id');
+    if (displayStyle==="heatmaps-selector") {
+      this.raceHeat();
+    } else if (displayStyle==="markers-selector") {
+      this.raceMarker();
+    };
   },
 
   age: function(){
@@ -96,11 +104,22 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  raceHeatDisplay: function(){
+  raceDisplay: function(){
     var raceForm = $('#race-selection');
-    if (raceForm.css('display') === "none") {
+    if ($(raceForm).css('display') === "none") {
       $(raceForm).css({"display":"block"});
     };
+  },
+
+  raceHeat: function(){
+    var checkedBoxes = $(raceForm).children('input:checked');
+    var checkedNames = $(checkedBoxes).map(function(){
+      return this.name;
+    })
+    .get();
+    var filteredCollection = this.collection.raceHeat(checkedNames);
+    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.filteredToHeatMap(filteredCollection);
   },
 
   raceMarker: function(){

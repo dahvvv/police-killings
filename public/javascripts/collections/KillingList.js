@@ -16,6 +16,10 @@ var KillingList = Backbone.Collection.extend({
     return new PopList();
   },
 
+  raceHeat: function(races){
+
+  },
+
   raceMarker: function(){
     var RaceMarkerList = Backbone.Collection.extend({
       model: Killing,
