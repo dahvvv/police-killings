@@ -139,8 +139,7 @@ var KillingListView = Backbone.View.extend({
 
   raceMarker: function(filteredCollection){
     this.$el.find($('.program-text')).text(programs.markermaps["race"]);
-    debugger;
-    filteredCollection.listenToOnce(filteredCollection, 'change', makeGeoMap);
+    filteredCollection.listenToOnce(filteredCollection, 'change', setRaceQuery);
     filteredCollection.trigger('change');
   },
 

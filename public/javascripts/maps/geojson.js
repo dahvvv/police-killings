@@ -23,7 +23,7 @@ function addGeoLayer(geoData){
     },
     style: function(feature){
       switch (feature.properties.query){
-        case "victim_race": return styleVictimRace(feature);
+        case "race": return styleVictimRace(feature);
         case "victim_age": return styleVictimAge(feature);
         case "victim_unarmed": return styleVictimUnarmed(feature);
       }
@@ -108,6 +108,12 @@ function jsonElemToObjLiteral(elem,query){
 
 function makeGeoMap(){
   var query = this.query;
+  var that = this;
+  setGeoMap(that,query);
+};
+
+function setRaceQuery(){
+  var query = "race";
   var that = this;
   setGeoMap(that,query);
 };
