@@ -20,14 +20,14 @@ function makeHeatMap(){
     map.removeLayer(heatLayer);
   };
   if (query==="state") {
-    $('.display-selector').animate({"top":"73%"},500);
-    $('#infovis').animate({"height":"73%"},500);    
+    // $('.display-selector').animate({"top":"73%"},500);
+    // $('#infovis').animate({"height":"73%"},500);    
     // debugger;
     var state = this.state;
     setMapToStateView(state);
   } else {
-    $('.display-selector').animate({"top":"65%"},500);
-    $('#infovis').animate({"height":"65%"},100);
+    // $('.display-selector').animate({"top":"65%"},500);
+    // $('#infovis').animate({"height":"65%"},100);
     map.setView([defaultLat,defaultLon],defaultZoom);
   };
   heatLayer = L.heatLayer(coords, {
