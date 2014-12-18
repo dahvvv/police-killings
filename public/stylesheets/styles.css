@@ -77,8 +77,8 @@ select.button-filter {
 
 #race-selection {
   margin: 0.5em 1em;
-/*  display: none;
-*/}
+  display: none;
+}
 
 #age-range input, label {
   margin: 0.5em 1em;

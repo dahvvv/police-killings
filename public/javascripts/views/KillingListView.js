@@ -5,9 +5,9 @@ var KillingListView = Backbone.View.extend({
     "dblclick #markers-selector" : "markerMap",
     "dblclick #graphs-selector" : "graph",
     "dblclick #usPop-filter" : "usPop",
+    "dblclick #race-filter" : "race",
     "dblclick #age-filter" : "age",
     "dblclick #age-range" : "ageHeat",
-    "dblclick #race-filter" : "race",
     "dblclick #state" : "stateHeat",
     "click #unarmed" : "armedOrUnarmed",
   },
@@ -62,7 +62,7 @@ var KillingListView = Backbone.View.extend({
   race: function(){
     var displayStyle = $('.display-type').attr('id');
     if (displayStyle==="heatmaps-selector") {
-      alert("should do 'this.raceHeatDisplay()'!");
+      this.raceHeatDisplay();
     } else if (displayStyle==="markers-selector") {
       this.raceMarker();
     } else {
@@ -94,6 +94,13 @@ var KillingListView = Backbone.View.extend({
     var filteredCollection = this.collection.usPopMarker();
     this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
+  },
+
+  raceHeatDisplay: function(){
+    var raceForm = $('#race-selection');
+    if (raceForm.css('display') === "none") {
+      $(raceForm).css({"display":"block"});
+    };
   },
 
   raceMarker: function(){

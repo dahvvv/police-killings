@@ -19,6 +19,9 @@ function replaceFilter(context){
   if (that.id != "age-filter") {
     $('#age-range').children().css({"display":"none"});
   };
+  if (that.id != "race-filter") {
+    $('#race-selection').css({"display":"none"});
+  };
   $('.button-filter').removeClass('filter-type');
   $(that).addClass('filter-type');
   triggerBang(that);
