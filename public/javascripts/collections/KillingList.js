@@ -96,6 +96,18 @@ var KillingList = Backbone.Collection.extend({
     return new StateList();
   },
 
+  stateMarker: function(state){
+    var state = state;
+    var StateMarkerList = Backbone.Collection.extend({
+      model: Killing,
+      state: state,
+      url: "/api/killings/state/" + state,
+      query: "state",
+      program: "state view marker"
+    });
+    return new StateMarkerList();
+  },
+
   armedOrUnarmedKillings: function(){
     var ArmedOrUnarmedList = Backbone.Collection.extend({
       model: Killing,

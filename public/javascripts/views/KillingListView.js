@@ -9,7 +9,7 @@ var KillingListView = Backbone.View.extend({
     "dblclick #race-selection" : "raceCheckboxes",
     "dblclick #age-filter" : "age",
     "dblclick #age-range" : "ageHeat",
-    "change #state-filter" : "stateHeat",
+    "change #state-filter" : "state",
     "click #unarmed" : "armedOrUnarmed",
   },
 
@@ -92,6 +92,16 @@ var KillingListView = Backbone.View.extend({
     };
   },
 
+  state: function(e){
+    e.preventDefault();
+    var displayStyle = $('.display-type').attr('id');
+    if (displayStyle==="heatmaps-selector") {
+      this.stateHeat();
+    } else if (displayStyle==="markers-selector") {
+      this.stateMarker();
+    };
+  },
+
   usPopHeat: function(){
     var filteredCollection = this.collection.usPopHeat();
     this.$el.find($('.program-text')).text(filteredCollection.program);
@@ -150,15 +160,19 @@ var KillingListView = Backbone.View.extend({
     this.filteredToGeoMap(filteredCollection);
   },
 
-  stateHeat: function(e){
-    e.preventDefault();
+  stateHeat: function(){
     var state = this.$el.find('#state-filter').val();
     var filteredCollection = this.collection.stateHeat(state);
+    this.$el.find($('.program-text')).text(filteredCollection.program);
+
     this.filteredToHeatMap(filteredCollection);
   },
 
   stateMarker: function(){
-    alert('statemarker!');
+    var state = this.$el.find('#state-filter').val();
+    var filteredCollection = this.collection.stateMarker(state);
+    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.filteredToGeoMap(filteredCollection);
   },
 
   armedOrUnarmed: function(){

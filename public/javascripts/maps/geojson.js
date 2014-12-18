@@ -17,12 +17,6 @@ function popupContent(feature){
 };
 
 function addGeoLayer(geoData){
-  while (map.hasLayer(heatLayer)) {
-    map.removeLayer(heatLayer);
-  };
-  while (map.hasLayer(geoLayer)) {
-    map.removeLayer(geoLayer);
-  };
   geoLayer = L.geoJson(geoData, {
     pointToLayer: function(feature, latlng){
       return L.circleMarker(latlng, geoStyleGeneric);
@@ -118,5 +112,21 @@ function makeGeoMap(){
     geoFeatureArr.push(geoFeature);
   });
   var geoData = geoJSONify(geoFeatureArr);
+  while (map.hasLayer(heatLayer)) {
+    map.removeLayer(heatLayer);
+  };
+  while (map.hasLayer(geoLayer)) {
+    map.removeLayer(geoLayer);
+  };
+  if (query==="state") {
+    $('.display-selector').animate({"top":"73%"},500);
+    $('#infovis').animate({"height":"73%"},500);    
+    var state = this.state;
+    setMapToStateView(state);
+  } else {
+    $('.display-selector').animate({"top":"65%"},500);
+    $('#infovis').animate({"height":"65%"},100);
+    map.setView([defaultLat,defaultLon],defaultZoom);
+  };
   addGeoLayer(geoData);
 };
