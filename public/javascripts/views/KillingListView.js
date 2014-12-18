@@ -112,12 +112,13 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceHeat: function(){
-    var checkedBoxes = $(raceForm).children('input:checked');
+    var checkedBoxes = $('#race-selection').children('input:checked');
     var checkedNames = $(checkedBoxes).map(function(){
       return this.name;
     })
     .get();
     var filteredCollection = this.collection.raceHeat(checkedNames);
+    debugger;
     this.$el.find($('.program-text')).text(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
   },

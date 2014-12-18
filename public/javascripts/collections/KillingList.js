@@ -17,7 +17,23 @@ var KillingList = Backbone.Collection.extend({
   },
 
   raceHeat: function(races){
-
+    var races = races;
+    var urlstring = "/api/killings/race";
+    // $.each(races,function(i,elem){
+    //   var urlstring = urlstring + "/" + elem;
+    // });
+    races.forEach(function(elem){
+      var elem = elem.split(" ").join("%20").split("/").join("%2F");
+      urlstring = urlstring + "/" + elem;
+    });
+    debugger;
+    var RaceHeatList = Backbone.Collection.extend({
+      model: Killing,
+      url: urlstring,
+      query: "victim_race",
+      program: "This heatmap is scaled to show similar total heat for any age range, in order to emphasize changes in locations."
+    });
+    return new RaceHeatList();
   },
 
   raceMarker: function(){
