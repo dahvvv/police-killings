@@ -35,7 +35,19 @@ function selectGradient(query){
 
 function setMaxZoom(numDatapoints, query){
   if (query === "state") {
-    return 10;
+    if (numDatapoints > 25) {
+      return 10;
+    } else if (numDatapoints <= 25 && numDatapoints > 30) {
+      return 9;
+    } else if (numDatapoints <= 30 && numDatapoints > 35) {
+      return 8;
+    } else if (numDatapoints <= 35 && numDatapoints > 40) {
+      return 7;
+    } else if (numDatapoints <= 40 && numDatapoints > 50) {
+      return 5;
+    } else {
+      return 3;
+    }
   } else {
     switch (true) {
       case (numDatapoints <= 10): return 1;

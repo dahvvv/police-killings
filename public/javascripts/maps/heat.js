@@ -32,9 +32,7 @@ function makeHeatMap(){
   };
   heatLayer = L.heatLayer(coords, {
     radius: 27,
-    // blur: 10,
     gradient: selectGradient(query),
-    // maxZoom: setMaxZoom(numDatapoints),
     maxZoom: setMaxZoom(numDatapoints,query),
     max: 1
   });
