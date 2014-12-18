@@ -53,6 +53,17 @@ select.button-filter {
   color: black;
 }
 
+.race-selection-submit {
+  position: absolute;
+  top: 56%;
+  right: 33%;
+}
+
+#race-selection {
+  margin: 0.5em 1em;
+  display: none;
+}
+
 #age-range input, label {
   margin: 0.5em 1em;
   display: none;

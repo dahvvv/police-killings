@@ -4,6 +4,15 @@
       <button class="button-filter filter-type" id="usPop-filter">Population</button>
       <%= erb :'_fifty_states_dropdown' %>
       <button class="button-filter" id="race-filter">Race</button>
+      <form id="race-selection">
+        <input type="checkbox" id="select-alaskan" name="alaskan" value="alaskan" checked />Alaskan / Pacific Islander<br>
+        <input type="checkbox" id="select-asian" name="asian" value="asian" checked />Asian<br>
+        <input type="checkbox" id="select-black" name="black" value="black" checked />Black<br>
+        <input type="checkbox" id="select-hispanic" name="hispanic" value="hispanic" checked />Hispanic / Latin<br>
+        <input type="checkbox" id="select-white" name="white" value="white" checked />White<br>
+        <input type="checkbox" id="select-other" name="other" value="other" checked />Other<br>
+        <input class="race-selection-submit" type="submit" />
+      </form>
       <button class="button-filter" id="age-filter">Age</button>
       <form id="age-range">
         <label for="age-min">Age Min:</label>
