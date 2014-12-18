@@ -9,7 +9,7 @@ var KillingListView = Backbone.View.extend({
     "dblclick #race-selection" : "raceCheckboxes",
     "dblclick #age-filter" : "age",
     "dblclick #age-range" : "ageHeat",
-    "dblclick #state" : "stateHeat",
+    "change #state-filter" : "stateHeat",
     "click #unarmed" : "armedOrUnarmed",
   },
 
@@ -152,7 +152,7 @@ var KillingListView = Backbone.View.extend({
 
   stateHeat: function(e){
     e.preventDefault();
-    var state = this.$el.find('#state').val();
+    var state = this.$el.find('#state-filter').val();
     var filteredCollection = this.collection.stateHeat(state);
     this.filteredToHeatMap(filteredCollection);
   },
@@ -167,7 +167,6 @@ var KillingListView = Backbone.View.extend({
   },
 
   filteredToHeatMap: function(filter){
-    debugger;
     filter.listenToOnce(filter, 'reset', makeHeatMap);
     filter.fetch({reset: true});
   },

@@ -20,7 +20,9 @@ function makeHeatMap(){
     map.removeLayer(heatLayer);
   };
   if (query==="state") {
-    $('.infovis').animate({"height":"73%"},500);
+    $('.display-selector').animate({"top":"73%"},500);
+    $('#infovis').animate({"height":"73%"},500);    
+    // debugger;
     var state = this.state;
     setMapToStateView(state);
   } else {

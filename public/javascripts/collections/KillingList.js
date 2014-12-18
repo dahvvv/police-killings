@@ -84,12 +84,14 @@ var KillingList = Backbone.Collection.extend({
     return new AgeMarkerList();
   },
 
-  stateViewHeatMap: function(state){
+  stateHeat: function(state){
     var state = state;
     var StateList = Backbone.Collection.extend({
       model: Killing,
+      state: state,
       url: "/api/killings/state/" + state,
-      query: "state"
+      query: "state",
+      program: "state view"
     });
     return new StateList();
   },
