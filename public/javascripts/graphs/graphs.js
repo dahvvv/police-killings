@@ -3,6 +3,7 @@ var labelType, useGradients, nativeTextSupport, animate;
 function selectGraphData(query){
   switch(query){
     case "city": return cityGraphData();
+    case "race": return raceGraphData();
     case "age": return ageGraphData();
     case "victim_unarmed": return unarmedGraphData();
   }
@@ -11,12 +12,14 @@ function selectGraphData(query){
 function selectGraphStyle(query){
   switch(query){
     case "city": return cityGraphStyle();
+    case "race": return raceGraphStyle();
     case "age": return ageGraphStyle();
     case "victim_unarmed": return unarmedGraphStyle();
   }
 };
 
 function makeGraph(query){
+  debugger;
   var graphData = selectGraphData(query);
   var graphStyle = selectGraphStyle(query);
   var graph = new $jit.BarChart(graphStyle);

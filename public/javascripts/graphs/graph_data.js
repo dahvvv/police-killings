@@ -22,6 +22,40 @@ var deathsByAge =
 0,0,0,0,0,
 0,1,0,0,0];
 
+function raceGraphData(){
+  var data = {
+    'color': ['#0066CC'],
+    'label': ['race'],
+    'values': [
+      {
+        'label': 'white',
+        'values': [1252],
+      },
+      {
+        'label': 'black',
+        'values': [889],
+      },
+      {
+        'label': 'hispanic and/or latin',
+        'values': [302],
+      },
+      {
+        'label': 'asian',
+        'values': [44],
+      },
+      {
+        'label': 'alaskan and/or pacific islander',
+        'values': [29],
+      },
+      {
+        'label': 'other',
+        'values': [24],
+      },
+    ]
+  };
+  return data;
+};
+
 function cityGraphData(){
   var data = {
     'color': ['#0066CC'],

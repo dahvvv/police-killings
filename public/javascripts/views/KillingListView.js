@@ -44,6 +44,9 @@ var KillingListView = Backbone.View.extend({
     if (filter==="usPop-filter") {
       this.graphProgram("city");
       emptyGraph("city");
+    } else if (filter==="race-filter") {
+      this.graphProgram("race");
+      emptyGraph("race");
     } else if (filter==="age-filter") {
       this.graphProgram("age");
       emptyGraph("age");

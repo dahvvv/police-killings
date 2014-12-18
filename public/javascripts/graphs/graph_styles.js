@@ -1,3 +1,36 @@
+function raceGraphStyle(){
+  var style = {
+    injectInto: 'infovis',
+    animate: true,
+    orientation: 'horizontal',
+    barsOffset: 10,
+    Margin: {
+      top:5,
+      left: 0,
+      right: 15,
+      bottom:5
+    },
+    labelOffest:5,
+    type: 'stacked:gradient',
+    showAggregates: true,
+    showLabels: true,
+    Label: {
+      type: 'HTML',
+      size: 12,
+      family: 'Helvetica',
+      color: '#c8cdcf',
+      // weight: 'bold'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = elem.value + " people killed in " + elem.label;
+      }
+    },
+  };
+  return style;
+};
+
 function cityGraphStyle(){
   var style = {
     injectInto: 'infovis',
