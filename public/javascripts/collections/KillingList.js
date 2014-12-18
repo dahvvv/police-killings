@@ -18,18 +18,34 @@ var KillingList = Backbone.Collection.extend({
 
   raceHeat: function(races){
     var races = races;
-    var urlstring = "/api/killings/race";
-    // $.each(races,function(i,elem){
-    //   var urlstring = urlstring + "/" + elem;
+    var urlBase = "/api/killings/race";
+    // races.forEach(function(elem){
+    //   var elem = elem.split(" ").join("%20").split("/").join("%2F");
+    //   urlstring = urlstring + "/" + elem;
     // });
-    races.forEach(function(elem){
-      var elem = elem.split(" ").join("%20").split("/").join("%2F");
-      urlstring = urlstring + "/" + elem;
-    });
-    debugger;
+
+
+    //shit, I'm running out of time and can't do this gracefully.
+
+    if (races.length === 0) {
+      var urlAddendum = "";
+    } else if (races.length === 1) {
+      var urlAddendum = "/one/" + races[0];
+    } else if (races.length === 2) {
+      var urlAddendum = "/one/" + races[0] + "/two/" + races[1];
+    } else if (races.length === 3) {
+      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2];
+    } else if (races.length === 4) {
+      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3];
+    } else if (races.length === 5) {
+      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3] + "/five/" + races[4];
+    } else if (races.length === 6) {
+      var urlAddendum = "/one/" + races[0] + "/two/" + races[1] + "/three/" + races[2] + "/four/" + races[3] + "/five/" + races[4] + "/six/" + races[5];
+    };
+    var url = urlBase + urlAddendum;
     var RaceHeatList = Backbone.Collection.extend({
       model: Killing,
-      url: urlstring,
+      url: url,
       query: "victim_race",
       program: "This heatmap is scaled to show similar total heat for any age range, in order to emphasize changes in locations."
     });

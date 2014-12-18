@@ -167,6 +167,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   filteredToHeatMap: function(filter){
+    debugger;
     filter.listenToOnce(filter, 'reset', makeHeatMap);
     filter.fetch({reset: true});
   },
