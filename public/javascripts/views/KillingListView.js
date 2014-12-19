@@ -393,9 +393,10 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceGraphArrestsweight: function(){
-    alert('graph of races shot by cops per arrest rate');;
+    this.graphProgram("arrestsWeight");
+    emptyGraph("arrestsWeight");
   },
-
+  
 
   ageHeat: function(){
     var ageMin = this.$el.find($('#age-min')).val();

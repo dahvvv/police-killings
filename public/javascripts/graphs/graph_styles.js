@@ -64,6 +64,39 @@ function race_popWeightGraphStyle(){
   return style;
 };
 
+function arrestsWeightGraphStyle(){
+  var style = {
+    injectInto: 'infovis',
+    animate: true,
+    orientation: 'vertical',
+    barsOffset: 10,
+    Margin: {
+      top:5,
+      left: 0,
+      right: 15,
+      bottom:5
+    },
+    labelOffest:5,
+    type: 'stacked:gradient',
+    showAggregates: true,
+    showLabels: true,
+    Label: {
+      type: 'HTML',
+      size: 16,
+      family: 'Helvetica',
+      color: '#c8cdcf',
+      // weight: 'bold'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = elem.label + ": " + elem.name;
+      }
+    },
+  };
+  return style;
+};
+
 function cityGraphStyle(){
   var style = {
     injectInto: 'infovis',
