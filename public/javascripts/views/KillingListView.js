@@ -13,8 +13,8 @@ var KillingListView = Backbone.View.extend({
     "change #state-filter" : "state",
     "click #unarmed" : "armedOrUnarmed",
     // weights
-    "dblclick #usPop-weight" : "usPopWeight",
-    "dblclick #arrests-weight" : "arrestsWeight"
+    "dblclick #usPop-weight" : "usPopWeightDetector",
+    "dblclick #arrests-weight" : "arrestsWeightDetector"
   },
 
 
@@ -298,6 +298,15 @@ var KillingListView = Backbone.View.extend({
 
   // methods for WEIGHTS, to redirect the more specifically
 
+  usPopWeightDetector: function(){
+    var weight = this.detectWeight();
+    if (weight === "usPop") {
+      this.usPopWeight();
+    } else {
+      this.couldGoAnywhere();
+    }
+  },
+
   usPopWeight: function(){
     var display = this.detectDisplayStyle();
     var filter = this.detectFilter();
@@ -326,6 +335,15 @@ var KillingListView = Backbone.View.extend({
       // } else if (filter === "state") {
       //   this.stateGraphPopweight();
       }
+    }
+  },
+
+  arrestsWeightDetector: function(){
+    var weight = this.detectWeight();
+    if (weight === "arrests") {
+      this.arrestsWeight();
+    } else {
+      this.couldGoAnywhere();
     }
   },
 
@@ -396,7 +414,7 @@ var KillingListView = Backbone.View.extend({
     this.graphProgram("arrestsWeight");
     emptyGraph("arrestsWeight");
   },
-  
+
 
   ageHeat: function(){
     var ageMin = this.$el.find($('#age-min')).val();
@@ -446,6 +464,19 @@ var KillingListView = Backbone.View.extend({
 
   graphProgram: function(query){
     this.$el.find($('.program-text')).html(programs.graphs[query]);
+  },
+
+  couldGoAnywhere: function(){
+    var display = this.detectDisplayStyle();
+    var filter = this.detectFilter();
+    var weight = this.detectWeight();
+    if (display === "heatmap") {
+      this.heatMap();
+    } else if (display === "marker") {
+      this.markerMap();
+    } else if (display === "graph") {
+      this.graph();
+    }
   },
 
 });
