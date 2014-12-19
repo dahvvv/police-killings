@@ -2,14 +2,15 @@ var programs = {
   heatmaps: {
     us_pop: "Concentrations of people killed by police officers in the united states.",
     age: "",
-    race: "This heatmap is scaled to always present a similar population size, \n in order to emphasize differences is location.",
+    race: "This heatmap is scaled to always present a similar population size,<br>in order to emphasize differences is location.",
     race_popWeight: "A heatmap of race weighted to us pop to stay kinda constant, so you see relative locations of diff races compared to us pop."
   },
   markermaps: {
     us_pop: "",
     age: "",
-    race: "...info about racial distribution here...",
-    race_popWeight: "A marker map of police shooting by race, weighted by US population."
+    race: "The racial distribution changes when you weight it by various relevant statistics.",
+    race_popWeight: "A marker map of police shooting by race, weighted by US population.",
+    race_arrestsWeight: "A marker map of police shooting by race, weighted by arrests."
   },
   graphs: {
     city: "New York and Las Vegas have far more deaths by Police Officers<br>than any other city, by far.  Brooklyn alone would be third",

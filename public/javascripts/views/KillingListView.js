@@ -17,7 +17,6 @@ var KillingListView = Backbone.View.extend({
     "dblclick #arrests-weight" : "arrestsWeightDetector"
   },
 
-
   // methods for grabbing which filters/displays/weights have been selected:
 
   detectDisplayStyle: function(){
@@ -103,7 +102,11 @@ var KillingListView = Backbone.View.extend({
     } else if (weight === "usPop") {
       if (filter === "race") {
         this.raceCheckboxes();
-      }
+      } 
+    } else if (weight === "arrests") {
+      if (filter === "race") {
+        this.raceCheckboxes();
+      } 
     } else {
       if (filter === "usPop") {
         this.usPopMarker();
@@ -225,7 +228,9 @@ var KillingListView = Backbone.View.extend({
         this.raceGraphPopweight();
       }
     } else if (weight === "arrests") {
-      if (display === "graph") {
+      if (display === "marker") {
+        this.raceMarkerArrestsweight(filteredCollection);
+      } else if (display === "graph") {
         this.raceGraphArrestsweight();
       }
     } else {
@@ -350,9 +355,19 @@ var KillingListView = Backbone.View.extend({
   arrestsWeight: function(){
     var display = this.detectDisplayStyle();
     var filter = this.detectFilter();
+    var checkedBoxes = $('#race-selection').children('input:checked');
+    var checkedNames = $(checkedBoxes).map(function(){
+      return this.name;
+    })
+    .get();
+    var filteredCollection = this.collection.filterByRaces(checkedNames);
     if (display === "graph") {
       if (filter === "race") {
         this.raceGraphArrestsweight();
+      }
+    } else if (display === "marker") {
+      if (filter === "race") {
+        this.raceMarkerArrestsweight(filteredCollection);
       }
     }
   },
@@ -361,13 +376,13 @@ var KillingListView = Backbone.View.extend({
 
   usPopHeat: function(){
     var filteredCollection = this.collection.usPopHeat();
-    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
   },
 
   usPopMarker: function(){
     var filteredCollection = this.collection.usPopMarker();
-    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
   },
 
@@ -377,13 +392,13 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceHeat: function(filteredCollection){
-    this.$el.find($('.program-text')).text(programs.heatmaps["race"]);
+    this.$el.find($('.program-text')).html(programs.heatmaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
     filteredCollection.trigger('change');
   },
 
   raceMarker: function(filteredCollection){
-    this.$el.find($('.program-text')).text(programs.markermaps["race"]);
+    this.$el.find($('.program-text')).html(programs.markermaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', setRaceQuery);
     filteredCollection.trigger('change');
   },
@@ -394,13 +409,13 @@ var KillingListView = Backbone.View.extend({
   },
 
   raceHeatPopweight: function(filteredCollection){
-    this.$el.find($('.program-text')).text(programs.heatmaps["race_popWeight"]);
+    this.$el.find($('.program-text')).html(programs.heatmaps["race_popWeight"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
     filteredCollection.trigger('change');
   },
 
   raceMarkerPopweight: function(filteredCollection){
-    this.$el.find($('.program-text')).text(programs.markermaps["race_popWeight"]);
+    this.$el.find($('.program-text')).html(programs.markermaps["race_popWeight"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', setRacePopweightQuery);
     filteredCollection.trigger('change');
   },
@@ -408,6 +423,12 @@ var KillingListView = Backbone.View.extend({
   raceGraphPopweight: function(){
     this.graphProgram("race_popWeight");
     emptyGraph("race_popWeight");
+  },
+
+  raceMarkerArrestsweight: function(filteredCollection){
+    this.$el.find($('.program-text')).html(programs.markermaps["race_arrestsWeight"]);
+    filteredCollection.listenToOnce(filteredCollection, 'change', setRaceArrestsweightQuery);
+    filteredCollection.trigger('change');
   },
 
   raceGraphArrestsweight: function(){
@@ -420,13 +441,13 @@ var KillingListView = Backbone.View.extend({
     var ageMin = this.$el.find($('#age-min')).val();
     var ageMax = this.$el.find($('#age-max')).val();
     var filteredCollection = this.collection.ageHeat(ageMin,ageMax);
-    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
   },
 
   ageMarker: function(){
     var filteredCollection = this.collection.ageMarker();
-    this.$el.find($('.program-text')).text(filteredCollection.program);
+    this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
   },
 
@@ -437,17 +458,24 @@ var KillingListView = Backbone.View.extend({
 
   stateHeat: function(){
     var state = this.$el.find('#state-filter').val();
-    var filteredCollection = this.collection.stateHeat(state);
-    this.$el.find($('.program-text')).text(filteredCollection.program);
-
+    if (state != "USA") {
+      var filteredCollection = this.collection.stateHeat(state);
+    this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
+    } else {
+      map.setView([defaultLat,defaultLon],defaultZoom);
+    }
   },
 
   stateMarker: function(){
     var state = this.$el.find('#state-filter').val();
-    var filteredCollection = this.collection.stateMarker(state);
-    this.$el.find($('.program-text')).text(filteredCollection.program);
+    if (state != "USA") {
+      var filteredCollection = this.collection.stateMarker(state);
+    this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
+    } else {
+      map.setView([defaultLat,defaultLon],defaultZoom);
+    }  
   },
 
 ///////AAAAND calling it

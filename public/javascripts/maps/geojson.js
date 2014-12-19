@@ -6,16 +6,6 @@ var geoStyleGeneric = {
   opacity: 0.8,
 };
 
-function popupImage(feature){
-  if (feature.properties.img != null) {
-    return '<img src="' + feature.properties.img + '"/>'
-  };
-};
-
-function popupContent(feature){
-  return '<h5>' + feature.properties.name + ', ' + feature.properties.age + '</h5>' + popupImage(feature) + '<p>' + feature.properties.description + '</p><a href="' + feature.properties.source + '" target="_blank">Source</a>'
-};
-
 function addGeoLayer(geoData){
   geoLayer = L.geoJson(geoData, {
     pointToLayer: function(feature, latlng){
@@ -25,16 +15,13 @@ function addGeoLayer(geoData){
       switch (feature.properties.query){
         case "race": return styleVictimRace(feature);
         case "race_popweight": return styleVictimRacePopweight(feature);
+        case "race_arrestsweight": return styleVictimRaceArrestsweight(feature);
         case "victim_age": return styleVictimAge(feature);
         case "victim_unarmed": return styleVictimUnarmed(feature);
       }
     },
     onEachFeature: function(feature,layer){
       var template = _.template($('#popup-template').html());
-      // layer.bindPopup(feature.properties.description)
-      // template(feature.properties)
-      // var content = popupContent(feature);
-      // layer.bindPopup(content);
       var popupContent = template(feature.properties);
       layer.bindPopup(popupContent, {
         maxHeight: 400,
@@ -126,6 +113,12 @@ function setRaceQuery(){
 
 function setRacePopweightQuery(){
   var query = "race_popweight";
+  var that = this;
+  setGeoMap(that,query);
+};
+
+function setRaceArrestsweightQuery(){
+  var query = "race_arrestsweight";
   var that = this;
   setGeoMap(that,query);
 };
