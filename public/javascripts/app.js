@@ -29,8 +29,12 @@ function replaceFilter(context){
 
 function replaceWeight(context){
   var that = context;
-  $('.button-filter').removeClass('weight-type');
-  $(that).addClass('weight-type');
+  if ($(that).hasClass('weight-type')) {
+    $(that).removeClass('weight-type');
+  } else {
+    $('.button-weight').removeClass('weight-type');
+    $(that).addClass('weight-type');
+  };  
   triggerBang(that);
 };
 
