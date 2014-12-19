@@ -38,13 +38,14 @@ function raceToFillColor(race){
 // each race's multiplier is their percentage-slice of the u.s. population, divided by their percentage-slice of people who get killed by police
 function racePopweightToRadius(race){
   var regR = 7;
+  var scaler = 0.5;
   switch (race) {
     case "alaskan and/or pacific islander": return Math.floor(regR * 13.9);
-    case "asian": return Math.floor(regR * 3.1);
-    case "black": return Math.floor(regR * 1.3);
-    case "hispanic and/or latin": return Math.floor(regR * 1.0);
-    case "white": return Math.floor(regR * 0.2);
-    case "other": return Math.floor(regR * 7);
+    case "asian": return Math.floor(regR * 3.1 * scaler);
+    case "black": return Math.floor(regR * 1.3 * scaler);
+    case "hispanic and/or latin": return Math.floor(regR * 1.0 * scaler);
+    case "white": return Math.floor(regR * 0.2 * scaler);
+    case "other": return Math.floor(regR * 7 * scaler);
   }
 }
 
@@ -59,7 +60,8 @@ function styleVictimRace(feature){
 function styleVictimRacePopweight(feature){
   return {
     fillColor: raceToFillColor(feature.properties.race),
-    radius: racePopweightToRadius(feature.properties.race)
+    radius: racePopweightToRadius(feature.properties.race),
+    color: raceToFillColor(feature.properties.race)
   }
 };
 

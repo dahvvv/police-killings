@@ -4,10 +4,21 @@ function setMapToStateView(state){
 };
 
 function makeHeatMap(){
-  var coords = [];
   var query = this.query;
-  var numDatapoints = this.toJSON().length;
-  this.toJSON().forEach(function(elem, i){
+  var that = this;
+  setHeatMap(that,query);
+};
+
+function setRacePopweightHeatQuery(){
+  var query = "race_popweight";
+  var that = this;
+  setHeatMap(that,query);
+};
+
+function setHeatMap(context,query){
+  var coords = [];
+  var numDatapoints = context.toJSON().length;
+  context.toJSON().forEach(function(elem, i){
     var lat = elem.lat;
     var lon = elem.lng;
     coords.push([lat,lon]);
@@ -23,7 +34,7 @@ function makeHeatMap(){
     // $('.display-selector').animate({"top":"73%"},500);
     // $('#infovis').animate({"height":"73%"},500);    
     // debugger;
-    var state = this.state;
+    var state = context.state;
     setMapToStateView(state);
   } else {
     // $('.display-selector').animate({"top":"65%"},500);

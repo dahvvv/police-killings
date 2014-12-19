@@ -73,6 +73,10 @@ var KillingListView = Backbone.View.extend({
       } else if (filter === "state") {
         this.stateHeat();
       }
+    } else if (weight === "usPop") {
+      if (filter === "race") {
+        this.raceCheckboxes();
+      }
     } else {
       if (filter === "usPop") {
         this.usPopHeat();
@@ -286,6 +290,9 @@ var KillingListView = Backbone.View.extend({
     var display = this.detectDisplayStyle();
     var filter = this.detectFilter();
     if (display === "heatmap") {
+      if (filter === "race") {
+        this.raceCheckboxes();
+      }
       // switch (filter) {
       //   case "race" : this.raceHeatPopweight();
       //   case "age" : this.ageHeatPopweight();
@@ -346,8 +353,10 @@ var KillingListView = Backbone.View.extend({
     emptyGraph("race");
   },
 
-  raceHeatPopweight: function(){
-    debugger;
+  raceHeatPopweight: function(filteredCollection){
+    this.$el.find($('.program-text')).text(programs.heatmaps["race_popWeight"]);
+    filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
+    filteredCollection.trigger('change');
   },
 
   raceMarkerPopweight: function(filteredCollection){
