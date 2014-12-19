@@ -6,8 +6,10 @@ function selectGraphData(query){
     case "race": return raceGraphData();
     case "age": return ageGraphData();
     case "victim_unarmed": return unarmedGraphData();
+    case "city_popWeight": return city_popWeightGraphData();
     case "race_popWeight": return race_popWeightGraphData();
     case "arrestsWeight": return arrestsWeightGraphData();
+    debugger;
   }
 };
 
@@ -17,6 +19,7 @@ function selectGraphStyle(query){
     case "race": return raceGraphStyle();
     case "age": return ageGraphStyle();
     case "victim_unarmed": return unarmedGraphStyle();
+    case "city_popWeight": return city_popWeightGraphStyle();
     case "race_popWeight": return race_popWeightGraphStyle();
     case "arrestsWeight": return arrestsWeightGraphStyle();
   }
@@ -39,18 +42,6 @@ function emptyGraph(query){
     makeGraph(query);
   }
 };
-
-
-// function makeChart(){
-//   $('#infovis').empty();
-//   var query = this.query;
-//   var chartStyle = selectChartStyle(query);
-//   var chartData = selectChartData(query);
-//   if (chartStyle != undefined) {
-//     var newChart = new $jit.BarChart(chartStyle);
-//     newChart.loadJSON(chartData);
-//   };
-// };
 
 $(function(){
 

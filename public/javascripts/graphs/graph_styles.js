@@ -1,3 +1,69 @@
+function city_popWeightGraphStyle(){
+  var style = {
+    injectInto: 'infovis',
+    animate: true,
+    orientation: 'vertical',
+    barsOffset: 10,
+    Margin: {
+      top:5,
+      left: 0,
+      right: 15,
+      bottom:5
+    },
+    labelOffest:5,
+    type: 'stacked:gradient',
+    showAggregates: true,
+    showLabels: true,
+    Label: {
+      type: 'HTML',
+      size: 16,
+      family: 'Helvetica',
+      color: '#c8cdcf',
+      // weight: 'bold'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = elem.label + ": " + elem.value + " " + elem.name;
+      }
+    },
+  };
+  return style;
+};
+
+function cityGraphStyle(){
+  var style = {
+    injectInto: 'infovis',
+    animate: true,
+    orientation: 'vertical',
+    barsOffset: 10,
+    Margin: {
+      top:5,
+      left: 0,
+      right: 15,
+      bottom:5
+    },
+    labelOffest:5,
+    type: 'stacked:gradient',
+    showAggregates: true,
+    showLabels: true,
+    Label: {
+      type: 'HTML',
+      size: 16,
+      family: 'Helvetica',
+      color: '#c8cdcf',
+      // weight: 'bold'
+    },
+    Tips: {
+      enable: true,
+      onShow: function(tip, elem) {
+        tip.innerHTML = elem.label + ":  " + elem.value + " deaths by police.";
+      }
+    },
+  };
+  return style;
+};
+
 function raceGraphStyle(){
   var style = {
     injectInto: 'infovis',
@@ -24,7 +90,7 @@ function raceGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = elem.label + ": " + (Number((elem.value/2450).toFixed(3))*100) + "%";
+        tip.innerHTML = elem.label + ": " + elem.value + "%";
       }
     },
   };
@@ -45,7 +111,7 @@ function race_popWeightGraphStyle(){
     },
     labelOffest:5,
     type: 'stacked:gradient',
-    showAggregates: true,
+    showAggregates: false,
     showLabels: true,
     Label: {
       type: 'HTML',
@@ -57,7 +123,7 @@ function race_popWeightGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = elem.label + ": " + elem.name;
+        tip.innerHTML = elem.name;
       }
     },
   };
@@ -78,7 +144,7 @@ function arrestsWeightGraphStyle(){
     },
     labelOffest:5,
     type: 'stacked:gradient',
-    showAggregates: true,
+    showAggregates: false,
     showLabels: true,
     Label: {
       type: 'HTML',
@@ -90,40 +156,7 @@ function arrestsWeightGraphStyle(){
     Tips: {
       enable: true,
       onShow: function(tip, elem) {
-        tip.innerHTML = elem.label + ": " + elem.name;
-      }
-    },
-  };
-  return style;
-};
-
-function cityGraphStyle(){
-  var style = {
-    injectInto: 'infovis',
-    animate: true,
-    orientation: 'horizontal',
-    barsOffset: 15,
-    Margin: {
-      top:5,
-      left: 0,
-      right: 15,
-      bottom:5
-    },
-    labelOffest:5,
-    type: 'stacked:gradient',
-    showAggregates: true,
-    showLabels: true,
-    Label: {
-      type: 'HTML',
-      size: 12,
-      family: 'Helvetica',
-      color: '#c8cdcf',
-      // weight: 'bold'
-    },
-    Tips: {
-      enable: true,
-      onShow: function(tip, elem) {
-        tip.innerHTML = elem.value + " people killed in " + elem.label;
+        tip.innerHTML = elem.name;
       }
     },
   };

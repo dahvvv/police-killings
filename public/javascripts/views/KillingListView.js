@@ -134,7 +134,9 @@ var KillingListView = Backbone.View.extend({
       //   this.stateGraph();
       }
     } else if (weight === "usPop") {
-      if (filter === "race") {
+      if (filter === "usPop") {
+        this.cityGraphPopweight();
+      } else if (filter === "race") {
         this.raceGraphPopweight();
       }
     } else if (weight === "arrests") {
@@ -168,6 +170,10 @@ var KillingListView = Backbone.View.extend({
         this.usPopMarker();
       } else if (display === "graph") {
         this.usPopGraph();
+      }
+    } else if (weight === "usPop") {
+      if (display === "graph") {
+        this.cityGraphPopweight();
       }
     } else {
       if (display === "heatmap") {
@@ -333,8 +339,11 @@ var KillingListView = Backbone.View.extend({
       //   case "state" : this.stateMarkerPopweight();
       // };
     } else if (display === "graph") {
-      if (filter === "race") {
+      if (filter === "usPop") {
+        this.cityGraphPopweight();
+      } else if (filter === "race") {
         this.raceGraphPopweight();
+      // }
       // } else if (filter === "age") {
       //   this.ageGraphPopweight();
       // } else if (filter === "state") {
@@ -375,35 +384,47 @@ var KillingListView = Backbone.View.extend({
   /////// methods for settings to call upon their info (aka filter) (or call it and use it, if display === graph)
 
   usPopHeat: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     var filteredCollection = this.collection.usPopHeat();
     this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToHeatMap(filteredCollection);
   },
 
   usPopMarker: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     var filteredCollection = this.collection.usPopMarker();
     this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
   },
 
   usPopGraph: function(){
+    $('.button-weight').css({'display':'none'});
+    $('.button-header,#usPop-weight').css({'display':'block'});
     this.graphProgram("city");
     emptyGraph("city");
   },
 
+  cityGraphPopweight: function(){
+    this.graphProgram("city_popWeight");
+    emptyGraph("city_popWeight");
+  },
+
   raceHeat: function(filteredCollection){
+    $('.button-header,.button-weight').css({'display':'none'});
     this.$el.find($('.program-text')).html(programs.heatmaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', makeHeatMap);
     filteredCollection.trigger('change');
   },
 
   raceMarker: function(filteredCollection){
+    $('.button-header,.button-weight').css({'display':'block'});
     this.$el.find($('.program-text')).html(programs.markermaps["race"]);
     filteredCollection.listenToOnce(filteredCollection, 'change', setRaceQuery);
     filteredCollection.trigger('change');
   },
 
   raceGraph: function(){
+    $('.button-header,.button-weight').css({'display':'block'});
     this.graphProgram("race");
     emptyGraph("race");
   },
@@ -438,6 +459,7 @@ var KillingListView = Backbone.View.extend({
 
 
   ageHeat: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     var ageMin = this.$el.find($('#age-min')).val();
     var ageMax = this.$el.find($('#age-max')).val();
     var filteredCollection = this.collection.ageHeat(ageMin,ageMax);
@@ -446,17 +468,20 @@ var KillingListView = Backbone.View.extend({
   },
 
   ageMarker: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     var filteredCollection = this.collection.ageMarker();
     this.$el.find($('.program-text')).html(filteredCollection.program);
     this.filteredToGeoMap(filteredCollection);
   },
 
   ageGraph: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     this.graphProgram("age");
     emptyGraph("age");
   },
 
   stateHeat: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     var state = this.$el.find('#state-filter').val();
     if (state != "USA") {
       var filteredCollection = this.collection.stateHeat(state);
@@ -468,6 +493,7 @@ var KillingListView = Backbone.View.extend({
   },
 
   stateMarker: function(){
+    $('.button-header,.button-weight').css({'display':'none'});
     var state = this.$el.find('#state-filter').val();
     if (state != "USA") {
       var filteredCollection = this.collection.stateMarker(state);

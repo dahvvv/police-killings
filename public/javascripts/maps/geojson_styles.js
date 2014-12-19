@@ -95,7 +95,7 @@ function styleVictimAge(feature){
   var lowStandDev = 21;
   var highStandDev = 48;
   var regR = 3;
-  var maxR = 13;
+  var maxR = 16;
   var regRGB = {r: 0, g: 76, b: 153};
   var maxRGB = {r: 255, g: 51, b: 51};
   if (i < lowStandDev) {

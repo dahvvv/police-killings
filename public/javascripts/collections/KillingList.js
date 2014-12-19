@@ -39,7 +39,7 @@ var KillingList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age/min/" + min + "/max/" + max,
       query: "victim_age",
-      program: "This heatmap is scaled to show similar total heat for any age range, in order to emphasize changes in locations."
+      program: "This heatmap is scaled to show similar total heat for any age range,<br>in order to emphasize changes in locations."
     });
     return new AgeHeatList();
   },
@@ -49,7 +49,7 @@ var KillingList = Backbone.Collection.extend({
       model: Killing,
       url: "/api/killings/victim_age",
       query: "victim_age",
-      program: "A point's size and brightness represent its distance from the standard deviation.  An unusual amount of very young or very old people have been killed in Texas and Arkansas.  Zoom in and click for more information."
+      program: "A point's size and brightness represent its distance from the standard deviation.<br>An unusual amount of very young or very old people have been killed in Texas and Arkansas."
     });
     return new AgeMarkerList();
   },
@@ -61,7 +61,7 @@ var KillingList = Backbone.Collection.extend({
       state: state,
       url: "/api/killings/state/" + state,
       query: "state",
-      program: "state view"
+      program: "View any individual state."
     });
     return new StateList();
   },
@@ -73,7 +73,7 @@ var KillingList = Backbone.Collection.extend({
       state: state,
       url: "/api/killings/state/" + state,
       query: "state",
-      program: "state view marker"
+      program: "View any individual state."
     });
     return new StateMarkerList();
   },

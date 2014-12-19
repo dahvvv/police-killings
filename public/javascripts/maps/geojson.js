@@ -137,14 +137,16 @@ function setGeoMap(context,query){
   while (map.hasLayer(geoLayer)) {
     map.removeLayer(geoLayer);
   };
-  if (query==="state") {
-    // $('.display-selector').animate({"top":"73%"},500);
-    // $('#infovis').animate({"height":"73%"},500);    
+  if (query==="state") { 
+    $('.display-selector').animate({"top":"73%"},500);
+    $('#infovis').animate({"height":"73%"},500);  
+    $('.program-text').animate({"top":"3.2em"},500);   
     var state = context.state;
-    setMapToStateView(state);
+    setMapToStateView(state); 
   } else {
-    // $('.display-selector').animate({"top":"65%"},500);
-    // $('#infovis').animate({"height":"65%"},100);
+    $('.display-selector').animate({"top":"65%"},500);
+    $('#infovis').animate({"height":"65%"},100);
+    $('.program-text').animate({"top":"1.5em"},500);   
     map.setView([defaultLat,defaultLon],defaultZoom);
   };
   addGeoLayer(geoData);
