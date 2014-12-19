@@ -13,7 +13,8 @@ var KillingListView = Backbone.View.extend({
     "change #state-filter" : "state",
     "click #unarmed" : "armedOrUnarmed",
     // weights
-    "dblclick #usPop-weight" : "usPopWeight"
+    "dblclick #usPop-weight" : "usPopWeight",
+    "dblclick #arrests-weight" : "arrestsWeight"
   },
 
 
@@ -49,12 +50,8 @@ var KillingListView = Backbone.View.extend({
       return "none";
     } else if (weight==="usPop-weight") {
       return "usPop";
-    } else if (weight==="race-weight") {
-      return "race";
-    } else if (weight==="age-weight") {
-      return "age";
-    } else if (weight==="state-weight") {
-      return "state";
+    } else if (weight==="arrests-weight") {
+      return "arrests";
     };
   },
 
@@ -137,6 +134,10 @@ var KillingListView = Backbone.View.extend({
       if (filter === "race") {
         this.raceGraphPopweight();
       }
+    } else if (weight === "arrests") {
+      if (filter === "race") {
+        this.raceGraphArrestsweight();
+      }
     } else {
       if (filter === "usPop") {
         this.usPopGraph();
@@ -178,10 +179,17 @@ var KillingListView = Backbone.View.extend({
 
   race: function(){
     var display = this.detectDisplayStyle();
+    var weight = this.detectWeight();
     if (display != "graph") {
       this.raceDisplay();
     } else {
-      this.raceGraph();
+      if (weight === "none") {
+        this.raceGraph();
+      } else if (weight === "usPop") {
+        this.raceGraphPopweight();
+      } else if (weight === "arrests") {
+        this.raceGraphArrestsweight();
+      }      
     }
   },
 
@@ -214,7 +222,11 @@ var KillingListView = Backbone.View.extend({
       } else if (display === "marker") {
         this.raceMarkerPopweight(filteredCollection);
       } else if (display === "graph") {
-        this.raceGraphPopweight(filteredCollection);
+        this.raceGraphPopweight();
+      }
+    } else if (weight === "arrests") {
+      if (display === "graph") {
+        this.raceGraphArrestsweight();
       }
     } else {
       if (display === "heatmap") {
@@ -317,6 +329,16 @@ var KillingListView = Backbone.View.extend({
     }
   },
 
+  arrestsWeight: function(){
+    var display = this.detectDisplayStyle();
+    var filter = this.detectFilter();
+    if (display === "graph") {
+      if (filter === "race") {
+        this.raceGraphArrestsweight();
+      }
+    }
+  },
+
   /////// methods for settings to call upon their info (aka filter) (or call it and use it, if display === graph)
 
   usPopHeat: function(){
@@ -368,6 +390,10 @@ var KillingListView = Backbone.View.extend({
   raceGraphPopweight: function(){
     this.graphProgram("race_popWeight");
     emptyGraph("race_popWeight");
+  },
+
+  raceGraphArrestsweight: function(){
+    alert('graph of races shot by cops per arrest rate');;
   },
 
 
