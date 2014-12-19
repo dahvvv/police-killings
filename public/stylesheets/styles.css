@@ -190,17 +190,18 @@ select.button-filter {
   padding: 0 5em;
 }
 
-.tip {
-  color: white;
-  font-weight: bold;
+.popup-container {
+  background-color: #c8cdcf;
+  border-radius: 15px;
   font-family: Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+  padding: 5px;
+  text-align: center;
+  font-size: 1.2em;
 }
 
-#popup-template {
-  color: red;
+.popup-img {
+  max-width: 500px;
+  max-height: 300px;
 }
 
-#popup-template img {
-  max-height: 150px;
-  max-width: 150px;
-}
+

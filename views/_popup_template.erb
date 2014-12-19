@@ -1,8 +1,14 @@
 <script type="text/template" id="popup-template">
-  <h5>
-    <%%= name %>, <%%= age %>, <%%= race %>
-  </h5>
-  <img src='<%%= img %>' alt="">
-  <%%= description %>
-  <%%= source %>
+  <div class='popup-container'>
+    <h4>
+      <%%= name %>  <%%= age %>
+    </h4>
+    <h4>
+      <a href='<%%= source %>' target=_blank>Source</a>
+    </h4>
+    <img class='popup-img' src='<%%= img %>' alt="">
+    <p>
+      <strong><%%= description %></strong>
+    </p>
+  </div>
 </script>

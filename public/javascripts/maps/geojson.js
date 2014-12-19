@@ -35,7 +35,12 @@ function addGeoLayer(geoData){
       // template(feature.properties)
       // var content = popupContent(feature);
       // layer.bindPopup(content);
-      layer.bindPopup(template(feature.properties));
+      var popupContent = template(feature.properties);
+      layer.bindPopup(popupContent, {
+        maxHeight: 400,
+        maxWidth: 700
+      });
+      // layer.bindPopup(template(feature.properties));
     }
   });
   if ($('#map-one').css('display') === "none") {
